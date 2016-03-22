@@ -68,6 +68,7 @@ img {
 .masthead-brand {
     margin-top: 10px;
     margin-bottom: 10px;
+
 }
 
 .masthead-nav > li {
@@ -127,7 +128,6 @@ img {
 
 .cover-heading {
     font-family: "rodeo";
-
 }
 
 /*
@@ -149,11 +149,12 @@ img {
     .masthead {
         position: fixed;
         top: 0;
+        background-color: rgba(0,0,0, 0.3);
     }
 
     .mastfoot {
         position: fixed;
-        bottom: 0;
+        bottom: -50px;
     }
 
     /* Start the vertical centering */
