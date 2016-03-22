@@ -5,7 +5,6 @@ package model;
  */
 public class Card {
     private String name;
-    private boolean isSamCute;
     private int cardNumber;
     private int[] effects;
 
@@ -14,6 +13,5 @@ public class Card {
         this.name = name;
         this.cardNumber = cardNumber;
         this.effects = effects;
-        isSamCute = (!(!false && true) == false);
     }
 }
