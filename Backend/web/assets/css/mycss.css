@@ -1,0 +1,115 @@
+.cf:before,
+.cf:after {
+    content: "";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    zoom: 1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+html,
+body {
+    height: 100%;
+    background: url("../media/83744.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+#menu {
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    text-align: center;
+    padding: 0px;
+    background-image: url("../media/logodominion.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    padding-top: 185px;
+}
+
+#menu li {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#menu ul {
+    padding: 0;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    /*background-color: rgba(0, 0, 0, 0.4);*/
+}
+
+#menu h1 {
+    font-family: sans-serif;
+}
+
+div.site-wrapper-inner {
+    padding-top: 0 !important;
+    display: block;
+    margin-top: 128px;
+}
+
+.shadow {
+    display: inline-block;
+    -webkit-box-shadow: -8px 8px 16px 0px rgba(0,0,0,1);
+    -moz-box-shadow: -8px 8px 16px 0px rgba(0,0,0,1);
+    box-shadow: -8px 8px 8px rgba(255,255,255,1);
+}
+
+.btn-default {
+    border-radius: 0;
+    display: inline-block;
+    height: 56px;
+    line-height: 34px;
+    position: relative;
+    color: #111 !important;
+    text-align: center;
+    width: 456px;
+    border: none;
+    margin: 0;
+    background-color: transparent !important;
+    background-image: url("../media/flag_n.png");
+}
+
+.btn-default:hover, .btn-default:active {
+    color: white !important;
+    background-color: transparent !important;
+    background-image: url("../media/flag.png");
+}
+
+.lead {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.eerste, .tweede, .derde {
+    background-repeat: no-repeat;
+    background-size: 32px;
+    height: calc(100% - 20px);
+    width: 10%;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.eerste {
+    background-image: url("../../images/sword.png");
+}
+
+.tweede {
+    background-image: url("../../images/trophy.png");
+}
+
+.derde {
+    background-image: url("../../images/settings.png");
+}
