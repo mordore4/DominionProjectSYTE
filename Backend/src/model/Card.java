@@ -5,6 +5,7 @@ package model;
  */
 public class Card {
     private String name;
+<<<<<<< HEAD
     private int effect;
     private boolean isSamCute;
 
@@ -13,5 +14,15 @@ public class Card {
         this.effect = effect;
 
         isSamCute = (!(!false && true) == false);
+=======
+    private int cardNumber;
+    private int[] effects;
+
+    public Card(String name, int cardNumber, int[] effects)
+    {
+        this.name = name;
+        this.cardNumber = cardNumber;
+        this.effects = effects;
+>>>>>>> origin/master
     }
 }
