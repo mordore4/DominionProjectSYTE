@@ -1,9 +1,11 @@
 out/
-.idea/workspace.xml
 
-web/.idea/misc.xml
-web/.idea/workspace.xml
-web/.idea/vcs.xml
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
 
 *.class
 
