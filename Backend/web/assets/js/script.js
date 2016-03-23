@@ -25,6 +25,7 @@ $(document).ready(function () {
     $('#play').on('click', playGame);
     toevoegenAfbeeldingen();
     $('#cards').hide();
+    /*objectDragen();*/
 });
 
 
@@ -70,3 +71,15 @@ var playGame = function (e) {
      window.location = goTo;
      }, 3000);*/
 };
+
+/*var objectDragen = function(){
+    $("#cards li").draggable();
+
+}
+*/
+
+$('#cards li').on('click', function() {
+    console.log("FUCKER");
+    $(this).css('width', '100');
+    $(this).css('height', '180');
+});
