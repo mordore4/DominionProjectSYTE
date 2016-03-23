@@ -3,13 +3,28 @@
  */
 
 var active = false;
+var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room", "Curse", "Duchy", "Estate"];
+var huidigeAfbeelding = 1;
 
+var toevoegenAfbeeldingen = function () {
+    for (var i = 0, len = kaarten.length; i < len; i++) {
+
+        var imageSource = "images/" + kaarten[i] + ".jpg";
+        var html = '<li>';
+        html += '<figure><img alt="' + kaarten[i] + '" title="' + kaarten[i] + '" src="' + imageSource + '" />';
+        /*html += '<figcaption>' + kaarten[i] + '</figcaption></figure></li>';*/
+
+        $('.carousel').append(html);
+    }
+
+};
 
 $(document).ready(function () {
 
     console.log("De verbinding werkt");
     $('#play').on('click', playGame);
-
+    toevoegenAfbeeldingen();
+    $('#cards').hide();
 });
 
 
@@ -44,13 +59,14 @@ var playGame = function (e) {
         }
     })
     $('#menu').hide();
+    $('#cards').show();
 
-   /* var goTo = this.getAttribute("href");
+    /* var goTo = this.getAttribute("href");
 
-    window.location = goTo;
+     window.location = goTo;
 
 
-    setTimeout(function () {
-        window.location = goTo;
-    }, 3000);*/
+     setTimeout(function () {
+     window.location = goTo;
+     }, 3000);*/
 };
