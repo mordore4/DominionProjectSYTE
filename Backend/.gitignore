@@ -1,6 +1,10 @@
 out/
 .idea/workspace.xml
 
+web/.idea/misc.xml
+web/.idea/workspace.xml
+web/.idea/vcs.xml
+
 *.class
 
 # Mobile Tools for Java (J2ME)
