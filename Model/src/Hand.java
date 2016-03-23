@@ -9,7 +9,7 @@ public class Hand {
 
     }
 
-    public void discard()
+    public void discard(DiscardPile pile)
     {
 
     }

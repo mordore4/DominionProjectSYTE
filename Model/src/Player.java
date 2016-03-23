@@ -9,4 +9,28 @@ public class Player {
     private int actions;
     private int buys;
     private int coins;
+
+    public int getActions() {
+        return actions;
+    }
+
+    public int getBuys() {
+        return buys;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public void setBuys(int buys) {
+        this.buys = buys;
+    }
+
+    public void setActions(int actions) {
+        this.actions = actions;
+    }
 }

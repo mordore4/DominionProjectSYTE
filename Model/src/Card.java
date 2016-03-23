@@ -6,5 +6,24 @@ public class Card {
     private int[] abilities; //possibly wrong, Abilities might become class
     private int type;
     private int cost;
+    private int points; //Correct place???
     //private int count; Amount still buyable, probably not the right class
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getPoints() {
+        return points;
+    }
 }

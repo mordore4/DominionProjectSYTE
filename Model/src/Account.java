@@ -5,4 +5,9 @@ public class Account {
     private String name;
     private int rankingScore;
     private String[] friendList;
+
+    public String getName()
+    {
+        return name;
+    }
 }
