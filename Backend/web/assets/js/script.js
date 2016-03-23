@@ -2,41 +2,55 @@
  * Created by Yannis on 1-12-2015.
  */
 
-var i = 0;
-
-$( document ).ready(function() {
-
-     $( "ul.carousel li:first-child" ).show();
+var active = false;
 
 
+$(document).ready(function () {
 
-$('ul.sequence li:last-of-type a').on ("click",function(e){
+    console.log("De verbinding werkt");
+    $('#play').on('click', playGame);
 
+});
+
+
+$body = $("body");
+
+$(document).on({
+    ajaxStart: function () {
+        if (active) $body.addClass("loading");
+    },
+    ajaxStop: function () {
+        if (active) setTimeout(stopLoading, 2000);
+        active = false;
+    }
+});
+
+var stopLoading = function () {
+    $body.removeClass("loading");
+};
+
+var playGame = function (e) {
     e.preventDefault();
 
-    i+=1;
+    /*active = true;*/
 
-    if (i > 7) {
-        i = 0;
-    }
-    console.log(i);
-
-    $('ul.carousel li:nth-of-type(' + (i - 1) + ')').fadeOut(200);
-    $('ul.carousel li:nth-of-type(' + (i) + ')').fadeIn(600);
-});
-    $('ul.sequence li:first-of-type a').on ("click",function(e){
-        e.preventDefault();
-        console.log("werkt dit?");
-        i-=1;
-
-        if (i < 0) {
-            i = 7;
+    $.ajax({
+        url: "index.html",
+        method: "GET",
+        data: "",
+        dataType: "html",
+        success: function (data) {
+            console.log(data);
         }
-        console.log(i);
+    })
+    $('#menu').hide();
 
-        $('ul.carousel li:nth-of-type(' + (i + 1) + ')').fadeOut(200);
-        $('ul.carousel li:nth-of-type(' + (i) + ')').fadeIn(600);
+   /* var goTo = this.getAttribute("href");
 
-});
-});
+    window.location = goTo;
 
+
+    setTimeout(function () {
+        window.location = goTo;
+    }, 3000);*/
+};
