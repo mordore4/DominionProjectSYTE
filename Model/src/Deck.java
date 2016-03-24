@@ -14,7 +14,7 @@ public class Deck {
         int points = 0;
         for (int cardnr = 0; cardnr < cards.length; cardnr++)
         {
-            points += cards[cardnr].getPoints();
+            points += cards[cardnr].getValue();
         }
 
         victoryPoints = points;
