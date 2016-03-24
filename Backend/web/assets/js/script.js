@@ -123,6 +123,7 @@ var stopLoading = function () {
 var playGame = function (e) {
     $('#coins').show();
     $('#topstates').show();
+    /*$('body').css({background : 'url(images/daszeker.jpg) no-repeat '});*/
     e.preventDefault();
 
     /*active = true;*/
