@@ -5,8 +5,11 @@
 var active = false;
 //var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room", "Curse", "Duchy", "Estate"];
 var kaarten = ["Copper", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper"];
+var coinsTop = ["Coppertop","Silvertop","Goldtop","Cursetop"];
+var StatesTop = ["provinceTop","dutchyTop","estateTop"];
 
 var huidigeAfbeelding = 1;
+var huidigeAfbeeldingTop = 1;
 
 var toevoegenAfbeeldingen = function () {
     var xoffset = 0;
@@ -29,16 +32,50 @@ var toevoegenAfbeeldingen = function () {
 
 };
 
+
+
+var toevoegenAfbeeldingenTop = function () {
+    for (var i= 0, len = coinsTop.length; i < len; i++) {
+
+        var imgsrc = "images/" + coinsTop[i] + ".png";
+
+        var html = '<li>'
+        html += '<figure><img alt="' + coinsTop[i] + '" title="' + coinsTop[i] + '" src="' + imgsrc  + '" />';
+        /*html += '<figcaption>' + coinsTop[i] + '</figcaption></figure></li>'*/
+
+        $('#coins').append(html);
+    }
+    $('#coins li:first').show();
+};
+
+var toevoegenStatesTop = function () {
+    for (var i= 0, len = StatesTop.length; i < len; i++) {
+
+        var imgsrc = "images/" + StatesTop[i] + ".png";
+
+        var html = '<li>'
+        html += '<figure><img alt="' + StatesTop[i] + '" title="' + StatesTop[i] + '" src="' + imgsrc  + '" />';
+        /*html += '<figcaption>' + coinsTop[i] + '</figcaption></figure></li>'*/
+
+        $('#topstates').append(html);
+    }
+    $('#topstates li:first').show();
+};
+
+
 $(document).ready(function () {
 
     console.log("De verbinding werkt");
     $('#play').on('click', playGame);
     toevoegenAfbeeldingen();
     $('#hand').hide();
+    $('#coins').hide();
+    $('#topstates').hide();
     $('#hand li').on('click', function () {
         console.log("FUCKER");
         $(this).find('img').css('top', '100px');
         //$(this).css('height', '180');
+
     });
 
     /*$('#hand li').on('mouseenter', function () {
@@ -61,7 +98,8 @@ $(document).ready(function () {
             $(this).removeClass("hoveredcard");
         }
     });
-
+    toevoegenAfbeeldingenTop();
+    toevoegenStatesTop();
     /*objectDragen();*/
 });
 
@@ -83,6 +121,8 @@ var stopLoading = function () {
 };
 
 var playGame = function (e) {
+    $('#coins').show();
+    $('#topstates').show();
     e.preventDefault();
 
     /*active = true;*/
