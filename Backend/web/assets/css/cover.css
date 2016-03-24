@@ -51,29 +51,6 @@ nav {
     position: relative;
 }
 
-img {
-    position: absolute;
-    line-height: 180px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height: 180px;
-    width: 120px;
-    background-repeat: no-repeat;
-    left: -250px;
-    top: 570px;
-
-}
-
-#cards li  {
-    position: relative;
-    text-decoration: none;
-    list-style-type: none;
-    display:block;
-    width: 32px;
-    height: 64px;
-    float: right;
-
-}
 
 
 
