@@ -147,18 +147,24 @@ body.loading .modal {
     height: 40px;
     width: 240px;
     background-repeat: no-repeat;
+    top: 300px;
+    position: absolute;
 }
 
 
-#hand li img  {
+#hand li   {
     position: absolute;
     text-decoration: none;
     list-style-type: none;
     display: inline-block;
     left: 0;
-    top: 500px;
+
+}
+
+#hand li img {
     height: 280px;
     width: 180px;
+
 }
 
 #hand li.hoveredcard {
