@@ -25,6 +25,9 @@ body {
 
 #gamewindow {
     position: relative;
+    background-color: pink;
+    width: 100%;
+    height: 100%;
 }
 
 #menu {
@@ -147,8 +150,9 @@ body.loading .modal {
     height: 40px;
     width: 240px;
     background-repeat: no-repeat;
-    top: 300px;
+    bottom: -500px;
     position: absolute;
+
 }
 
 
