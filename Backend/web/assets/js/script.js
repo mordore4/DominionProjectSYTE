@@ -71,6 +71,7 @@ $(document).ready(function () {
     $('#hand').hide();
     $('#coins').hide();
     $('#topstates').hide();
+    $("#gamewindow").hide();
     $('#hand li').on('click', function () {
         console.log("FUCKER");
         $(this).find('img').css('top', '100px');
@@ -123,6 +124,7 @@ var stopLoading = function () {
 var playGame = function (e) {
     $('#coins').show();
     $('#topstates').show();
+    $("#gamewindow").show();
     //$('body').css({background : 'url(images/daszeker.jpg) no-repeat '});
     e.preventDefault();
 
