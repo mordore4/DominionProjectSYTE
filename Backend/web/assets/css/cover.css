@@ -39,6 +39,8 @@ body {
 .cover-container {
     margin-right: auto;
     margin-left: auto;
+    /*height: 1100px;
+    max-height: 1000px;*/
 }
 
 /* Padding for spacing */
@@ -50,10 +52,6 @@ body {
 nav {
     position: relative;
 }
-
-
-
-
 
 .carousel {
     text-decoration: none;

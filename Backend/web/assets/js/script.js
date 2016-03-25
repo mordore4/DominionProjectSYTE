@@ -4,7 +4,7 @@
 
 var active = false;
 //var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room", "Curse", "Duchy", "Estate"];
-var kaarten = ["Copper", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper"];
+var kaarten = ["Adventurer", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper"];
 var coinsTop = ["Coppertop","Silvertop","Goldtop","Cursetop"];
 var StatesTop = ["provinceTop","dutchyTop","estateTop"];
 
@@ -20,12 +20,14 @@ var toevoegenAfbeeldingen = function () {
 
         var imageSource = "images/" + kaarten[i] + ".jpg";
         /*var html = '<li style="left: ' + xoffset + 'px; z-index: ' + (kaarten.length - i) + '; transform: rotate(' + angle + 'deg) translate(0px , ' + (angle * 5) + 'px)">';*/
-        var html = '<li style="left: ' + xoffset + 'px; z-index: ' + (kaarten.length - i) + ';">';
+        /*var html = '<li style="left: ' + xoffset + 'px; z-index: ' + (kaarten.length - i) + ';">';*/
+        var html = '<li style="background-image: url(' + imageSource + ');">';
 
-        html += '<figure><img alt="' + kaarten[i] + '" title="' + kaarten[i] + '" src="' + imageSource + '" />';
+
+        //html += '<figure><img alt="' + kaarten[i] + '" title="' + kaarten[i] + '" src="' + imageSource + '" />';
         /*html += '<figcaption>' + kaarten[i] + '</figcaption></figure></li>';*/
 
-        $('.carousel').append(html);
+        $('#hand').append(html);
 
         xoffset += 80;
     }
@@ -87,10 +89,13 @@ $(document).ready(function () {
      $(this).removeClass("hoveredcard");
      });*/
 
+    $("#hand").sortable();
+
     $('#hand li').draggable({
         revert: true,
         zIndex: 1000,
         revertDuration: 500,
+        connectToSortable: "#sortable",
         scroll: false,
         start: function () {
             $(this).addClass("hoveredcard");
