@@ -4,7 +4,7 @@
 
 var active = false;
 //var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room", "Curse", "Duchy", "Estate"];
-var kaarten = ["Adventurer", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper"];
+var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room"];
 var coinsTop = ["Coppertop","Silvertop","Goldtop","Cursetop"];
 var StatesTop = ["provinceTop","dutchyTop","estateTop"];
 
@@ -41,7 +41,7 @@ var toevoegenAfbeeldingenTop = function () {
 
         var imgsrc = "images/" + coinsTop[i] + ".png";
 
-        var html = '<li>'
+        var html = '<li>';
         html += '<figure><img alt="' + coinsTop[i] + '" title="' + coinsTop[i] + '" src="' + imgsrc  + '" />';
         /*html += '<figcaption>' + coinsTop[i] + '</figcaption></figure></li>'*/
 
@@ -55,7 +55,7 @@ var toevoegenStatesTop = function () {
 
         var imgsrc = "images/" + StatesTop[i] + ".png";
 
-        var html = '<li>'
+        var html = '<li>';
         html += '<figure><img alt="' + StatesTop[i] + '" title="' + StatesTop[i] + '" src="' + imgsrc  + '" />';
         /*html += '<figcaption>' + coinsTop[i] + '</figcaption></figure></li>'*/
 
@@ -89,9 +89,11 @@ $(document).ready(function () {
      $(this).removeClass("hoveredcard");
      });*/
 
-    $("#hand").sortable();
+    $("#hand").sortable({
+        //axis: "x"
+    });
 
-    $('#hand li').draggable({
+    /*$('#hand li').draggable({
         revert: true,
         zIndex: 1000,
         revertDuration: 500,
@@ -103,7 +105,7 @@ $(document).ready(function () {
         stop: function() {
             $(this).removeClass("hoveredcard");
         }
-    });
+    });*/
     toevoegenAfbeeldingenTop();
     toevoegenStatesTop();
     /*objectDragen();*/
