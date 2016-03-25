@@ -1,3 +1,5 @@
+package dominion;
+
 /**
  * Created by Sam on 23/03/2016.
  */
@@ -33,5 +35,15 @@ public class Card
     public int getValue()
     {
         return value;
+    }
+
+    public void setType(int type)
+    {
+        this.type = type;
+    }
+
+    public void setCost(int cost)
+    {
+        this.cost = cost;
     }
 }

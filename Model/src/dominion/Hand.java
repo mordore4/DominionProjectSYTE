@@ -1,3 +1,5 @@
+package dominion;
+
 import java.util.ArrayList;
 
 /**
