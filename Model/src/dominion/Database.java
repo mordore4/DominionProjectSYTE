@@ -15,10 +15,7 @@ public class Database
     {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-        Connection connection = null;
-        connection = DriverManager.getConnection("jdbc:mysql://digaly.ddns.net/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
-
-        this.connection = connection;
+        this.connection = DriverManager.getConnection("jdbc:mysql://digaly.ddns.net/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
 
         importCards();
     }
