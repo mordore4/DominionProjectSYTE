@@ -16,7 +16,7 @@ public class Database
         this.connection = DriverManager.getConnection("jdbc:mysql://digaly.ddns.net/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
     }
 
-    public DatabaseResults selectQuery(String parametrizedSQL, String... parameterValues)
+    public DatabaseResults executeQuery(String parametrizedSQL, String... parameterValues)
     {
         DatabaseResults results = new DatabaseResults();
 
@@ -28,11 +28,16 @@ public class Database
             stmt = connection.prepareStatement(parametrizedSQL);
             parametrizeStatement(stmt, parameterValues);
 
-            rs = stmt.executeQuery();
-
-            populateResults(rs, results);
-
-            return results;
+            if (stmt.execute()) //If this is true, it means it's a resultset
+            {
+                rs = stmt.getResultSet();
+                populateResults(rs, results);
+                return results;
+            }
+            else //No resultset, so no results are returned
+            {
+                return null;
+            }
         }
         catch (SQLException ex)
         {
