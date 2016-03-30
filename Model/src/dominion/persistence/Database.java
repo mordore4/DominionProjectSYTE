@@ -136,4 +136,24 @@ public class Database
 
         return filteredCards;
     }*/
+
+    /*public Card getSpecificCard(String name)
+    {
+        Card card;
+        String cardName;
+        int type;
+        int cost;
+
+        for (int i = 0; i < cardList.size(); i++)
+        {
+            if (cardList.get(i).getName() == name)
+            {
+                cardName = cardList.get(i).getName();
+                type = cardList.get(i).getType();
+                cost = cardList.get(i).getCost();
+            }
+        }
+        card = new Card(cardName, type, cost);
+        return card;
+    }*/
 }
