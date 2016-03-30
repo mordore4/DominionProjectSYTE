@@ -5,8 +5,9 @@
 var active = false;
 //var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room", "Curse", "Duchy", "Estate"];
 var kaarten = ["Adventurer", "Bureaucrat", "Cellar", "Chancellor", "Chapel", "Copper", "Council_Room"];
-var coinsTop = ["Coppertop","Silvertop","Goldtop","Cursetop"];
-var StatesTop = ["provinceTop","dutchyTop","estateTop"];
+var coinsTop = ["Coppertop", "Silvertop", "Goldtop", "Cursetop"];
+var StatesTop = ["provinceTop", "dutchyTop", "estateTop"];
+var kingdomCards = ["Militia", "Remodel", "Smithy", "Market", "Mine", "Cellar", "Moat", "Village", "Woodcutter", "Workshop"];
 
 var huidigeAfbeelding = 1;
 var huidigeAfbeeldingTop = 1;
@@ -35,14 +36,13 @@ var toevoegenAfbeeldingen = function () {
 };
 
 
-
 var toevoegenAfbeeldingenTop = function () {
-    for (var i= 0, len = coinsTop.length; i < len; i++) {
+    for (var i = 0, len = coinsTop.length; i < len; i++) {
 
         var imgsrc = "images/" + coinsTop[i] + ".png";
 
         var html = '<li>';
-        html += '<figure><img alt="' + coinsTop[i] + '" title="' + coinsTop[i] + '" src="' + imgsrc  + '" />';
+        html += '<figure><img alt="' + coinsTop[i] + '" title="' + coinsTop[i] + '" src="' + imgsrc + '" />';
         /*html += '<figcaption>' + coinsTop[i] + '</figcaption></figure></li>'*/
 
         $('#coins').append(html);
@@ -51,12 +51,12 @@ var toevoegenAfbeeldingenTop = function () {
 };
 
 var toevoegenStatesTop = function () {
-    for (var i= 0, len = StatesTop.length; i < len; i++) {
+    for (var i = 0, len = StatesTop.length; i < len; i++) {
 
         var imgsrc = "images/" + StatesTop[i] + ".png";
 
         var html = '<li>';
-        html += '<figure><img alt="' + StatesTop[i] + '" title="' + StatesTop[i] + '" src="' + imgsrc  + '" />';
+        html += '<figure><img alt="' + StatesTop[i] + '" title="' + StatesTop[i] + '" src="' + imgsrc + '" />';
         /*html += '<figcaption>' + coinsTop[i] + '</figcaption></figure></li>'*/
 
         $('#topstates').append(html);
@@ -64,6 +64,23 @@ var toevoegenStatesTop = function () {
     $('#topstates li:first').show();
 };
 
+var toevoegenKingdomCards = function () {
+
+    for (var i = 0, len = kingdomCards.length; i < len; i++) {
+        var cardName = kingdomCards[i];
+
+        var html = '<li>';
+        html += '<div class="kingdomcard">';
+        html += '<div class="kingdomcard-top" style="background-image: url(images/' + cardName + '.jpg);"></div>';
+        html += '<div class="kingdomcard-bottom" style="background-image: url(images/' + cardName + '.jpg);"></div>';
+        html += '</div>';
+        html += '</li>';
+
+        $("#kingdomcards ul").append(html);
+    }
+
+
+};
 
 $(document).ready(function () {
 
@@ -75,7 +92,6 @@ $(document).ready(function () {
     $('#topstates').hide();
     $("#gamewindow").hide();
     $('#hand li').on('click', function () {
-        console.log("FUCKER");
         $(this).find('img').css('top', '100px');
         //$(this).css('height', '180');
 
@@ -90,24 +106,27 @@ $(document).ready(function () {
      });*/
 
     $("#hand").sortable({
+        revert: true
         //axis: "x"
     });
 
     /*$('#hand li').draggable({
-        revert: true,
-        zIndex: 1000,
-        revertDuration: 500,
-        connectToSortable: "#sortable",
-        scroll: false,
-        start: function () {
-            $(this).addClass("hoveredcard");
-        },
-        stop: function() {
-            $(this).removeClass("hoveredcard");
-        }
-    });*/
+     revert: true,
+     zIndex: 1000,
+     revertDuration: 500,
+     connectToSortable: "#sortable",
+     scroll: false,
+     start: function () {
+     $(this).addClass("hoveredcard");
+     },
+     stop: function() {
+     $(this).removeClass("hoveredcard");
+     }
+     });*/
     toevoegenAfbeeldingenTop();
     toevoegenStatesTop();
+    toevoegenKingdomCards();
+
     /*objectDragen();*/
 });
 
@@ -149,6 +168,7 @@ var playGame = function (e) {
 
     $('#menu').hide();
     $('#hand').show();
+    $("div.mastfoot").hide();
 
     /* var goTo = this.getAttribute("href");
 

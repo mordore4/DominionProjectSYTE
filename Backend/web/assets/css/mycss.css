@@ -29,6 +29,7 @@ body {
     height: 100%;
     margin-left: auto;
     margin-right: auto;
+    padding: 0;
 }
 
 #menu {
@@ -161,19 +162,18 @@ body.loading .modal {
 
 
 #hand {
-    height: 280px;
+    height: 249px;
     width: 100%;
     position: fixed;
     bottom: 0;
 }
 
-
-
-
 #hand li   {
     /*position: absolute;*/
-    width: 180px;
-    height: 280px;
+    /*width: 180px;
+    height: 280px;*/
+    width: 158px;
+    height: 249px;
     display: inline-block;
     text-decoration: none;
     list-style-type: none;
@@ -182,11 +182,11 @@ body.loading .modal {
     background-size: contain;
 }
 
-#hand li img {
-    height: 280px;
+/*#hand li img {
+    /*height: 280px;
     width: 180px;
 
-}
+}*/
 
 #hand li.hoveredcard {
     z-index: 1000 !important;
@@ -216,4 +216,49 @@ body.loading .modal {
     left: -20px;
     text-decoration: none;
     list-style: none;
+}
+
+#topstates img, #coins img {
+    width: 130px;
+}
+
+div.kingdomcard {
+    display: inline-block;
+    width: 140px;
+    height: 120px;
+    border: 2px solid black;
+    padding: 3px;
+    background-color: black;
+    border-radius: 16px;
+}
+
+div.kingdomcard-top {
+    background-image: url("../../images/Smithy.jpg");
+    width: 100%;
+    height: 80%;
+    background-size: 100%;
+}
+
+div.kingdomcard-bottom {
+    background-image: url("../../images/Smithy.jpg");
+    width: 100%;
+    height: 20%;
+    background-size: 100%;
+    background-position: bottom center;
+}
+
+#kingdomcards {
+    display: inline-block;
+    margin: 0;
+    width: 740px;
+}
+
+#kingdomcards ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+#kingdomcards ul li {
+    display: inline-block;
+    margin-right: 8px;
 }
