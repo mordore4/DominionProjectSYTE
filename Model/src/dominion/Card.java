@@ -6,15 +6,16 @@ package dominion;
 public class Card
 {
     private String name;
-    private int[] abilities; //possibly wrong, Abilities might become class
+    private Ability[] abilities; //possibly wrong, Abilities might become class
     private int type;
     private int cost;
-    private int value;
     //private int count; Amount still buyable, probably not the right class
 
-    public Card(String cardName)
+    public Card(String cardName, int type, int cost)
     {
         name = cardName;
+        this.type = type;
+        this.cost = cost;
     }
 
     public String getName()
@@ -30,11 +31,6 @@ public class Card
     public int getCost()
     {
         return cost;
-    }
-
-    public int getValue()
-    {
-        return value;
     }
 
     public void setType(int type)

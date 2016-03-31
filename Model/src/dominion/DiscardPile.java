@@ -1,5 +1,7 @@
 package dominion;
 
+import dominion.persistence.Database;
+
 import java.util.ArrayList;
 
 /**
@@ -8,6 +10,5 @@ import java.util.ArrayList;
 public class DiscardPile
 {
     private ArrayList<Card> cards;
-
 
 }

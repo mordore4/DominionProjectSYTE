@@ -1,5 +1,9 @@
 package dominion;
 
+import dominion.persistence.Database;
+import dominion.persistence.DatabaseResults;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +12,21 @@ import java.util.ArrayList;
 public class GameEngine
 {
     private ArrayList<Lobby> lobbies;
+    private Database cardDatabase;
+    private ArrayList<Card> cardList;
 
 
+    public GameEngine() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
+    {
+        cardDatabase = new Database();
+        DatabaseResults result = cardDatabase.executeQuery("SELECT * FROM Cards");
+        for (int i = 0; i < result.size(); i++)
+        {
+            String cardName = result.getRecord(i).getValue("cardName");
+            int type = Integer.parseInt(result.getRecord(i).getValue("type"));
+            int cost = Integer.parseInt(result.getRecord(i).getValue("cost"));
+            Card currentCard = new Card(cardName, type, cost);
+            cardList.add(currentCard);
+        }
+    }
 }
