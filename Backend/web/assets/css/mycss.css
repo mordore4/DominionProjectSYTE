@@ -68,9 +68,9 @@ div.site-wrapper-inner {
 
 .shadow {
     display: inline-block;
-    -webkit-box-shadow: -8px 8px 16px 0px rgba(0,0,0,1);
-    -moz-box-shadow: -8px 8px 16px 0px rgba(0,0,0,1);
-    box-shadow: -8px 8px 8px rgba(255,255,255,1);
+    -webkit-box-shadow: -8px 8px 16px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -8px 8px 16px 0px rgba(0, 0, 0, 1);
+    box-shadow: -8px 8px 8px rgba(255, 255, 255, 1);
 }
 
 .btn-default {
@@ -124,25 +124,19 @@ div.site-wrapper-inner {
 }
 
 .modal {
-    display:    none;
-    position:   fixed;
-    z-index:    1000;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
-    background: rgba( 255, 255, 255, .8 )
-    url('../../assets/media/ajax-loader.gif')
-    50% 50%
-    no-repeat;
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, .8) url('../../assets/media/ajax-loader.gif') 50% 50% no-repeat;
 }
-
-
 
 body.loading {
     overflow: hidden;
 }
-
 
 body.loading .modal {
     display: block;
@@ -160,7 +154,6 @@ body.loading .modal {
 
 /*#hand>li { float: left; }*/
 
-
 #hand {
     height: 249px;
     width: 100%;
@@ -168,7 +161,7 @@ body.loading .modal {
     bottom: 0;
 }
 
-#hand li   {
+#hand li {
     /*position: absolute;*/
     /*width: 180px;
     height: 280px;*/
@@ -193,6 +186,10 @@ body.loading .modal {
     box-shadow: 0 0 8px 4px green !important;
 }
 
+#hand li.ui-sortable-helper {
+    box-shadow: 0 0 8px 4px green !important;
+}
+
 #hand li.hoveredcard img {
     /*height: 270px;
     width: 180px;
@@ -208,6 +205,7 @@ body.loading .modal {
     text-decoration: none;
     list-style: none;
 }
+
 #topstates {
     position: absolute;
     width: 20px;
