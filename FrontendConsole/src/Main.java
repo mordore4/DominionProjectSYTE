@@ -1,5 +1,7 @@
 import dominion.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by Digaly on 14/04/2016.
  */
@@ -24,13 +26,26 @@ public class Main
             ex.printStackTrace();
         }
 
-        Lobby newLobby = gameEngine.createLobby(bob, "mygame", "mypassword");
-        newLobby.addPlayer(alice);
+        gameEngine.createLobby(bob, "mygame", "mypassword");
+
+        Lobby lobby = null;
+
+        try
+        {
+            lobby = gameEngine.findLobby("mygame");
+        }
+        catch (LobbyNotFoundException ex)
+        {
+            System.out.println("That lobby wasn't found.");
+            return;
+        }
+
+        lobby.addPlayer(alice);
         //ge.findLobby("mygame").addPlayer(alice);
 
-        newLobby.startGame();
+        lobby.startGame();
 
-               
+        Game currentGame = lobby.getGame();
 
     }
 }
