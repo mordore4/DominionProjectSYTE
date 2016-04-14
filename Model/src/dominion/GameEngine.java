@@ -1,5 +1,6 @@
 package dominion;
 
+import dominion.Exceptions.LobbyNotFoundException;
 import dominion.persistence.Database;
 import dominion.persistence.DatabaseRecord;
 import dominion.persistence.DatabaseResults;
@@ -66,11 +67,37 @@ public class GameEngine
 
     public void createLobby(Account account, String name, String password)
     {
-        lobbies.add(new Lobby(account, name, password));
+        lobbies.add(new Lobby(account, name, password, this));
+    }
+
+    public Lobby findLobby(String name) throws LobbyNotFoundException
+    {
+        for (Lobby lobby : lobbies)
+        {
+            if (lobby.getName().equals(name))
+            {
+                return lobby;
+            }
+        }
+        throw new LobbyNotFoundException();
     }
 
     public ArrayList<Card> getCardList()
     {
         return cardList;
     }
+
+    public Card findCard(String name)
+    {
+        Card foundCard = null;
+        for(Card card : cardList)
+        {
+            if (card.getName().equals(name))
+            {
+                foundCard = card;
+            }
+        }
+        return foundCard;
+    }
+
 }

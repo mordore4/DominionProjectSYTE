@@ -11,13 +11,17 @@ public class Lobby
     private Game game;
     private String name;
     private String password;
+    private String cardSet;
+    private GameEngine gameEngine;
 
 
-    public Lobby(Account account, String name, String password)
+    public Lobby(Account account, String name, String password, GameEngine gameEngine)
     {
         playersInLobby.add(account);
         this.name = name;
         this.password = password;
+        cardSet = "default";
+        this.gameEngine = gameEngine;
     }
 
     public void addPlayer(Account account)
@@ -28,6 +32,15 @@ public class Lobby
         }
     }
 
+    public String getName()
+    {
+        return name;
+    }
 
+    public void startGame()
+    {
+        Account[] playerArray = (Account[]) playersInLobby.toArray();
+        game = new Game(playerArray, cardSet, gameEngine);
+    }
 
 }
