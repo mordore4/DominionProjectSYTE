@@ -11,7 +11,8 @@ import static org.junit.Assert.*;
 /**
  * Created by Sam on 14/04/2016.
  */
-public class GameEngineTest {
+public class GameEngineTest
+{
     @Test
     public void testCardList()
     {
@@ -20,17 +21,17 @@ public class GameEngineTest {
         try
         {
             ge = new GameEngine();
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
 
         }
         ArrayList<Card> cl = ge.getCardList();
         for (Card c : cl)
         {
-            if (c.getName().equals("adventurer") && c.getType() == 3 && c.getCost() == 6)
+            if (c.getName().equals("village") && c.getType() == 3 && c.getCost() == 3 && c.getAmount() == 0)
             {
-                works = true;
+                if (c.getAbilities()[0].getId() == 1 && c.getAbilities()[0].getAmount() == 2 && c.getAbilities()[1].getId() == 4 && c.getAbilities()[1].getAmount() == 1)
+                    works = true;
             }
         }
         assertTrue(works);

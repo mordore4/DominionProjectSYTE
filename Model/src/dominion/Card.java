@@ -9,13 +9,15 @@ public class Card
     private Ability[] abilities; //possibly wrong, Abilities might become class
     private int type;
     private int cost;
-    //private int count; Amount still buyable, probably not the right class
+    private int amount;
 
-    public Card(String cardName, int type, int cost)
+    public Card(String cardName, int type, int cost, int amount, Ability[] abilities)
     {
         name = cardName;
         this.type = type;
         this.cost = cost;
+        this.amount = amount;
+        this.abilities = abilities;
     }
 
     public String getName()
@@ -31,6 +33,16 @@ public class Card
     public int getCost()
     {
         return cost;
+    }
+
+    public int getAmount()
+    {
+        return amount;
+    }
+
+    public Ability[] getAbilities()
+    {
+        return abilities;
     }
 
     public void setType(int type)
