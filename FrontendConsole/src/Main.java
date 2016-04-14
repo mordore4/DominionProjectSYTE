@@ -1,4 +1,5 @@
 import dominion.*;
+import dominion.Exceptions.*;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class Main
             ex.printStackTrace();
         }
 
-        gameEngine.createLobby(bob, "mygame", "mypassword");
+        gameEngine.createLobby(bob, "mygame", "mypassword", gameEngine);
 
         Lobby lobby = null;
 

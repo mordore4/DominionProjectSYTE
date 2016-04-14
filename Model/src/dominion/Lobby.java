@@ -43,4 +43,7 @@ public class Lobby
         game = new Game(playerArray, cardSet, gameEngine);
     }
 
+    public Game getGame() {
+        return game;
+    }
 }
