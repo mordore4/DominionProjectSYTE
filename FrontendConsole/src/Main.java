@@ -27,7 +27,7 @@ public class Main
             ex.printStackTrace();
         }
 
-        gameEngine.createLobby(bob, "mygame", "mypassword", gameEngine);
+        gameEngine.createLobby(bob, "mygame", "mypassword");
 
         Lobby lobby = null;
 
