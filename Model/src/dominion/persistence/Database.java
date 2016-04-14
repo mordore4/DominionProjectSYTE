@@ -13,7 +13,7 @@ public class Database
     {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-        this.connection = DriverManager.getConnection("jdbc:mysql://digaly.ddns.net/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
+        this.connection = DriverManager.getConnection("jdbc:mysql://178.117.107.177/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
     }
 
     public DatabaseResults executeQuery(String parametrizedSQL, String... parameterValues)
@@ -33,8 +33,7 @@ public class Database
                 rs = stmt.getResultSet();
                 populateResults(rs, results);
                 return results;
-            }
-            else //No resultset, so no results are returned
+            } else //No resultset, so no results are returned
             {
                 return null;
             }
