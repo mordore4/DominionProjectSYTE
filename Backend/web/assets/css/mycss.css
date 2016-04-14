@@ -32,6 +32,14 @@ body {
     padding: 0;
 }
 
+#cardsComeCenter {
+    position: relative;
+    height: 250px;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
 #menu {
     margin-left: auto;
     margin-right: auto;
@@ -161,7 +169,7 @@ body.loading .modal {
     bottom: 0;
 }
 
-#hand li {
+#hand li, #cardsComeCenter li {
     /*position: absolute;*/
     /*width: 180px;
     height: 280px;*/

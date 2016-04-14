@@ -90,6 +90,7 @@ $(document).ready(function () {
     $('#hand').hide();
     $('#coins').hide();
     $('#topstates').hide();
+    $('#cardsComeCenter').hide();
     $("#gamewindow").hide();
     $('#hand li').on('click', function () {
         $(this).find('img').css('top', '100px');
@@ -106,8 +107,16 @@ $(document).ready(function () {
      });*/
 
     $("#hand").sortable({
-        revert: true
+        revert: true,
+        connectWith: "#cardsComeCenter"
         //axis: "x"
+    });
+
+    $('#cardsComeCenter').sortable({
+        handle: "none",
+        placeholder: false,
+        items: "li:not('#cardsComeCenter li')"
+        /*placeholder: "placeholder"*/
     });
 
     /*$('#hand li').draggable({
@@ -151,6 +160,7 @@ var playGame = function (e) {
     $('#coins').show();
     $('#topstates').show();
     $("#gamewindow").show();
+    $('#cardsComeCenter').show();
     //$('body').css({background : 'url(images/daszeker.jpg) no-repeat '});
     e.preventDefault();
 
