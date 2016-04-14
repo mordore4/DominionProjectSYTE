@@ -40,7 +40,7 @@ public class Lobby
 
     public void startGame()
     {
-        Account[] playerArray = (Account[]) playersInLobby.toArray();
+        Account[] playerArray = playersInLobby.toArray(new Account[playersInLobby.size()]);
         game = new Game(playerArray, cardSet, gameEngine);
     }
 
