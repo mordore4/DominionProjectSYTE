@@ -64,6 +64,11 @@ public class GameEngine
         return cardList;
     }
 
+    public void createLobby(Account account, String name, String password)
+    {
+        lobbies.add(new Lobby(account, name, password));
+    }
+
     public ArrayList<Card> getCardList()
     {
         return cardList;
