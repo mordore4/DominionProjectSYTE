@@ -9,24 +9,23 @@ public class Hand
 {
     private ArrayList<Card> cards;
 
-    public void build()
+    public Hand()
     {
-
+        //startkaarten hier <3
     }
 
-    public void discard(DiscardPile pile)
+    public void addCard(Card card)
+    {
+        cards.add(card);
+    }
+
+    public void discard(DiscardPile pile, String name)
     {
 
     }
 
     public void trash()
     {
-
-    }
-
-    public void gain()
-    {
-
     }
 
     public void reveal()

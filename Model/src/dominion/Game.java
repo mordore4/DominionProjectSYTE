@@ -24,7 +24,4 @@ public class Game
             players[i] = newPlayer;
         }
     }
-
-
-
 }

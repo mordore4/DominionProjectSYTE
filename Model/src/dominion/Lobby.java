@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Lobby
 {
     private ArrayList<Account> playersInLobby;
+    private Game game;
 
 
     public Lobby()
