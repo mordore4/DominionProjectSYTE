@@ -31,11 +31,11 @@
 
                     <nav>
                         <ul class="nav masthead-nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">Features</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Highscores</a></li>
-                            <li><a href="#">About</a></li>
+                            <li class="active home"><a href="#">Home</a></li>
+                            <li class="register"><a href="#">Register</a></li>
+                            <li class="login"><a href="#">Login</a></li>
+                            <li class="about"><a href="#">About</a></li>
+                            <li class="contact"><a href="#">Contact</a></li>
                         </ul>
 
 
@@ -78,6 +78,39 @@
                         <a href="#" class="btn btn-lg btn-default" id="settings"><span class="derde"></span>Settings</a>
                     </li>
                 </ul>
+            </div>
+
+            <div class="forms" id="form">
+                <form method = "post" action="#">
+                    <fieldset id="fieldset1">
+                        <legend>Please fill in the form.</legend>
+
+                        <input type='hidden' name='submitted' id='submitted' value='1'/>
+
+                        <label for='name' >Your First Name <span>*</span>: </label>
+                        <input type='text' name='firstname' id='firstname' maxlength="50" />
+
+                        <label for='name' >Your Last Name <span>*</span>: </label>
+                        <input type='text' name='lastname' id='lastname' maxlength="50" />
+
+                        <label for='email' >Email Address<span>*</span>:</label>
+                        <input type='text' name='email' id='email' maxlength="50" />
+
+                      <!--  <label for="sex">Gender:</label>
+                        <input type="checkbox" name="sex" value="Man">Man<br>
+                        <input type="checkbox" name="sex" value="Female">Female<br>-->
+
+                        <label for='username' >Username<span>*</span>:</label>
+                        <input type='text' name='username' id='username' maxlength="50" />
+
+                        <label for='password' >Password<span>*</span>:</label>
+                        <input type='password' name='password' id='password' maxlength="50" />
+
+                        <input type='submit' name='Submit' value='Submit' />
+
+
+                    </fieldset>
+            </form>
             </div>
 
             <div class="mastfoot">

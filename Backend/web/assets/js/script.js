@@ -92,9 +92,15 @@ $(document).ready(function () {
     $('#topstates').hide();
     $('#cardsComeCenter').hide();
     $("#gamewindow").hide();
+    $("#form").hide();
     $('#hand li').on('click', function () {
         $(this).find('img').css('top', '100px');
         //$(this).css('height', '180');
+
+    });
+    $(".register").on('click', function(){
+        $('#menu').hide();
+        $("#form").show();
 
     });
 
