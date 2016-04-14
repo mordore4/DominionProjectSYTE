@@ -18,8 +18,9 @@ public class GameEngine
 
     public GameEngine() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
+        cardList = new ArrayList<Card>();
         cardDatabase = new Database();
-        DatabaseResults result = cardDatabase.executeQuery("SELECT * FROM Cards");
+        DatabaseResults result = cardDatabase.executeQuery("SELECT * FROM Card");
         for (int i = 0; i < result.size(); i++)
         {
             String cardName = result.getRecord(i).getValue("cardName");
@@ -28,5 +29,10 @@ public class GameEngine
             Card currentCard = new Card(cardName, type, cost);
             cardList.add(currentCard);
         }
+    }
+
+    public ArrayList<Card> getCardList()
+    {
+        return cardList;
     }
 }
