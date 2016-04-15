@@ -278,6 +278,9 @@ div.kingdomcard-bottom {
     line-height: 34px;
     color: black !important;
     text-align: center;
+    margin-left:auto;
+    margin-right:auto;
+    width: 30%;
 }
 
 
@@ -286,4 +289,9 @@ div.kingdomcard-bottom {
 
 span {
     color:red;
+}
+
+.form-group
+{
+
 }
