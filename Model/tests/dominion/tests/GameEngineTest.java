@@ -18,22 +18,25 @@ public class GameEngineTest
     {
         boolean works = false;
         GameEngine ge = null;
+
         try
         {
             ge = new GameEngine();
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
 
         }
+
         ArrayList<Card> cl = ge.getCardList();
         for (Card c : cl)
         {
-            if (c.getName().equals("village") && c.getType() == 3 && c.getCost() == 3 && c.getAmount() == 0)
+            if (c.toString().equals("village 3 3 0 1 2 4 1 "))
             {
-                if (c.getAbilities()[0].getId() == 1 && c.getAbilities()[0].getAmount() == 2 && c.getAbilities()[1].getId() == 4 && c.getAbilities()[1].getAmount() == 1)
-                    works = true;
+                works = true;
             }
         }
+
         assertTrue(works);
     }
 }

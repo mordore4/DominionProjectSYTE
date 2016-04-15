@@ -25,6 +25,7 @@ public class Main
         catch (Exception ex)
         {
             ex.printStackTrace();
+            return;
         }
 
         gameEngine.createLobby(bob, "mygame", "mypassword");
@@ -47,6 +48,7 @@ public class Main
         lobby.startGame();
 
         Game currentGame = lobby.getGame();
+
 
     }
 }

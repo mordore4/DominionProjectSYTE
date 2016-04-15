@@ -15,7 +15,7 @@ public class Game
     private boolean isOver;
     private GameEngine gameEngine;
 
-    public Game(Account[] accounts,String cardSetName, GameEngine gameEngine)
+    public Game(Account[] accounts, String cardSetName, GameEngine gameEngine)
     {
         this.cardSetName = cardSetName;
         this.gameEngine = gameEngine;
@@ -24,7 +24,7 @@ public class Game
 
         for (int i = 0; i < accounts.length; i++)
         {
-            Player newPlayer = new Player();
+            Player newPlayer = new Player(gameEngine);
 
             newPlayer.setAccount(accounts[i]);
 
@@ -40,9 +40,12 @@ public class Game
         {
             cardSetNames = new String[] {"cellar", "market", "militia", "mine", "moat", "remodel", "smithy", "village", "woodcutter", "workshop", };
         }
+
         for (int i = 0; i < cardSetNames.length; i++)
         {
-            cardSet[i] = gameEngine.findCard(name);
+            Card card = gameEngine.findCard(cardSetNames[i]);
+            cardSet[i] = new Card(card);
+            cardSet[i].setAmount(10);
         }
         return cardSet;
     }

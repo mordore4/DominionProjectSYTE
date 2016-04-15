@@ -8,17 +8,24 @@ public class Ability
     private int id;
     private int amount;
 
-    public Ability (int id, int amount)
+    public Ability(int id, int amount)
     {
         this.id = id;
         this.amount = amount;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public int getAmount() {
+    public int getAmount()
+    {
         return amount;
+    }
+
+    public String toString()
+    {
+        return id + " " + amount + " ";
     }
 }

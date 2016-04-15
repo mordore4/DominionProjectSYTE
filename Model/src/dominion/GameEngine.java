@@ -17,7 +17,6 @@ public class GameEngine
     private Database cardDatabase;
     private ArrayList<Card> cardList;
 
-
     public GameEngine() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
         lobbies = new ArrayList<Lobby>();

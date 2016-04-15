@@ -20,6 +20,15 @@ public class Card
         this.abilities = abilities;
     }
 
+    public Card(Card card)
+    {
+        name = card.getName();
+        abilities = card.getAbilities();
+        type = card.getType();
+        cost = card.getCost();
+        amount = card.getAmount();
+    }
+
     public String getName()
     {
         return name;
@@ -54,4 +63,22 @@ public class Card
     {
         this.cost = cost;
     }
+
+    public void setAmount(int amount)
+    {
+        this.amount = amount;
+    }
+
+    public String toString()
+    {
+        String tmp = name + " " + type + " " + cost + " " + amount + " ";
+
+        for (int i = 0; i < abilities.length; i++)
+        {
+            tmp += abilities[i].toString();
+        }
+
+        return tmp;
+    }
+
 }

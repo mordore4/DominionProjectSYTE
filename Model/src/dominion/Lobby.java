@@ -17,12 +17,14 @@ public class Lobby
 
     public Lobby(Account account, String name, String password, GameEngine gameEngine)
     {
-        playersInLobby = new ArrayList<Account>();
-        playersInLobby.add(account);
         this.name = name;
         this.password = password;
-        cardSet = "default";
         this.gameEngine = gameEngine;
+
+        playersInLobby = new ArrayList<Account>();
+        playersInLobby.add(account);
+
+        cardSet = "default";
     }
 
     public void addPlayer(Account account)
