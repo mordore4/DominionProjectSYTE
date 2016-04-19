@@ -316,6 +316,26 @@ span {
 }
 
 .form-group
-{
+ {
 
+ }
+
+::-webkit-input-placeholder {
+    color: lightgray !important;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: lightgray !important;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: lightgray !important;
+}
+
+:-ms-input-placeholder {
+    color: lightgray !important;
+}
+
+input {
+    color: white !important;
 }
