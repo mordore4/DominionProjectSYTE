@@ -280,7 +280,31 @@ div.kingdomcard-bottom {
     text-align: center;
     margin-left:auto;
     margin-right:auto;
-    width: 30%;
+    width: 25%;
+
+}
+
+
+
+input[type="text"], input[type="email"], input[type="password"], .form-control {
+    background-color:#3c3c3c;
+    opacity: 0.8;
+    /*color: white;*/
+
+}
+
+/*.form-group {
+    color:white; !important;
+}
+
+input {
+    color:white;
+}
+*/
+label{
+
+    color:#5c92e3;
+
 }
 
 
