@@ -1,6 +1,7 @@
 package dominion;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import dominion.exceptions.CardNotAvailableException;
 
 /**
  * Created by Sam on 23/03/2016.
@@ -33,6 +34,50 @@ public class Player
         createStartingDeck();
     }
 
+    public void createStartingDeck()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            try
+            {
+                buyCard("copper", false);
+            }
+            catch (CardNotAvailableException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            try
+            {
+                buyCard("estate", false);
+            }
+            catch (CardNotAvailableException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        deck.shuffle();
+    }
+
+    public void buyCard(String cardName, Boolean isKingdomCard) throws CardNotAvailableException
+    {
+        Card card = game.retrieveCard(cardName, isKingdomCard);
+
+        if (card.getAmount() > 0)
+        {
+            card.setAmount(card.getAmount() - 1);
+
+            Card newCard = new Card(card, game);
+            newCard.setAmount(1);
+
+            deck.addCard(newCard);
+        }
+        else throw new CardNotAvailableException();
+    }
 
     public void setAccount(Account account)
     {
@@ -76,33 +121,5 @@ public class Player
     public void setActions(int actions)
     {
         this.actions = actions;
-    }
-
-    public void createStartingDeck()
-    {
-        for (int i = 0; i < 7; i++)
-        {
-            buyCard("copper", false);
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            buyCard("estate", false);
-        }
-
-        deck.shuffle();
-    }
-
-    public void buyCard(String cardName, Boolean isKingdomCard)
-    {
-        Card card = game.retrieveCard(cardName, isKingdomCard);
-
-        //TODO: Check if enough cards are left
-        card.setAmount(card.getAmount() - 1);
-
-        Card newCard = new Card(card, game);
-        newCard.setAmount(1);
-
-        deck.addCard(newCard);
     }
 }
