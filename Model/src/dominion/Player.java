@@ -13,10 +13,12 @@ public class Player
     private int buys;
     private int coins;
     private GameEngine gameEngine;
+    private Game game;
 
-    public Player(GameEngine gameEngine)
+    public Player(GameEngine gameEngine, Game game)
     {
         this.gameEngine = gameEngine;
+        this.game = game;
 
         actions = 1;
         buys = 1;

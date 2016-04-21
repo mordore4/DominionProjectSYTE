@@ -29,6 +29,11 @@ public class Card
         amount = card.getAmount();
     }
 
+    public Card(Card card, Game game)
+    {
+
+    }
+
     public String getName()
     {
         return name;
