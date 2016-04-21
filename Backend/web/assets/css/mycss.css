@@ -290,22 +290,13 @@ input[type="text"], input[type="email"], input[type="password"], .form-control {
     background-color:#3c3c3c;
     opacity: 0.8;
     /*color: white;*/
+    color: lightgray; !important
 
 }
-
 /*.form-group {
-    color:white; !important;
-}
-
-input {
-    color:white;
+    color: lightgray; !important
 }
 */
-label{
-
-    color:#5c92e3;
-
-}
 
 
 #name {
