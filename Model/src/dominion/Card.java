@@ -10,6 +10,7 @@ public class Card
     private int type;
     private int cost;
     private int amount;
+    private Game game;
 
     public Card(String cardName, int type, int cost, int amount, Ability[] abilities)
     {
@@ -31,7 +32,8 @@ public class Card
 
     public Card(Card card, Game game)
     {
-
+        this(card);
+        this.game = game;
     }
 
     public String getName()

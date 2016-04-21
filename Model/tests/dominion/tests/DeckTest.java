@@ -35,8 +35,11 @@ public class DeckTest
     {
         Deck deck = new Deck(true, gameEngine);
 
-        assert(deck.getCard("copper").toString().equals("copper 1 0 1 3 1 "));
-        assert(deck.getCard("estate").toString().equals("estate 2 2 1 10 1 "));
+        deck.addCard(new Card(gameEngine.findCard("copper")));
+        deck.addCard(new Card(gameEngine.findCard("estate")));
+
+        assert(deck.getCard("copper").toString().equals("copper 1 0 0 3 1 "));
+        assert(deck.getCard("estate").toString().equals("estate 2 2 0 10 1 "));
     }
 
     @Test
@@ -45,11 +48,16 @@ public class DeckTest
         Deck deck = new Deck(true, gameEngine);
         Deck discardPile = new Deck(false, gameEngine);
 
+        for (int i = 0; i < 7; i ++)
+            deck.addCard(new Card(gameEngine.findCard("copper")));
+        for (int i = 0; i < 3; i ++)
+            deck.addCard(new Card(gameEngine.findCard("estate")));
+
+        deck.shuffle();
+
         Card topCard = deck.takeTopCard(discardPile);
         Card copper = gameEngine.findCard("copper");
-        copper.setAmount(1);
         Card estate = gameEngine.findCard("estate");
-        estate.setAmount(1);
 
         assert(topCard.equals(copper) || topCard.equals(estate));
     }
@@ -61,7 +69,13 @@ public class DeckTest
         Deck discardPile = new Deck(false, gameEngine);
         Card lastCard = null;
 
-        Card smithy = gameEngine.findCard("smithy");
+        for (int i = 0; i < 7; i ++)
+            deck.addCard(new Card(gameEngine.findCard("copper")));
+
+        for (int i = 0; i < 3; i ++)
+            deck.addCard(new Card(gameEngine.findCard("estate")));
+
+        Card smithy = new Card(gameEngine.findCard("smithy"));
         discardPile.addCard(smithy);
 
         for (int i = 0; i < 11; i++)

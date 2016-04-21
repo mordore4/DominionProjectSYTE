@@ -17,7 +17,7 @@ public class Deck
         this.gameEngine = gameEngine;
         cards = new ArrayList<Card>();
 
-        if (isNewDeck)
+        /*if (isNewDeck)
         {
             Card copper = new Card(gameEngine.findCard("copper"));
             copper.setAmount(1);
@@ -33,9 +33,8 @@ public class Deck
                 cards.add(estate);
             }
             shuffle();
-        }
+        }*/
     }
-
 
 
     public Card takeTopCard(Deck discardPile)
@@ -91,6 +90,23 @@ public class Deck
         discardPile.cards = this.cards;
         this.cards = temp;
         shuffle();
+    }
+
+    public int size()
+    {
+        return cards.size();
+    }
+
+    public String toString()
+    {
+        String out = "";
+
+        for (Card c : cards)
+        {
+            out += c.toString() + "\n";
+        }
+
+        return out;
     }
 
     public void addCard(Card card)

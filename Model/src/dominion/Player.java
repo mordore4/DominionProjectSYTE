@@ -1,5 +1,7 @@
 package dominion;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 /**
  * Created by Sam on 23/03/2016.
  */
@@ -27,14 +29,19 @@ public class Player
         hand = new Hand(deck);
         discardPile = new Deck(false, gameEngine);
         deck = new Deck(true, gameEngine);
-    }
 
+        createStartingDeck();
+    }
 
 
     public void setAccount(Account account)
     {
         this.account = account;
     }
+
+    public Account getAccount() { return account; }
+
+    public Deck getDeck() { return deck; }
 
     public int getActions()
     {
@@ -51,7 +58,10 @@ public class Player
         return coins;
     }
 
-    public Hand getHand() { return hand; }
+    public Hand getHand()
+    {
+        return hand;
+    }
 
     public void setCoins(int coins)
     {
@@ -66,5 +76,33 @@ public class Player
     public void setActions(int actions)
     {
         this.actions = actions;
+    }
+
+    public void createStartingDeck()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            buyCard("copper", false);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            buyCard("estate", false);
+        }
+
+        deck.shuffle();
+    }
+
+    public void buyCard(String cardName, Boolean isKingdomCard)
+    {
+        Card card = game.retrieveCard(cardName, isKingdomCard);
+
+        //TODO: Check if enough cards are left
+        card.setAmount(card.getAmount() - 1);
+
+        Card newCard = new Card(card, game);
+        newCard.setAmount(1);
+
+        deck.addCard(newCard);
     }
 }
