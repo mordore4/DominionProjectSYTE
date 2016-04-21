@@ -20,4 +20,9 @@ public class Account
     {
         return name;
     }
+
+    public String toString()
+    {
+        return this.name + " " + this.rankingScore;
+    }
 }

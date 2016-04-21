@@ -1,4 +1,4 @@
-package dominion.Exceptions;
+package dominion.exceptions;
 
 /**
  * Created by Sam on 14/04/2016.

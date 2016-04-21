@@ -1,7 +1,6 @@
 import dominion.*;
-import dominion.Exceptions.*;
-
-import java.util.ArrayList;
+import dominion.exceptions.*;
+import java.util.Scanner;
 
 /**
  * Created by Digaly on 14/04/2016.
@@ -13,8 +12,17 @@ public class Main
         System.out.println("Dominion SYTE Console frontend");
         System.out.println("------------------------------");
 
-        Account bob = new Account("bob", 0);
-        Account alice = new Account("alice", 0);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Player 1, what is your name?");
+        String name = scanner.nextLine();
+
+        Account player1 = new Account(name, 0);
+
+        System.out.println("Player 2, what is your name?");
+        name = scanner.nextLine();
+
+        Account player2 = new Account(name, 0);
 
         GameEngine gameEngine = null;
 
@@ -28,7 +36,9 @@ public class Main
             return;
         }
 
-        gameEngine.createLobby(bob, "mygame", "mypassword");
+
+
+        gameEngine.createLobby(player1, "mygame", "mypassword");
 
         Lobby lobby = null;
 
@@ -42,12 +52,15 @@ public class Main
             return;
         }
 
-        lobby.addPlayer(alice);
-        //ge.findLobby("mygame").addPlayer(alice);
+        lobby.addPlayer(player2);
+        //ge.findLobby("mygame").addPlayer(player2);
 
         lobby.startGame();
 
         Game currentGame = lobby.getGame();
+
+
+
 
 
     }

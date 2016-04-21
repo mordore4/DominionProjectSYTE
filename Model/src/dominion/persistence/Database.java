@@ -118,41 +118,4 @@ public class Database
             stmt = null;
         }
     }
-
-    //This responsibility should be moved to GameEngine, and not Database
-
-    /*public ArrayList<Card> getCardsOfType(int type)
-    {
-        ArrayList<Card> filteredCards = new ArrayList<Card>();
-
-        for (int i = 0; i < cardList.size(); i++)
-        {
-            if (cardList.get(i).getType() == type)
-            {
-                filteredCards.add(cardList.get(i));
-            }
-        }
-
-        return filteredCards;
-    }*/
-
-    /*public Card getSpecificCard(String name)
-    {
-        Card card;
-        String cardName;
-        int type;
-        int cost;
-
-        for (int i = 0; i < cardList.size(); i++)
-        {
-            if (cardList.get(i).getName() == name)
-            {
-                cardName = cardList.get(i).getName();
-                type = cardList.get(i).getType();
-                cost = cardList.get(i).getCost();
-            }
-        }
-        card = new Card(cardName, type, cost);
-        return card;
-    }*/
 }

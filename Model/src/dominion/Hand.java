@@ -9,9 +9,9 @@ public class Hand
 {
     private ArrayList<Card> cards;
 
-    public Hand()
+    public Hand(Deck deck)
     {
-        //startkaarten hier <3
+
     }
 
     public void addCard(Card card)
@@ -19,7 +19,7 @@ public class Hand
         cards.add(card);
     }
 
-    public void discard(DiscardPile pile, String name)
+    public void discard(Deck pile, String name)
     {
 
     }

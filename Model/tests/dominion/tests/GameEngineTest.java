@@ -1,7 +1,10 @@
 package dominion.tests;
 
+import dominion.Account;
 import dominion.Card;
 import dominion.GameEngine;
+import dominion.Lobby;
+import dominion.exceptions.LobbyNotFoundException;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -38,5 +41,48 @@ public class GameEngineTest
         }
 
         assertTrue(works);
+    }
+
+    @Test
+    public void testFindCard()
+    {
+        GameEngine ge = null;
+
+        try
+        {
+            ge = new GameEngine();
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        assert(ge.findCard("smithy").toString().equals("smithy 3 4 0 4 3 "));
+    }
+
+    @Test
+    public void testFindLobbyException()
+    {
+        GameEngine ge = null;
+
+        try
+        {
+            ge = new GameEngine();
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        try
+        {
+            ge.findLobby("test");
+        }
+        catch (LobbyNotFoundException ex)
+        {
+            return;
+        }
+
+        fail("Finding nonexistent lobby did not throw an exception.");
     }
 }

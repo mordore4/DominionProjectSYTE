@@ -1,6 +1,6 @@
 package dominion;
 
-import dominion.Exceptions.LobbyNotFoundException;
+import dominion.exceptions.LobbyNotFoundException;
 import dominion.persistence.Database;
 import dominion.persistence.DatabaseRecord;
 import dominion.persistence.DatabaseResults;

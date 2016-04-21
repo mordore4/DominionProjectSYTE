@@ -29,6 +29,7 @@ public class Game
 
             players[i] = newPlayer;
         }
+        fixedCards = makeFixedCards();
     }
 
     private Card[] cardSet(String name)
@@ -49,7 +50,7 @@ public class Game
         return cardSet;
     }
 
-    private Card[] fixedCards()
+    private Card[] makeFixedCards()
     {
         Card[] fixedCards = new Card[7];
 
@@ -81,4 +82,5 @@ public class Game
 
         return fixedCards;
     }
+
 }

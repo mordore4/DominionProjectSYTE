@@ -81,4 +81,15 @@ public class Card
         return tmp;
     }
 
+    public Boolean equals(Card card)
+    {
+        Boolean nameCorrect = name.equals(card.getName());
+        Boolean abilitiesCorrect = abilities == card.abilities;
+        Boolean typeCorrect = type == card.type;
+        Boolean costCorrect = cost == card.cost;
+        Boolean amountCorrect = amount == card.amount;
+
+        return(nameCorrect && abilitiesCorrect && typeCorrect && costCorrect && amountCorrect);
+    }
+
 }

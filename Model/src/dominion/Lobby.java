@@ -35,6 +35,19 @@ public class Lobby
         }
     }
 
+    public Account getPlayer(String username)
+    {
+        Account player = null;
+
+        for (Account a : playersInLobby)
+        {
+            if (a.getName().equals(username))
+                player = a;
+        }
+
+        return player;
+    }
+
     public String getName()
     {
         return name;

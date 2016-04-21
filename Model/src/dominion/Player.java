@@ -6,7 +6,7 @@ package dominion;
 public class Player
 {
     private Account account;
-    private Deck hand;
+    private Hand hand;
     private Deck discardPile;
     private Deck deck;
     private int actions;
@@ -22,10 +22,12 @@ public class Player
         buys = 1;
         coins = 0;
 
-        hand = new Deck("hand", gameEngine);
-        discardPile = new Deck(" ", gameEngine);
-        deck = new Deck(" ", gameEngine);
+        hand = new Hand(deck);
+        discardPile = new Deck(false, gameEngine);
+        deck = new Deck(true, gameEngine);
     }
+
+
 
     public void setAccount(Account account)
     {
@@ -46,6 +48,8 @@ public class Player
     {
         return coins;
     }
+
+    public Hand getHand() { return hand; }
 
     public void setCoins(int coins)
     {
