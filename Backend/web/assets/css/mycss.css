@@ -184,6 +184,7 @@ body.loading .modal {
     margin: 0px;
     background-size: contain;
     transition: width 5s;
+    /*nee*/
 
 
 }
