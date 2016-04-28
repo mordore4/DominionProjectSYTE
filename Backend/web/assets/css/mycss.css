@@ -167,7 +167,8 @@ body.loading .modal {
     width: 100%;
     position: fixed;
     bottom: 0;
-
+    left: 0;
+    padding: 0;
 }
 
 #hand li, #cardsComeCenter li {
@@ -180,10 +181,26 @@ body.loading .modal {
     text-decoration: none;
     list-style-type: none;
     left: 0;
-    margin: 0;
+    margin: 0px;
     background-size: contain;
     transition: width 5s;
+
+
 }
+
+#cardsComeCenter li {
+    height:220px;
+    width:110px;
+    background-repeat: no-repeat;
+}
+#hand li {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-box-shadow: 2px 2px 10px #000;
+    -webkit-box-shadow: 2px 2px 10px #000;
+
+}
+
 
 /*#hand li img {
     /*height: 280px;
@@ -198,12 +215,14 @@ body.loading .modal {
 
 #hand li.ui-sortable-helper {
     box-shadow: 0 0 8px 4px green !important;
+
 }
 
 #hand li.hoveredcard img {
     /*height: 270px;
     width: 180px;
     */
+
 }
 
 #coins {
@@ -329,4 +348,13 @@ span {
 
 input {
     color: white !important;
+}
+
+
+#hand li:hover {
+    -moz-transform: translate(-2px, -2px);
+    -ms-transform: translate(-2px, -2px);
+    -o-transform: translate(-2px, -2px);
+    -webkit-transform: translate(-2px, -2px);
+    transform: translate(-2px, -2px)
 }
