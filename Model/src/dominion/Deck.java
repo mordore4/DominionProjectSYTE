@@ -36,7 +36,6 @@ public class Deck
         }*/
     }
 
-
     public Card takeTopCard(Deck discardPile)
     {
         if (cards.size() == 0)
@@ -61,6 +60,11 @@ public class Deck
         }
 
         return card;
+    }
+
+    public ArrayList<Card> getCards()
+    {
+        return cards;
     }
 
     public int getVictoryPoints()

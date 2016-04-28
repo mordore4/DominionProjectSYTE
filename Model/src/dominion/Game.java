@@ -7,6 +7,17 @@ public class Game
 {
     private Card[] fixedCards;
     private String kingdomCardSet;
+
+    public Card[] getKingdomCards()
+    {
+        return kingdomCards;
+    }
+
+    public Card[] getFixedCards()
+    {
+        return fixedCards;
+    }
+
     private Card[] kingdomCards;
     private int currentPlayerIndex;
     private Player[] players;
@@ -48,8 +59,9 @@ public class Game
 
         if (phase == 0 && !findCurrentPlayer().hasActionCards()) phase++;
 
-        if (phase > 2)
+        if (phase >= 2)
         {
+            findCurrentPlayer().cleanup();
             advancePlayer();
             phase = -1;
             advancePhase();
@@ -64,6 +76,10 @@ public class Game
         {
             currentPlayerIndex = 0;
         }
+
+        findCurrentPlayer().setBuys(1);
+        findCurrentPlayer().setActions(1);
+        findCurrentPlayer().setCoins(0);
     }
 
     public int getPhase()
@@ -141,7 +157,29 @@ public class Game
         return player;
     }
 
-    public Card retrieveCard(String cardName, Boolean isKingdomCard)
+    public Card retrieveCard(String cardName)
+    {
+        Card foundCard = null;
+
+        for (Card c : fixedCards)
+        {
+            if (c.getName().equals(cardName))
+                foundCard = c;
+        }
+
+        if (foundCard == null)
+        {
+            for (Card c : kingdomCards)
+            {
+                if (c.getName().equals(cardName))
+                    foundCard = c;
+            }
+        }
+
+        return foundCard;
+    }
+
+    /*public Card retrieveCard(String cardName, Boolean isKingdomCard)
     {
         Card foundCard = null;
 
@@ -155,7 +193,7 @@ public class Game
         }
 
         return foundCard;
-    }
+    }*/
 
     public String allCardsToString()
     {

@@ -3,6 +3,8 @@ package dominion;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import dominion.exceptions.CardNotAvailableException;
 
+import java.util.ArrayList;
+
 /**
  * Created by Sam on 23/03/2016.
  */
@@ -27,11 +29,12 @@ public class Player
         buys = 1;
         coins = 0;
 
-        hand = new Hand(deck);
         discardPile = new Deck(false, gameEngine);
         deck = new Deck(true, gameEngine);
 
         createStartingDeck();
+
+        hand = new Hand(deck, discardPile);
     }
 
     public void createStartingDeck()
@@ -40,7 +43,7 @@ public class Player
         {
             try
             {
-                buyCard("copper", false);
+                addCard("copper");
             }
             catch (CardNotAvailableException e)
             {
@@ -52,7 +55,7 @@ public class Player
         {
             try
             {
-                buyCard("estate", false);
+                addCard("estate");
             }
             catch (CardNotAvailableException e)
             {
@@ -63,9 +66,9 @@ public class Player
         deck.shuffle();
     }
 
-    public void buyCard(String cardName, Boolean isKingdomCard) throws CardNotAvailableException
+    public void addCard(String cardName) throws CardNotAvailableException
     {
-        Card card = game.retrieveCard(cardName, isKingdomCard);
+        Card card = game.retrieveCard(cardName);
 
         if (card.getAmount() > 0)
         {
@@ -74,9 +77,17 @@ public class Player
             Card newCard = new Card(card, game);
             newCard.setAmount(1);
 
-            deck.addCard(newCard);
+            discardPile.addCard(newCard);
+        } else throw new CardNotAvailableException();
+    }
+
+    public void buyCard(String cardName) throws CardNotAvailableException
+    {
+        if (coins >= game.retrieveCard(cardName).getCost())
+        {
+            addCard(cardName);
+            buys--;
         }
-        else throw new CardNotAvailableException();
     }
 
     public void setAccount(Account account)
@@ -84,9 +95,20 @@ public class Player
         this.account = account;
     }
 
-    public Account getAccount() { return account; }
+    public Account getAccount()
+    {
+        return account;
+    }
 
-    public Deck getDeck() { return deck; }
+    public Deck getDeck()
+    {
+        return deck;
+    }
+
+    public Deck getDiscardPile()
+    {
+        return discardPile;
+    }
 
     public int getActions()
     {
@@ -126,5 +148,30 @@ public class Player
     public boolean hasActionCards()
     {
         return deck.containsActionCards();
+    }
+
+    public void cleanup()
+    {
+        ArrayList<Card> currentHand = hand.getCards();
+
+        for (int i = 0; i < currentHand.size(); i++)
+        {
+            discardPile.addCard(currentHand.get(i));
+        }
+
+        hand = new Hand(deck, discardPile);
+    }
+
+    public void playCard(String cardName)
+    {
+        Card currentCard = hand.findCard(cardName);
+
+        if (currentCard.getType() == 1)
+        {
+            coins += currentCard.getAbilities()[0].getAmount();
+        }
+
+        discardPile.addCard(currentCard);
+        hand.removeCard(currentCard);
     }
 }

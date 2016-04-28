@@ -37,6 +37,6 @@ public class PlayerTest
     public void testStartingCards()
     {
         Player player = game.getPlayer("bob");
-        assert (player.getDeck().size() == 10);
+        assert (player.getDeck().size() == 5);
     }
 }
