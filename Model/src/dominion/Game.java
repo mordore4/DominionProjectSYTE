@@ -8,7 +8,7 @@ public class Game
     private Card[] fixedCards;
     private String kingdomCardSet;
     private Card[] kingdomCards;
-    private Player currentPlayer;
+    private int currentPlayerIndex;
     private Player[] players;
     private int phase;
     private boolean isOver;
@@ -30,6 +30,50 @@ public class Game
 
             players[i] = newPlayer;
         }
+
+        currentPlayerIndex = pickRandomPlayer();
+        phase = -1;
+        isOver = false;
+        advancePhase();
+    }
+
+    private int pickRandomPlayer()
+    {
+        return (int) (Math.random() * players.length);
+    }
+
+    public void advancePhase()
+    {
+        phase++;
+
+        if (phase == 0 && !findCurrentPlayer().hasActionCards()) phase++;
+
+        if (phase > 2)
+        {
+            advancePlayer();
+            phase = -1;
+            advancePhase();
+        }
+    }
+
+    private void advancePlayer()
+    {
+        currentPlayerIndex++;
+
+        if (currentPlayerIndex > players.length - 1)
+        {
+            currentPlayerIndex = 0;
+        }
+    }
+
+    public int getPhase()
+    {
+        return phase;
+    }
+
+    public Player findCurrentPlayer()
+    {
+        return players[currentPlayerIndex];
     }
 
     private Card[] cardSet(String name)
@@ -68,8 +112,7 @@ public class Game
             fixedCards[0].setAmount(8);
             fixedCards[1].setAmount(8);
             fixedCards[2].setAmount(8);
-        }
-        else
+        } else
         {
             fixedCards[0].setAmount(12);
             fixedCards[1].setAmount(12);
@@ -112,5 +155,27 @@ public class Game
         }
 
         return foundCard;
+    }
+
+    public String allCardsToString()
+    {
+        String out = "";
+
+        for (int i = 0; i < kingdomCards.length; i++)
+        {
+            out += kingdomCards[i].toString() + "\n";
+        }
+
+        for (int i = 0; i < fixedCards.length; i++)
+        {
+            out += fixedCards[i].toString() + "\n";
+        }
+
+        return out;
+    }
+
+    public boolean getIsOver()
+    {
+        return isOver;
     }
 }

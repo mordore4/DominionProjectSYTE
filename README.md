@@ -1,5 +1,15 @@
 # DominionProjectSYTE
 
+## SQL Database
+Card types reference:
+
+1. Treasure
+2. Victory
+3. Action
+4. Action attack
+5. Action reaction
+6. Gardens
+
 ## Model
 
 This readme will cover usage of various classes in the Model project.
