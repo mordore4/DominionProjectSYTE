@@ -83,7 +83,6 @@ var toevoegenKingdomCards = function () {
 };
 
 $(document).ready(function () {
-
     console.log("De verbinding werkt");
     $('#play').on('click', playGame);
     toevoegenAfbeeldingen();
@@ -98,6 +97,9 @@ $(document).ready(function () {
         //$(this).css('height', '180');
 
     });
+
+    $("label[for=state_id]").parent().load("assets/fragments/states.html");
+
     $(".register").on('click', function(){
         $('#menu').hide();
         $("#form").show();
