@@ -122,4 +122,9 @@ public class Player
     {
         this.actions = actions;
     }
+
+    public boolean hasActionCards()
+    {
+        return deck.containsActionCards();
+    }
 }

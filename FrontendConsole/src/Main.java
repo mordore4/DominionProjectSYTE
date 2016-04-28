@@ -59,8 +59,32 @@ public class Main
 
         Game currentGame = lobby.getGame();
 
+        while (!currentGame.getIsOver())
+        {
+            System.out.println(currentGame.findCurrentPlayer().getAccount().getName() + "'s turn starts.");
 
+            switch (currentGame.getPhase())
+            {
+                case 0:
+                    System.out.println("ACTION phase");
+                    break;
+                case 1:
+                    System.out.println("BUY phase");
+                    break;
+                case 2:
+                    System.out.println("CLEANUP phase");
+                    break;
+            }
 
+            scanner.nextLine();
+
+            currentGame.advancePhase();
+        }
+
+        System.out.println(currentGame.getPlayer(player1.getName()).getDeck().toString());
+        System.out.println(currentGame.getPlayer(player2.getName()).getDeck().toString());
+
+        System.out.println(currentGame.allCardsToString());
 
 
     }
