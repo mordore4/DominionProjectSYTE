@@ -1,9 +1,6 @@
 package dominion.controllers;
 
-import dominion.Account;
-import dominion.Game;
-import dominion.GameEngine;
-import dominion.Lobby;
+import dominion.*;
 import dominion.exceptions.LobbyNotFoundException;
 
 import java.util.Scanner;
@@ -14,6 +11,8 @@ public class CliController
 {
     private GameEngine gameEngine;
     private Scanner scanner;
+    private Lobby lobby;
+    private Game game;
 
     public CliController(GameEngine gameEngine)
     {
@@ -34,9 +33,9 @@ public class CliController
         System.out.println("/~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~\\");
     }
 
-    public Lobby setUpLobby()
+    public void setUpLobby()
     {
-        Lobby lobby = null;
+        lobby = null;
 
         System.out.println("Player 1, what is your name?");
         String name = scanner.nextLine();
@@ -59,20 +58,31 @@ public class CliController
 
         lobby.addPlayer(player2);
 
-        return lobby;
     }
 
-    public Game startGame(Lobby lobby)
+    public void startGame()
     {
         lobby.startGame();
-        return lobby.getGame();
+        game = lobby.getGame();
     }
 
-
-    //temp
-    public Scanner getScanner()
+    public void gamePlay()
     {
-        return scanner;
+        while (!game.getIsOver())
+        {
+            Player currentPlayer = game.findCurrentPlayer();
+            System.out.println(currentPlayer.getAccount().getName() + "'s turn starts.");
+            switch (game.getPhase())
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+            game.advancePhase();
+        }
     }
 
 }
