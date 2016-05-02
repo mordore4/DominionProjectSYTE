@@ -76,4 +76,17 @@ public class Hand
 
         return out;
     }
+
+    public Boolean checkHandForType(int type)
+    {
+        Boolean hasType = false;
+        for (Card c : cards)
+        {
+            if (c.getType() == type)
+            {
+                hasType = true;
+            }
+        }
+        return hasType;
+    }
 }

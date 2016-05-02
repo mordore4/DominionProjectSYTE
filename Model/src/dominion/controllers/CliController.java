@@ -185,8 +185,8 @@ public class CliController
     private void useTreasureCards(Player currentPlayer)
     {
         String command = "";
-        ArrayList<Card> currentCards = currentPlayer.getHand().getCards();
-        Boolean hasTreasureCards = checkHandForType(currentCards, 1);
+        Hand currentPlayerHand = currentPlayer.getHand();
+        Boolean hasTreasureCards = currentPlayerHand.checkHandForType(1);
         System.out.println("You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
@@ -195,9 +195,9 @@ public class CliController
         {
             System.out.println("Your coins:" + currentPlayer.getCoins());
             System.out.println("Your treasures:");
-            currentCards = currentPlayer.getHand().getCards();
+            currentPlayerHand = currentPlayer.getHand();
 
-            printCardsOfType(currentCards, 1);
+            printCardsOfType(currentPlayerHand.getCards(), 1);
 
             System.out.println("Which treasure card would you like to use?");
 
@@ -214,22 +214,14 @@ public class CliController
                     System.out.println("You don't have a " + command + " card or no such card exists");
                 }
             }
-            hasTreasureCards = checkHandForType(currentCards, 1);
+            hasTreasureCards = currentPlayerHand.checkHandForType(1);
         }
 
     }
 
-    private Boolean checkHandForType(ArrayList<Card> currentCards, int type) //moet naar Hand class
+    private void buyCards()
     {
-        Boolean hasType = false;
-        for (Card c : currentCards)
-        {
-            if (c.getType() == type)
-            {
-                hasType = true;
-            }
-        }
-        return hasType;
+        
     }
 
     private void printCardsOfType(ArrayList<Card> currentCards, int type)
