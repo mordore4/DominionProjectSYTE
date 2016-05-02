@@ -12,3 +12,5 @@ Backend/web/testing.html
 *.xml
 *.class
 *.class
+Backend/src/Test.java
+Backend/src/Dummy.java
