@@ -50,7 +50,7 @@ public class CliController
         String name = scanner.nextLine();
         Account player1 = new Account(name, 0);
 
-        System.out.println("Player 1, what is your name?");
+        System.out.println("Player 2, what is your name?");
         name = scanner.nextLine();
         Account player2 = new Account(name, 0);
 
@@ -89,8 +89,6 @@ public class CliController
                 case 1:
                     buyPhase(currentPlayer);
                     break;
-                case 2:
-                    break;
             }
             game.advancePhase();
         }
@@ -112,6 +110,8 @@ public class CliController
         printVicTreasCards();
 
         useTreasureCards(currentPlayer);
+
+        buyCards(currentPlayer);
     }
 
     private void printHand(Player currentPlayer)
@@ -184,10 +184,11 @@ public class CliController
 
     private void useTreasureCards(Player currentPlayer)
     {
+
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
         Boolean hasTreasureCards = currentPlayerHand.checkHandForType(1);
-        System.out.println("You can now use your treasure cards");
+        printInColor(31, "You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
 
@@ -201,7 +202,7 @@ public class CliController
 
             System.out.println("Which treasure card would you like to use?");
 
-            command = scanner.nextLine();
+            command = scanner.nextLine().toLowerCase();
 
             if (!command.equals("stop"))
             {
@@ -219,9 +220,27 @@ public class CliController
 
     }
 
-    private void buyCards()
+    private void buyCards(Player currentPlayer)
     {
-        
+        String command = "";
+        System.out.println("You can now buy cards");
+        System.out.println("Enter \"stop\" at any given time if you would like to stop buying cards.");
+        while (!command.equals("stop") && currentPlayer.getBuys() > 0)
+        {
+            printKingdomCards();
+            printVicTreasCards();
+            System.out.println("Your buys:" + currentPlayer.getBuys());
+            command = scanner.nextLine().toLowerCase();
+
+            try
+            {
+                currentPlayer.buyCard(command);
+            }
+            catch (Exception e)
+            {
+                System.out.println("You don't have " + command + " or no such card exists");
+            }
+        }
     }
 
     private void printCardsOfType(ArrayList<Card> currentCards, int type)
@@ -234,5 +253,12 @@ public class CliController
             }
         }
         System.out.println();
+    }
+
+    private void printInColor(int color, String string)
+    {
+        String printColor = (char)27 + "[" + color + "m";
+        String resetColor = (char)27 + "[0m";
+        System.out.println(printColor + string + resetColor);
     }
 }
