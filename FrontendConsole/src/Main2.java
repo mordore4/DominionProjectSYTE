@@ -9,24 +9,13 @@ public class Main2
 {
     public static void main(String[] args)
     {
-        GameEngine gameEngine = null;
 
-        try
-        {
-            gameEngine = new GameEngine();
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-            return;
-        }
-
-        CliController cliController = new CliController(gameEngine);
+        CliController cliController = new CliController();
         cliController.printTitle();
 
         cliController.setUpLobby();
         cliController.startGame();
 
-
+        cliController.gamePlay();
     }
 }
