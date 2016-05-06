@@ -23,6 +23,14 @@ body {
 
 }
 
+body.game {
+    background: url("../media/game_back.jpg") repeat top left;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+}
+
 #gamewindow {
     position: relative;
     width: calc(100% - 100px);
@@ -35,9 +43,10 @@ body {
 #cardsComeCenter {
     position: relative;
     height: 250px;
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
+    padding: 0;
 }
 
 #menu {
@@ -61,11 +70,16 @@ body {
     padding: 0;
     padding-top: 32px;
     padding-bottom: 32px;
-    /*background-color: rgba(0, 0, 0, 0.4);*/
 }
 
 #menu h1 {
     font-family: sans-serif;
+    background-color: rgba(0,0,0,0.6);
+    text-shadow: #000000 2px ;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+
 }
 
 div.site-wrapper-inner {
@@ -120,15 +134,27 @@ div.site-wrapper-inner {
 }
 
 .eerste {
-    background-image: url("../../images/sword.png");
+    background-image: url("../media/ui/button_play_n.png");
+}
+
+#play:hover span.eerste {
+    background-image: url("../media/ui/button_play.png");
 }
 
 .tweede {
-    background-image: url("../../images/trophy.png");
+    background-image: url("../media/ui/button_scores_n.png");
+}
+
+#highscores:hover span.tweede {
+    background-image: url("../media/ui/button_scores.png");
 }
 
 .derde {
-    background-image: url("../../images/settings.png");
+    background-image: url("../media/ui/button_settings_n.png");
+}
+
+#settings:hover span.derde {
+    background-image: url("../media/ui/button_settings.png");
 }
 
 .modal {
@@ -150,18 +176,6 @@ body.loading .modal {
     display: block;
 }
 
-/*#hand {
-    height: 280px;
-    width: 660px; /*180 + (aantalKaarten - 1) * 80    of     aantalKaarten * 80 + 100
-    background-repeat: no-repeat;
-    bottom: 1%;
-    left: calc(50% - 330px);
-    position: absolute;
-
-}*/
-
-/*#hand>li { float: left; }*/
-
 #hand {
     height: 249px;
     width: 100%;
@@ -172,21 +186,15 @@ body.loading .modal {
 }
 
 #hand li, #cardsComeCenter li {
-    /*position: absolute;*/
-    /*width: 180px;
-    height: 280px;*/
     width: 158px;
     height: 249px;
     display: inline-block;
     text-decoration: none;
     list-style-type: none;
     left: 0;
-    margin: 0px;
+    margin: 0;
     background-size: contain;
     transition: width 5s;
-    /*nee*/
-
-
 }
 
 #cardsComeCenter li {
@@ -202,13 +210,6 @@ body.loading .modal {
 
 }
 
-
-/*#hand li img {
-    /*height: 280px;
-    width: 180px;
-
-}*/
-
 #hand li.hoveredcard {
     z-index: 1000 !important;
     box-shadow: 0 0 8px 4px green !important;
@@ -216,13 +217,6 @@ body.loading .modal {
 
 #hand li.ui-sortable-helper {
     box-shadow: 0 0 8px 4px green !important;
-
-}
-
-#hand li.hoveredcard img {
-    /*height: 270px;
-    width: 180px;
-    */
 
 }
 
@@ -358,4 +352,8 @@ input {
     -o-transform: translate(-2px, -2px);
     -webkit-transform: translate(-2px, -2px);
     transform: translate(-2px, -2px)
+}
+
+#hand li {
+    transition: height 0.5s;
 }
