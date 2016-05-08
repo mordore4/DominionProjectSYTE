@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
-        <servlet-name>Test</servlet-name>
-        <servlet-class>Test</servlet-class>
+        <servlet-name>GameManager</servlet-name>
+        <servlet-class>dominion.server.GameManager</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Test</servlet-name>
-        <url-pattern>/test</url-pattern>
+        <servlet-name>GameManager</servlet-name>
+        <url-pattern>/server/gamemanager</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -6,6 +6,7 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Backend" />
+          <element id="module-output" name="Model" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="gson-2.6.2" />
