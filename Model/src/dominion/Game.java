@@ -1,5 +1,7 @@
 package dominion;
 
+import java.util.ArrayList;
+
 /**
  * Created by Digaly on 23/03/2016.
  */
@@ -7,17 +9,6 @@ public class Game
 {
     private Card[] fixedCards;
     private String kingdomCardSet;
-
-    public Card[] getKingdomCards()
-    {
-        return kingdomCards;
-    }
-
-    public Card[] getFixedCards()
-    {
-        return fixedCards;
-    }
-
     private Card[] kingdomCards;
     private int currentPlayerIndex;
     private Player[] players;
@@ -104,7 +95,7 @@ public class Game
         for (int i = 0; i < cardSetNames.length; i++)
         {
             Card card = gameEngine.findCard(cardSetNames[i]);
-            cardSet[i] = new Card(card, this);
+            cardSet[i] = new Card(card);
             cardSet[i].setAmount(10);
         }
         return cardSet;
@@ -114,13 +105,13 @@ public class Game
     {
         Card[] fixedCards = new Card[7];
 
-        fixedCards[0] = new Card(gameEngine.findCard("province"), this);
-        fixedCards[1] = new Card(gameEngine.findCard("duchy"), this);
-        fixedCards[2] = new Card(gameEngine.findCard("estate"), this);
-        fixedCards[3] = new Card(gameEngine.findCard("curse"), this);
-        fixedCards[4] = new Card(gameEngine.findCard("gold"), this);
-        fixedCards[5] = new Card(gameEngine.findCard("silver"), this);
-        fixedCards[6] = new Card(gameEngine.findCard("copper"), this);
+        fixedCards[0] = new Card(gameEngine.findCard("province"));
+        fixedCards[1] = new Card(gameEngine.findCard("duchy"));
+        fixedCards[2] = new Card(gameEngine.findCard("estate"));
+        fixedCards[3] = new Card(gameEngine.findCard("curse"));
+        fixedCards[4] = new Card(gameEngine.findCard("gold"));
+        fixedCards[5] = new Card(gameEngine.findCard("silver"));
+        fixedCards[6] = new Card(gameEngine.findCard("copper"));
 
 
         if (playerCount == 2)
@@ -128,7 +119,8 @@ public class Game
             fixedCards[0].setAmount(8);
             fixedCards[1].setAmount(8);
             fixedCards[2].setAmount(8);
-        } else
+        }
+        else
         {
             fixedCards[0].setAmount(12);
             fixedCards[1].setAmount(12);
@@ -215,5 +207,15 @@ public class Game
     public boolean getIsOver()
     {
         return isOver;
+    }
+
+    public Card[] getKingdomCards()
+    {
+        return kingdomCards;
+    }
+
+    public Card[] getFixedCards()
+    {
+        return fixedCards;
     }
 }

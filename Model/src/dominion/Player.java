@@ -74,7 +74,7 @@ public class Player
         {
             card.setAmount(card.getAmount() - 1);
 
-            Card newCard = new Card(card, game);
+            Card newCard = new Card(card);
             newCard.setAmount(1);
 
             discardPile.addCard(newCard);

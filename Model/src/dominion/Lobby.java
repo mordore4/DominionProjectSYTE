@@ -12,14 +12,15 @@ public class Lobby
     private String name;
     private String password;
     private String cardSet;
+    private boolean started;
     private GameEngine gameEngine;
-
 
     public Lobby(Account account, String name, String password, GameEngine gameEngine)
     {
         this.name = name;
         this.password = password;
         this.gameEngine = gameEngine;
+        this.started = false;
 
         playersInLobby = new ArrayList<Account>();
         playersInLobby.add(account);
@@ -57,9 +58,16 @@ public class Lobby
     {
         Account[] playerArray = playersInLobby.toArray(new Account[playersInLobby.size()]);
         game = new Game(playerArray, cardSet, gameEngine);
+        started = true;
     }
 
-    public Game getGame() {
+    public Game getGame()
+    {
         return game;
+    }
+
+    public boolean isStarted()
+    {
+        return started;
     }
 }
