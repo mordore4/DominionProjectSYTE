@@ -24,11 +24,11 @@ body {
 }
 
 body.game {
-    background: url("../media/game_back.jpg") repeat top left;
-    -webkit-background-size: contain;
-    -moz-background-size: contain;
-    -o-background-size: contain;
-    background-size: contain;
+    background: url("../media/game_back.jpg") no-repeat top left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 #gamewindow {
