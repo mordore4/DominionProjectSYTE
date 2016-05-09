@@ -1,4 +1,4 @@
-var tempHand = ["adventurer", "bureaucrat", "cellar", "chancellor", "chapel", "copper", "council room"];
+var tempHand = ["adventurer", "bureaucrat", "gold", "curse", "cellar", "chancellor", "copper", "chapel"];
 var kingdomCards = ["militia", "remodel", "smithy", "market", "mine", "cellar", "moat", "village", "woodcutter", "workshop"];
 var fixedCards = ["copper", "silver", "gold", "curse", "province", "duchy", "estate"];
 var forbiddenCards = ["province", "duchy", "estate", "curse"];
@@ -38,6 +38,11 @@ $(document).ready(function () {
 
     $("label[for=state_id]").parent().load("assets/fragments/states.html");
     $('#play').on('click', enterNickName);
+    $("#card-info").on('click', function () {
+        $(this).hide();
+    }).hide();
+
+    playGame();
 });
 
 var enterNickName = function () {
@@ -66,12 +71,16 @@ var enterNickName = function () {
 var playGame = function () {
     addFixedCards();
     addKingdomCards(kingdomCards);
+
+    $("a.info").on('click', showCardInfo);
+
     createHand(tempHand);
 
     $('body').addClass("game");
 
     $('#menu').hide();
     $("div.mastfoot").hide();
+    //$("#hand").hide();
 
     $("#gamewindow").show();
     $('#cardsComeCenter').show();
@@ -109,8 +118,8 @@ var addFixedCards = function () {
     for (var i = 0, len = fixedCards.length; i < len; i++) {
         var imgsrc = "images/" + fixedCards[i] + "_top.png";
 
-        var html = '<li><figure>' +
-            '<img alt="' + fixedCards[i] + '" title="' + fixedCards[i] + '" src="' + imgsrc + '" />' +
+        var html = '<li><figure class="unselectable" data-cardname="' + fixedCards[i] + '">' +
+            '<div class="amount">0</div><a href="#" class="info"></a><img class="nobuy" alt="' + fixedCards[i] + '" title="' + fixedCards[i] + '" src="' + imgsrc + '" />' +
             '</figure></li>';
 
         if (i > 3)
@@ -124,13 +133,86 @@ var addKingdomCards = function (cardsArray) {
     for (var i = 0, len = cardsArray.length; i < len; i++) {
         var cardName = cardsArray[i];
 
-        var html = '<li><div class="kingdomcard">';
-        html += '<div class="kingdomcard-top" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
-        html += '<div class="kingdomcard-bottom" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
-        html += '</div></li>';
+        var html = '<li><div data-cardname="' + cardsArray[i] + '" class="kingdomcard">';
+        html += '<div class="kingdomcard-top nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
+        html += '<div class="kingdomcard-bottom nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
+        html += '<div class="amount unselectable">0</div><a href="#" class="info"></a></div></li>';
 
         $("#kingdomcards").find('ul').append(html);
     }
+};
+
+var showCardInfo = function () {
+    var cardName = $(this).parent().attr("data-cardname");
+
+    $("#card-info").show().find("img").attr("src", "images/cards/" + cardName + ".jpg");
+};
+
+var findCardElement = function(cardName)
+{
+    var isFixedCard = $.inArray(cardName, fixedCards);
+    var foundCard;
+    var containerElement = $("#coins");
+
+    if (isFixedCard >= 0) {
+        if (isFixedCard > 3) containerElement = $("#topstates");
+
+        foundCard = containerElement.find('figure[data-cardname="' + cardName + '"]');
+    }
+    else //Kingdom cards
+    {
+        foundCard = $("#kingdomcards").find('div[data-cardname="' + cardName + '"]');
+    }
+
+    return foundCard;
+};
+
+var setCardBuyable = function (cardName, buyable) {
+    var isFixedCard = $.inArray(cardName, fixedCards);
+    var foundCard = findCardElement(cardName);
+
+    //States or coins
+    if (isFixedCard >= 0) {
+        foundCard = foundCard.find("img");
+    }
+    else //Kingdom cards
+    {
+        foundCard = foundCard.find(".kingdomcard-top, .kingdomcard-bottom");
+    }
+
+    if (buyable) foundCard.removeClass("nobuy");
+    else foundCard.addClass("nobuy");
+};
+
+var setCardAmount= function (cardName, amount) {
+    var isFixedCard = $.inArray(cardName, fixedCards);
+    var foundCard = findCardElement(cardName);
+    var containerElement = $("#coins");
+
+    foundCard = foundCard.find("div.amount");
+
+    foundCard.text(amount);
+};
+
+var highlightCardsOfType = function(type)
+{
+    var hand = $("#hand");
+
+    hand.find("li").removeClass("contextaware");
+
+    hand.find("li").each(function() {
+        var cardName = $(this).attr("data-cardname");
+
+        switch(type)
+        {
+            case "treasure":
+                var index = $.inArray(cardName, fixedCards);
+                if (index >=0 && index < 3) $(this).addClass("contextaware");
+        }
+
+    });
+
+
 };
 
 var createLobby = function () {
@@ -187,7 +269,7 @@ var checkGameStatus = function () {
 
             isMyTurn = status.isMyTurn;
 
-            if (isMyTurn) { 
+            if (isMyTurn) {
                 $("#hand").sortable("enable");
             }
             else {
@@ -199,7 +281,7 @@ var checkGameStatus = function () {
 
                 $("#hand").sortable("disable");
             }
-            
+
             setTimeout(checkGameStatus, pollInterval);
         });
 };
@@ -239,6 +321,8 @@ var retrieveHand = function () {
             cardArray.forEach(function (item) {
                 cardNames.push(item.name);
             });
+
+            $("#hand").show();
 
             createHand(cardNames);
         });

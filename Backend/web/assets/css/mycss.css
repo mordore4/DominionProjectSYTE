@@ -215,33 +215,62 @@ body.loading .modal {
     box-shadow: 0 0 8px 4px green !important;
 }
 
+#hand li.contextaware {
+    z-index: 1000 !important;
+    box-shadow: 0 0 8px 4px white !important;
+}
+
 #hand li.ui-sortable-helper {
     box-shadow: 0 0 8px 4px green !important;
 
 }
 
-#coins {
+#topstates, #coins {
     position: absolute;
-    width: 20px;
-    height: 20px;
     top: 0;
-    right: 150px;
     text-decoration: none;
     list-style: none;
+    z-index: 20;
+}
+
+#coins {
+    right: 150px;
 }
 
 #topstates {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 0;
     left: -20px;
-    text-decoration: none;
-    list-style: none;
 }
 
 #topstates img, #coins img {
     width: 130px;
+}
+
+#topstates figure, #coins figure {
+    position: relative;
+    width: 135px;
+    height: 115px;
+}
+
+#topstates div.amount, #coins div.amount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 45px;
+    text-align: center;
+    line-height: 42px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+}
+
+a.info {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: url("../media/ui/button_info.png") no-repeat top left;
+    z-index: 25;
 }
 
 div.kingdomcard {
@@ -252,6 +281,26 @@ div.kingdomcard {
     padding: 3px;
     background-color: black;
     border-radius: 16px;
+    position: relative;
+}
+
+div.kingdomcard div.amount, #topstates div.amount, #coins div.amount {
+    position: absolute;
+    background: url("../media/ui/amount_circle.png") no-repeat top left;
+    width: 40px;
+    height: 45px;
+    top: 0;
+    right: 0;
+    text-align: center;
+    line-height: 38px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    z-index: 30;
+}
+
+#topstates div.amount, #coins div.amount {
+    right: 4px;
+    top: 3px;
 }
 
 div.kingdomcard-top {
@@ -267,6 +316,20 @@ div.kingdomcard-bottom {
     height: 20%;
     background-size: 100%;
     background-position: bottom center;
+}
+
+a.info {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+div.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
+    opacity: 1;
+}
+
+.nobuy {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 #kingdomcards {
@@ -356,4 +419,28 @@ input {
 
 #hand li {
     transition: height 0.5s;
+}
+
+#card-info {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#card-info img {
+    border: 8px solid black;
+    border-radius: 8px;
+    width: 300px;
+    height: 500px;
+    margin-top: calc(25% - 250px);
+}
+
+.unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
