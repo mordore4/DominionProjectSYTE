@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Tom Dobbelaere on 7/05/2016.
@@ -20,7 +21,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
     public void init()
     {
         ServletContext servletContext = getServletContext();
-        HashMap<String, ArrayList<Card>> cardsOnTable = new HashMap<>();
+        HashMap<String, CopyOnWriteArrayList<Card>> cardsOnTable = new HashMap<>();
 
         GameEngine gameEngine = null;
 
@@ -35,6 +36,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
         servletContext.setAttribute("gameEngine", gameEngine);
         servletContext.setAttribute("cardsOnTable", cardsOnTable);
+        //servletContext.setAttribute("isModifying", false);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
     {
         ServletContext servletContext = getServletContext();
         GameEngine gameEngine = (GameEngine) servletContext.getAttribute("gameEngine");
-        HashMap<String, ArrayList<Card>> cardsOnTable = (HashMap<String, ArrayList<Card>>) servletContext.getAttribute("cardsOnTable");
+        HashMap<String, CopyOnWriteArrayList<Card>> cardsOnTable = (HashMap<String, CopyOnWriteArrayList<Card>>) servletContext.getAttribute("cardsOnTable");
 
         PrintWriter writer = response.getWriter();
         Gson gson = new Gson();
@@ -69,7 +71,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
                     gameEngine.createLobby(newAccount, lobbyName, "");
 
-                    cardsOnTable.put(lobbyName, new ArrayList<Card>());
+                    cardsOnTable.put(lobbyName, new CopyOnWriteArrayList<Card>());
                 }
                 break;
                 case "joinlobby":
@@ -142,8 +144,10 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
                         HashMap<String, Object> gameStatus = new HashMap<>();
                         gameStatus.put("isMyTurn", game.findCurrentPlayer().getAccount().getName().equals(nickname));
-                        gameStatus.put("cardsOnTable", cardsOnTable.get(lobbyName));
 
+                        //while ((boolean) servletContext.getAttribute("isModifying"))
+
+                        gameStatus.put("cardsOnTable", cardsOnTable.get(lobbyName));
                         writer.print(gson.toJson(gameStatus));
                     }
                     catch (LobbyNotFoundException e)
@@ -158,16 +162,18 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     String cardName = request.getParameter("cardname");
                     String lobbyName = request.getParameter("lobbyname");
 
-                    ArrayList<Card> cards = cardsOnTable.get(lobbyName);
+                    CopyOnWriteArrayList<Card> cards = cardsOnTable.get(lobbyName);
 
+                    //servletContext.setAttribute("isModifying", true);
                     cards.add(gameEngine.findCard(cardName));
+                    //servletContext.setAttribute("isModifying", false);
                 }
                 break;
                 case "getcardsontable":
                 {
                     String lobbyName = request.getParameter("lobbyname");
 
-                    ArrayList<Card> cards = cardsOnTable.get(lobbyName);
+                    CopyOnWriteArrayList<Card> cards = cardsOnTable.get(lobbyName);
 
                     writer.print(gson.toJson(cards));
                 }
