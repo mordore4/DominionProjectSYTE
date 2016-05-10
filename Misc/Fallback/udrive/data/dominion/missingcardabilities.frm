@@ -1,0 +1,13 @@
+TYPE=VIEW
+query=select `dominion`.`card`.`cardName` AS `cardName` from `dominion`.`card` where (not(`dominion`.`card`.`cardName` in (select distinct `dominion`.`cardability`.`cardName` AS `cardName` from `dominion`.`cardability`)))
+md5=2bbf3d80f6b6aa4c059baa1c857cb8fc
+updatable=1
+algorithm=0
+definer_user=root
+definer_host=127.0.0.1
+suid=1
+with_check_option=0
+revision=2
+timestamp=2016-05-10 18:12:44
+create-version=1
+source=select `dominion`.`card`.`cardName` AS `cardName` from `card` where (not(`dominion`.`card`.`cardName` in (select distinct `dominion`.`cardability`.`cardName` AS `cardName` from `cardability`)))

@@ -1,5 +1,8 @@
 package dominion.persistence;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+
+import java.io.IOException;
 import java.sql.*;
 
 /**
@@ -13,7 +16,38 @@ public class Database
     {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-        this.connection = DriverManager.getConnection("jdbc:mysql://178.117.107.177/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
+        try
+        {
+            this.connection = DriverManager.getConnection("jdbc:mysql://178.117.107.177/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
+        }
+        catch (CommunicationsException e)
+        {
+            System.out.println("[Database] WARNING! Could not connect to global database, starting local fallback!");
+
+            //System.out.println(System.getProperty("user.dir"));
+
+            try
+            {
+                Runtime.getRuntime().exec("cmd /c \"cd ..\\Misc\\Fallback && start mysql_start.bat\"");
+            }
+            catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            try
+            {
+                Thread.sleep(3000);
+            }
+            catch (InterruptedException ex)
+            {
+                ex.printStackTrace();
+                //Turn over and weep silently
+            }
+
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3311/dominion?user=root&password=root");
+        }
+
     }
 
     public DatabaseResults executeQuery(String parametrizedSQL, String... parameterValues)
