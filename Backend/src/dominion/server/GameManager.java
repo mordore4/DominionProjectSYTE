@@ -7,6 +7,7 @@ import dominion.exceptions.LobbyNotFoundException;
 import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -22,6 +23,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
     {
         ServletContext servletContext = getServletContext();
         HashMap<String, CopyOnWriteArrayList<Card>> cardsOnTable = new HashMap<>();
+        HashMap<String, Boolean> enableBuying = new HashMap<>();
 
         GameEngine gameEngine = null;
 
@@ -36,7 +38,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
         servletContext.setAttribute("gameEngine", gameEngine);
         servletContext.setAttribute("cardsOnTable", cardsOnTable);
-        //servletContext.setAttribute("isModifying", false);
+        servletContext.setAttribute("enableBuying", enableBuying);
     }
 
     @Override
@@ -52,6 +54,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
         ServletContext servletContext = getServletContext();
         GameEngine gameEngine = (GameEngine) servletContext.getAttribute("gameEngine");
         HashMap<String, CopyOnWriteArrayList<Card>> cardsOnTable = (HashMap<String, CopyOnWriteArrayList<Card>>) servletContext.getAttribute("cardsOnTable");
+        HashMap<String, Boolean> enableBuying = (HashMap<String, Boolean>) servletContext.getAttribute("enableBuying");
 
         PrintWriter writer = response.getWriter();
         Gson gson = new Gson();
@@ -72,6 +75,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     gameEngine.createLobby(newAccount, lobbyName, "");
 
                     cardsOnTable.put(lobbyName, new CopyOnWriteArrayList<Card>());
+                    enableBuying.put(lobbyName, false);
                 }
                 break;
                 case "joinlobby":
@@ -131,7 +135,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     }
                 }
                 break;
-                case "fetchlobbystatus":
+                case "fetchgamestatus":
                 {
                     String nickname = request.getParameter("nickname");
                     String lobbyName = request.getParameter("lobbyname");
@@ -141,13 +145,25 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     {
                         lobby = gameEngine.findLobby(lobbyName);
                         Game game = lobby.getGame();
+                        Player thisPlayer = game.getPlayer(nickname);
 
                         HashMap<String, Object> gameStatus = new HashMap<>();
                         gameStatus.put("isMyTurn", game.findCurrentPlayer().getAccount().getName().equals(nickname));
-
-                        //while ((boolean) servletContext.getAttribute("isModifying"))
-
                         gameStatus.put("cardsOnTable", cardsOnTable.get(lobbyName));
+
+                        if (!enableBuying.get(lobbyName))
+                        {
+                            gameStatus.put("phase", game.getPhase());
+                        }
+                        else
+                        {
+                            gameStatus.put("phase", 3);
+                        }
+
+                        gameStatus.put("actions", thisPlayer.getActions());
+                        gameStatus.put("buys", thisPlayer.getBuys());
+                        gameStatus.put("coins", thisPlayer.getCoins());
+
                         writer.print(gson.toJson(gameStatus));
                     }
                     catch (LobbyNotFoundException e)
@@ -159,14 +175,36 @@ public class GameManager extends javax.servlet.http.HttpServlet
                 break;
                 case "putcardontable":
                 {
+                    String nickname = request.getParameter("nickname");
                     String cardName = request.getParameter("cardname");
                     String lobbyName = request.getParameter("lobbyname");
 
                     CopyOnWriteArrayList<Card> cards = cardsOnTable.get(lobbyName);
 
-                    //servletContext.setAttribute("isModifying", true);
                     cards.add(gameEngine.findCard(cardName));
-                    //servletContext.setAttribute("isModifying", false);
+
+                    Lobby lobby;
+
+                    try
+                    {
+                        lobby = gameEngine.findLobby(lobbyName);
+                        Game game = lobby.getGame();
+                        Player currentPlayer = game.findCurrentPlayer();
+
+                        if (currentPlayer.getAccount().getName().equals(nickname))
+                        {
+                            currentPlayer.playCard(cardName);
+
+                            if (!currentPlayer.getHand().checkHandForType(1))
+                            {
+                                enableBuying.put(lobbyName, true);
+                            }
+                        }
+                    }
+                    catch (LobbyNotFoundException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
                 break;
                 case "getcardsontable":
@@ -178,6 +216,73 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     writer.print(gson.toJson(cards));
                 }
                 break;
+                case "endturn":
+                {
+                    String nickname = request.getParameter("nickname");
+                    String lobbyName = request.getParameter("lobbyname");
+
+                    Lobby lobby;
+
+                    try
+                    {
+                        lobby = gameEngine.findLobby(lobbyName);
+                        Game game = lobby.getGame();
+                        Player currentPlayer = game.findCurrentPlayer();
+
+                        if (currentPlayer.getAccount().getName().equals(nickname))
+                        {
+                            enableBuying.put(lobbyName, false);
+                            cardsOnTable.put(lobbyName, new CopyOnWriteArrayList<Card>());
+                            game.advancePhase();
+                        }
+                    }
+                    catch (LobbyNotFoundException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+                case "retrievebuyablecards":
+                {
+                    String lobbyName = request.getParameter("lobbyname");
+
+                    Lobby lobby;
+
+                    try
+                    {
+                        lobby = gameEngine.findLobby(lobbyName);
+                        Game game = lobby.getGame();
+                        Player currentPlayer = game.findCurrentPlayer();
+                        int money = currentPlayer.getCoins();
+
+                        ArrayList<String> buyableCards = new ArrayList<>();
+
+                        Card[] kingdomCards = game.getKingdomCards();
+                        Card[] fixedCards = game.getFixedCards();
+
+                        for (Card kingdomCard : kingdomCards)
+                        {
+                            if (money >= kingdomCard.getCost())
+                            {
+                                buyableCards.add(kingdomCard.getName());
+                            }
+                        }
+
+                        for (Card fixedCard : fixedCards)
+                        {
+                            if (money >= fixedCard.getCost())
+                            {
+                                buyableCards.add(fixedCard.getName());
+                            }
+                        }
+
+                        writer.print(gson.toJson(buyableCards));
+                    }
+                    catch (LobbyNotFoundException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 

@@ -7,6 +7,7 @@ var nickname = "mingebag";
 var lobbyname = "";
 var isHost = false;
 var isMyTurn = false;
+var phase = 0;
 
 var pollInterval = 2000;
 
@@ -31,7 +32,19 @@ $(document).ready(function () {
             if (!isMyTurn || $.inArray(cardName, forbiddenCards) != -1) {
                 $(ui.sender).sortable('cancel');
             } else {
-                putCardOnTable(cardName);
+                //Treasure cards
+                if ($.inArray(cardName, fixedCards) >= 0 && $.inArray(cardName, fixedCards) <= 2)
+                {
+                    if (phase == 1) {
+                        setTurnInfo("coins", getTurnInfo("coins") + ($.inArray(cardName, fixedCards) + 1));
+                        putCardOnTable(cardName);
+                    }
+                    else $(ui.sender).sortable('cancel');
+                }
+                else
+                {
+                    $(ui.sender).sortable('cancel');
+                }
             }
         }
     });
@@ -41,8 +54,9 @@ $(document).ready(function () {
     $("#card-info").on('click', function () {
         $(this).hide();
     }).hide();
+    $("#end-turn").on('click', endTurn).hide();
 
-    playGame();
+    //playGame();
 });
 
 var enterNickName = function () {
@@ -118,7 +132,7 @@ var addFixedCards = function () {
     for (var i = 0, len = fixedCards.length; i < len; i++) {
         var imgsrc = "images/" + fixedCards[i] + "_top.png";
 
-        var html = '<li><figure class="unselectable" data-cardname="' + fixedCards[i] + '">' +
+        var html = '<li><figure data-cardname="' + fixedCards[i] + '">' +
             '<div class="amount">0</div><a href="#" class="info"></a><img class="nobuy" alt="' + fixedCards[i] + '" title="' + fixedCards[i] + '" src="' + imgsrc + '" />' +
             '</figure></li>';
 
@@ -136,7 +150,7 @@ var addKingdomCards = function (cardsArray) {
         var html = '<li><div data-cardname="' + cardsArray[i] + '" class="kingdomcard">';
         html += '<div class="kingdomcard-top nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
         html += '<div class="kingdomcard-bottom nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
-        html += '<div class="amount unselectable">0</div><a href="#" class="info"></a></div></li>';
+        html += '<div class="amount">0</div><a href="#" class="info"></a></div></li>';
 
         $("#kingdomcards").find('ul').append(html);
     }
@@ -184,7 +198,7 @@ var setCardBuyable = function (cardName, buyable) {
     else foundCard.addClass("nobuy");
 };
 
-var setCardAmount= function (cardName, amount) {
+var setCardAmount = function (cardName, amount) {
     var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard = findCardElement(cardName);
     var containerElement = $("#coins");
@@ -211,9 +225,18 @@ var highlightCardsOfType = function(type)
         }
 
     });
-
-
 };
+
+var setTurnInfo = function(type, value)
+{
+    $("#player-turninfo").find("#turn-" + type).find("span").text(value);
+};
+
+var getTurnInfo = function(type)
+{
+    return parseInt($("#player-turninfo").find("#turn-" + type).find("span").text());
+};
+
 
 var createLobby = function () {
     $.ajax({
@@ -254,12 +277,62 @@ var checkLobbyReady = function () {
         });
 };
 
+var clearBuyableCards = function() {
+    for (var card in kingdomCards)
+    {
+        setCardBuyable(kingdomCards[card], false);
+    }
+
+    for (var card in fixedCards)
+    {
+        setCardBuyable(fixedCards[card], false);
+    }
+};
+
+var retrieveBuyableCards = function() {
+    $.ajax({
+            method: "GET",
+            url: "server/gamemanager",
+            data: {
+                command: "retrievebuyablecards",
+                lobbyname: lobbyname
+            }
+        })
+        .done(function (data) {
+            var buyableCards = JSON.parse(data);
+
+            for (var card in buyableCards)
+            {
+                setCardBuyable(buyableCards[card], true);
+            }
+
+            console.log(data)
+        });
+};
+
+var endTurn = function() {
+    $.ajax({
+            method: "GET",
+            url: "server/gamemanager",
+            data: {
+                command: "endturn",
+                lobbyname: lobbyname,
+                nickname: nickname
+            }
+        })
+        .done(function (data) {
+            $("#end-turn").hide();
+            clearBuyableCards();
+            retrieveHand();
+        });
+};
+
 var checkGameStatus = function () {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
             data: {
-                command: "fetchlobbystatus",
+                command: "fetchgamestatus",
                 nickname: nickname,
                 lobbyname: lobbyname
             }
@@ -267,7 +340,30 @@ var checkGameStatus = function () {
         .done(function (data) {
             var status = JSON.parse(data);
 
+            //First time we notice the phase is after-treasure mode
+            if (phase != status.phase && status.phase == 3)
+            {
+                //Request the cards that are buyable
+                retrieveBuyableCards();
+            }
+
+            phase = status.phase;
+
+            //This is the first time we notice it's our turn
+            //So this can be seen as stuff to do on turn start
+            if (isMyTurn == false && status.isMyTurn == true)
+            {
+                $("body").addClass("myturn");
+                $("#cardsComeCenter").empty();
+                $("#end-turn").show();
+                clearBuyableCards();
+            }
+
             isMyTurn = status.isMyTurn;
+
+            setTurnInfo("actions", status.actions);
+            setTurnInfo("buys", status.buys);
+            setTurnInfo("coins", status.coins);
 
             if (isMyTurn) {
                 $("#hand").sortable("enable");
@@ -279,6 +375,7 @@ var checkGameStatus = function () {
                 });
                 createCardsOnTable(cardNames);
 
+                $("body").removeClass("myturn");
                 $("#hand").sortable("disable");
             }
 
@@ -335,7 +432,8 @@ var putCardOnTable = function (cardname) {
             data: {
                 command: "putcardontable",
                 cardname: cardname,
-                lobbyname: lobbyname
+                lobbyname: lobbyname,
+                nickname: nickname
             }
         })
         .done(function (data) {
