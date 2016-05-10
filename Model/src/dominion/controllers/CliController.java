@@ -45,16 +45,25 @@ public class CliController
     public void setUpLobby()
     {
         lobby = null;
+        int amountOfPlayers = 2;
+        Account[] accounts = new Account[amountOfPlayers];
 
-        System.out.print("Player 1, what is your name?\t");
+        for (int playerNumber = 0; playerNumber < amountOfPlayers; playerNumber++)
+        {
+            System.out.print("Player "+playerNumber+", what is your name?\t");
+            String name = scanner.nextLine();
+            accounts[playerNumber] = new Account(name, 0);
+        }
+
+        /*System.out.print("Player 1, what is your name?\t");
         String name = scanner.nextLine();
-        Account player1 = new Account(name, 0);
+        Account account1 = new Account(name, 0);
 
         System.out.print("Player 2, what is your name?\t");
         name = scanner.nextLine();
-        Account player2 = new Account(name, 0);
+        Account account2 = new Account(name, 0);*/
 
-        gameEngine.createLobby(player1, "mygame", "mypassword");
+        gameEngine.createLobby(accounts[0], "mygame", "mypassword");
 
         try
         {
@@ -65,7 +74,12 @@ public class CliController
             //never happens in the CLI
         }
 
-        lobby.addPlayer(player2);
+        //lobby.addPlayer(account2);
+
+        for (int playerNumber = 1; playerNumber < amountOfPlayers; playerNumber++)
+        {
+            lobby.addPlayer(accounts[playerNumber]);
+        }
 
     }
 
@@ -101,9 +115,7 @@ public class CliController
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
 
-        Boolean hasActionCards = currentPlayerHand.checkHandForType(3);
-        hasActionCards = hasActionCards || currentPlayerHand.checkHandForType(4);
-        hasActionCards = hasActionCards || currentPlayerHand.checkHandForType(5);
+        Boolean hasActionCards = currentPlayerHand.containsActionCards();
 
         printInColor(34, "You can now use your action cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
@@ -111,9 +123,7 @@ public class CliController
 
         while (hasActionCards && currentPlayer.getBuys() != 0 && !command.equals("stop"))
         {
-            System.out.println("Your coins:" + currentPlayer.getCoins());
-            System.out.println("Your actions:" + currentPlayer.getActions());
-            System.out.println("Your buys:" + currentPlayer.getBuys());
+            printActionsBuysCoins(currentPlayer);
 
             System.out.println("Your action cards:");
             printCardsOfType(currentPlayerHand.getCards(), 3);
@@ -123,6 +133,7 @@ public class CliController
             System.out.println("Which action card would you like to use?");
 
             command = scanner.nextLine().toLowerCase();
+            hasActionCards = currentPlayerHand.containsActionCards();
         }
 
     }
@@ -218,7 +229,7 @@ public class CliController
 
         while (!command.equals("stop") && hasTreasureCards)
         {
-            System.out.println("Your coins:" + currentPlayer.getCoins());
+            printInColor(32, "Your coins:" + currentPlayer.getCoins());
             System.out.println("Your treasures:");
             currentPlayerHand = currentPlayer.getHand();
 
@@ -249,6 +260,7 @@ public class CliController
         String command = "";
         printInColor(34, "You can now buy cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop buying cards.");
+
         while (!command.equals("stop") && currentPlayer.getBuys() > 0)
         {
             printKingdomCards();
@@ -286,6 +298,13 @@ public class CliController
         printKingdomCards();
 
         printVicTreasCards();
+    }
+
+    private void printActionsBuysCoins(Player currentPlayer)
+    {
+        printInColor(32, "Your actions:" + currentPlayer.getActions());
+        printInColor(32, "Your buys:" + currentPlayer.getBuys());
+        printInColor(32, "Your coins:" + currentPlayer.getCoins());
     }
 
     private void printInColor(int color, String string)
