@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FrontendConsole:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FrontendConsole_jar</output-path>
+    <root id="archive" name="FrontendConsole.jar">
+      <element id="module-output" name="FrontendConsole" />
+      <element id="module-output" name="Model" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Model/lib/mysql-connector-java-5.1.38-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

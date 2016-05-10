@@ -118,17 +118,4 @@ public class Deck
         cards.add(card);
     }
 
-    public boolean containsActionCards()
-    {
-        boolean out = false;
-
-        for (int i = 0; i < cards.size(); i++)
-        {
-            int type = cards.get(i).getType();
-
-            if (type == 3 || type == 4 || type == 5) out = true;
-        }
-
-        return out;
-    }
 }

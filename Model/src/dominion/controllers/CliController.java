@@ -46,11 +46,11 @@ public class CliController
     {
         lobby = null;
 
-        System.out.println("Player 1, what is your name?");
+        System.out.print("Player 1, what is your name?\t");
         String name = scanner.nextLine();
         Account player1 = new Account(name, 0);
 
-        System.out.println("Player 2, what is your name?");
+        System.out.print("Player 2, what is your name?\t");
         name = scanner.nextLine();
         Account player2 = new Account(name, 0);
 
@@ -84,7 +84,7 @@ public class CliController
             switch (game.getPhase())
             {
                 case 0:
-                    actionPhase();
+                    actionPhase(currentPlayer);
                     break;
                 case 1:
                     buyPhase(currentPlayer);
@@ -94,20 +94,44 @@ public class CliController
         }
     }
 
-    private void actionPhase()
+    private void actionPhase(Player currentPlayer)
     {
-        System.out.println("ACTION phase");
+        printInColor(31, "ACTION phase");
+        printTable(currentPlayer);
+        String command = "";
+        Hand currentPlayerHand = currentPlayer.getHand();
+
+        Boolean hasActionCards = currentPlayerHand.checkHandForType(3);
+        hasActionCards = hasActionCards || currentPlayerHand.checkHandForType(4);
+        hasActionCards = hasActionCards || currentPlayerHand.checkHandForType(5);
+
+        printInColor(34, "You can now use your action cards");
+        System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
+        System.out.println();
+
+        while (hasActionCards && currentPlayer.getBuys() != 0 && !command.equals("stop"))
+        {
+            System.out.println("Your coins:" + currentPlayer.getCoins());
+            System.out.println("Your actions:" + currentPlayer.getActions());
+            System.out.println("Your buys:" + currentPlayer.getBuys());
+
+            System.out.println("Your action cards:");
+            printCardsOfType(currentPlayerHand.getCards(), 3);
+            printCardsOfType(currentPlayerHand.getCards(), 4);
+            printCardsOfType(currentPlayerHand.getCards(), 5);
+
+            System.out.println("Which action card would you like to use?");
+
+            command = scanner.nextLine().toLowerCase();
+        }
+
     }
 
     private void buyPhase(Player currentPlayer)
     {
-        System.out.println("BUY phase");
+        printInColor(31, "BUY phase");
 
-        printHand(currentPlayer);
-
-        printKingdomCards();
-
-        printVicTreasCards();
+        printTable(currentPlayer);
 
         useTreasureCards(currentPlayer);
 
@@ -188,7 +212,7 @@ public class CliController
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
         Boolean hasTreasureCards = currentPlayerHand.checkHandForType(1);
-        printInColor(31, "You can now use your treasure cards");
+        printInColor(34, "You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
 
@@ -223,7 +247,7 @@ public class CliController
     private void buyCards(Player currentPlayer)
     {
         String command = "";
-        System.out.println("You can now buy cards");
+        printInColor(34, "You can now buy cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop buying cards.");
         while (!command.equals("stop") && currentPlayer.getBuys() > 0)
         {
@@ -249,14 +273,33 @@ public class CliController
         {
             if (c.getType() == type)
             {
-                System.out.println(c.getName());
+                printInColor(33, c.getName());
             }
         }
         System.out.println();
     }
 
+    private void printTable(Player currentPlayer)
+    {
+        printHand(currentPlayer);
+
+        printKingdomCards();
+
+        printVicTreasCards();
+    }
+
     private void printInColor(int color, String string)
     {
+        /*
+        30 black
+        31 red
+        32 green
+        33 yellow
+        34 blue
+        35 magenta
+        36 cyan
+        37 white
+         */
         String printColor = (char)27 + "[" + color + "m";
         String resetColor = (char)27 + "[0m";
         System.out.println(printColor + string + resetColor);

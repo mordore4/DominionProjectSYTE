@@ -147,7 +147,7 @@ public class Player
 
     public boolean hasActionCards()
     {
-        return deck.containsActionCards();
+        return hand.containsActionCards();
     }
 
     public void cleanup()
