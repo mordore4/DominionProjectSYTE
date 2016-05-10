@@ -49,6 +49,11 @@ public class Deck
         return topCard;
     }
 
+    /*public Card getTopCard()
+    {
+        return cards.get(cards.size() - 1);
+    }*/
+
     public Card getCard(String name)
     {
         Card card = null;

@@ -14,6 +14,7 @@ public class CliController
     private Scanner scanner;
     private Lobby lobby;
     private Game game;
+    private boolean buying = false;
 
     public CliController()
     {
@@ -50,7 +51,7 @@ public class CliController
 
         for (int playerNumber = 0; playerNumber < amountOfPlayers; playerNumber++)
         {
-            System.out.print("Player "+playerNumber+", what is your name?\t");
+            System.out.print("Player "+(playerNumber+1)+", what is your name?\t");
             String name = scanner.nextLine();
             accounts[playerNumber] = new Account(name, 0);
         }
@@ -110,7 +111,7 @@ public class CliController
 
     private void actionPhase(Player currentPlayer)
     {
-        printInColor(31, "ACTION phase");
+        printLnInColor(31, "ACTION phase");
         printTable(currentPlayer);
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
@@ -133,6 +134,7 @@ public class CliController
             System.out.println("Which action card would you like to use?");
 
             command = scanner.nextLine().toLowerCase();
+            currentPlayer.playCard(command);
             hasActionCards = currentPlayerHand.containsActionCards();
         }
 
@@ -140,7 +142,7 @@ public class CliController
 
     private void buyPhase(Player currentPlayer)
     {
-        printInColor(31, "BUY phase");
+        printLnInColor(31, "BUY phase");
 
         printTable(currentPlayer);
 
@@ -151,7 +153,6 @@ public class CliController
 
     private void printHand(Player currentPlayer)
     {
-        System.out.println();
         System.out.println("Your hand:");
         System.out.println();
 
@@ -159,9 +160,10 @@ public class CliController
         {
             System.out.println(c.getName());
         }
+        System.out.println();
     }
 
-    private void printKingdomCards()
+    /*private void printKingdomCards(Player currentPlayer)
     {
         System.out.println();
         System.out.println("Available kingdom cards:");
@@ -172,18 +174,80 @@ public class CliController
 
             if (currentCard.getAmount() > 0)
             {
-                System.out.print(String.format("%-24s",
-                        currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
-            } else
+                if (currentCard.getCost() <= currentPlayer.getCoins())
+                {
+                    printInColor(32,String.format("%-24s",
+                            currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                }
+                else
+                {
+                    System.out.print(String.format("%-24s",
+                            currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                }
+                            } else
             {
                 System.out.print(String.format("%-24s", ""));
             }
 
             if (i == 4) System.out.println();
         }
+    }*/
+
+    private void printCards(Player currentPlayer, String type)
+    {
+        Card[] cards = new Card[0]; // won't cause trouble because will never happen.
+        if (type.equals("kingdom"))
+        {
+            System.out.println("Available kingdom cards:");
+            cards = game.getKingdomCards();
+        }
+        if (type.equals("fixed"))
+        {
+            System.out.println("Available coin cards:");
+            cards = game.getFixedCards();
+        }
+
+
+        for (int i = cards.length - 1; i >= 0; i--)
+        {
+            Card currentCard = cards[i];
+            Card prevCard = null;
+
+            if (currentCard.getAmount() > 0)
+            {
+                if ((currentCard.getCost() <= currentPlayer.getCoins()) && buying)
+                {
+                    printInColor(32, String.format("%-24s",
+                            currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                }
+                else
+                {
+                    System.out.print(String.format("%-24s",
+                            currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                }
+            } else
+            {
+                System.out.print(String.format("%-24s", ""));
+            }
+
+            if (type.equals("fixed"))
+            {
+                if (i == 4)
+                {
+                    System.out.println("");
+                    System.out.println("Available victory cards");
+                }
+            }
+            else
+            {
+                if (i == 5) System.out.println();
+            }
+        }
+        System.out.println();
+        System.out.println();
     }
 
-    private void printVicTreasCards()
+    /*private void printVicTreasCards(Player currentPlayer)
     {
         System.out.println();
         System.out.println();
@@ -204,8 +268,16 @@ public class CliController
 
             if (currentCard.getAmount() > 0)
             {
-                System.out.print(String.format("%-24s",
-                        currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                if (currentCard.getCost() <= currentPlayer.getCoins())
+                {
+                    printInColor(32, String.format("%-24s",
+                            currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                }
+                else
+                {
+                    System.out.print(String.format("%-24s",
+                            currentCard.getName() + "(" + currentCard.getAmount() + "x/" + currentCard.getCost() + " c)"));
+                }
             } else
             {
                 System.out.print(String.format("%-24s", ""));
@@ -215,7 +287,7 @@ public class CliController
         }
         System.out.println();
         System.out.println();
-    }
+    }*/
 
     private void useTreasureCards(Player currentPlayer)
     {
@@ -223,13 +295,13 @@ public class CliController
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
         Boolean hasTreasureCards = currentPlayerHand.checkHandForType(1);
-        printInColor(34, "You can now use your treasure cards");
+        printLnInColor(34, "You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
 
         while (!command.equals("stop") && hasTreasureCards)
         {
-            printInColor(32, "Your coins:" + currentPlayer.getCoins());
+            printLnInColor(32, "Your coins:" + currentPlayer.getCoins());
             System.out.println("Your treasures:");
             currentPlayerHand = currentPlayer.getHand();
 
@@ -257,14 +329,15 @@ public class CliController
 
     private void buyCards(Player currentPlayer)
     {
+        buying = true;
         String command = "";
-        printInColor(34, "You can now buy cards");
+        printLnInColor(34, "You can now buy cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop buying cards.");
 
         while (!command.equals("stop") && currentPlayer.getBuys() > 0)
         {
-            printKingdomCards();
-            printVicTreasCards();
+            printCards(currentPlayer, "kingdom");
+            printCards(currentPlayer, "fixed");
             System.out.println("Your buys:" + currentPlayer.getBuys());
             command = scanner.nextLine().toLowerCase();
 
@@ -277,6 +350,8 @@ public class CliController
                 System.out.println("You don't have " + command + " or no such card exists");
             }
         }
+        System.out.println();
+        buying = false;
     }
 
     private void printCardsOfType(ArrayList<Card> currentCards, int type)
@@ -285,7 +360,7 @@ public class CliController
         {
             if (c.getType() == type)
             {
-                printInColor(33, c.getName());
+                printLnInColor(33, c.getName());
             }
         }
         System.out.println();
@@ -295,16 +370,15 @@ public class CliController
     {
         printHand(currentPlayer);
 
-        printKingdomCards();
-
-        printVicTreasCards();
+        printCards(currentPlayer, "kingdom");
+        printCards(currentPlayer, "fixed");
     }
 
     private void printActionsBuysCoins(Player currentPlayer)
     {
-        printInColor(32, "Your actions:" + currentPlayer.getActions());
-        printInColor(32, "Your buys:" + currentPlayer.getBuys());
-        printInColor(32, "Your coins:" + currentPlayer.getCoins());
+        printLnInColor(32, "Your actions:" + currentPlayer.getActions());
+        printLnInColor(32, "Your buys:" + currentPlayer.getBuys());
+        printLnInColor(32, "Your coins:" + currentPlayer.getCoins());
     }
 
     private void printInColor(int color, String string)
@@ -321,6 +395,12 @@ public class CliController
          */
         String printColor = (char)27 + "[" + color + "m";
         String resetColor = (char)27 + "[0m";
-        System.out.println(printColor + string + resetColor);
+        System.out.print(printColor + string + resetColor);
+    }
+
+    private void printLnInColor(int color, String string)
+    {
+        printInColor(color, string);
+        System.out.println();
     }
 }

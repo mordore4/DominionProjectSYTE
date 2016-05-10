@@ -53,6 +53,7 @@ public class Hand
 
     public void trash()
     {
+
     }
 
     public void reveal()

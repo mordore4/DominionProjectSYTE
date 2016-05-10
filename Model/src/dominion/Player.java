@@ -162,13 +162,27 @@ public class Player
         hand = new Hand(deck, discardPile);
     }
 
-    public void playCard(String cardName)
+    /*public void playCard(String cardName)
     {
         Card currentCard = hand.findCard(cardName);
 
         if (currentCard.getType() == 1)
         {
             coins += currentCard.getAbilities()[0].getAmount();
+        }
+
+        discardPile.addCard(currentCard);
+        hand.removeCard(currentCard);
+    }*/
+
+    public void playCard(String cardName)
+    {
+        Card currentCard = hand.findCard(cardName);
+        Ability[] cardAbilities = currentCard.getAbilities();
+
+        for (Ability ability : cardAbilities)
+        {
+            ability.doAbility(this);
         }
 
         discardPile.addCard(currentCard);
