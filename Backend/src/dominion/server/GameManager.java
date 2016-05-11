@@ -193,7 +193,8 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
                         if (currentPlayer.getAccount().getName().equals(nickname))
                         {
-                            currentPlayer.playCard(cardName);
+                            game.playCard(cardName);
+                            //currentPlayer.playCard(cardName);
 
                             if (!currentPlayer.getHand().checkHandForType(1))
                             {
