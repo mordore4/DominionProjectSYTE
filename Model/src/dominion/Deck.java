@@ -17,6 +17,7 @@ public class Deck
 
     public void makeHand(Deck deck, Deck discardPile)
     {
+        cards = new ArrayList<Card>();
         for (int i = 0; i < 5; i++)
         {
             this.takeTopCard(deck, discardPile);
@@ -30,16 +31,18 @@ public class Deck
         {
             deck.discardToDeck(discardPile);
         }
+
+        deckCards = deck.getCards();
         Card topCard = deckCards.get(deckCards.size() - 1);
         deckCards.remove(deckCards.size() - 1);
 
         cards.add(topCard);
     }
 
-    /*public Card getTopCard()
+    public Card getTopCard()
     {
         return cards.get(cards.size() - 1);
-    }*/
+    }
 
     public Card findCard(String name)
     {
