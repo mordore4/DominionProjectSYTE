@@ -114,7 +114,7 @@ public class CliController
         printlnincolor(31, "ACTION phase");
         printTable(currentPlayer);
         String command = "";
-        Hand currentPlayerHand = currentPlayer.getHand();
+        Deck currentPlayerHand = currentPlayer.getHand();
 
         Boolean hasActionCards = currentPlayerHand.containsActionCards();
 
@@ -293,7 +293,7 @@ public class CliController
     {
 
         String command = "";
-        Hand currentPlayerHand = currentPlayer.getHand();
+        Deck currentPlayerHand = currentPlayer.getHand();
         Boolean hasTreasureCards = currentPlayerHand.checkHandForType(1);
         printlnincolor(34, "You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");

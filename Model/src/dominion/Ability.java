@@ -32,7 +32,7 @@ public class Ability
                 addCoins(currentPlayer);
                 break;
             case 4:
-                addCards(currentPlayer);
+                //addCards(currentPlayer);
                 break;
             case 5:
 
@@ -66,7 +66,7 @@ public class Ability
         currentPlayer.setCoins(currentPlayerCoins + amount);
     }
 
-    private void addCards(Player currentPlayer)
+    /*private void addCards(Player currentPlayer)
     {
         Deck discardPile = currentPlayer.getDiscardPile();
         for (int i = 0; i < amount; i++)
@@ -75,7 +75,7 @@ public class Ability
             Card topCard = currentPlayer.getDeck().takeTopCard(discardPile);
             currentPlayer.getHand().addCard(topCard);
         }
-    }
+    }*/
 
 
 

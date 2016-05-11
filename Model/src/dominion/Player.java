@@ -11,30 +11,29 @@ import java.util.ArrayList;
 public class Player
 {
     private Account account;
-    private Hand hand;
+    private Deck hand;
     private Deck discardPile;
     private Deck deck;
     private int actions;
     private int buys;
     private int coins;
-    private GameEngine gameEngine;
     private Game game;
 
-    public Player(GameEngine gameEngine, Game game)
+    public Player(Game game)
     {
-        this.gameEngine = gameEngine;
         this.game = game;
 
         actions = 1;
         buys = 1;
         coins = 0;
 
-        discardPile = new Deck(false, gameEngine);
-        deck = new Deck(true, gameEngine);
+        discardPile = new Deck();
+        deck = new Deck();
+        hand = new Deck();
 
         createStartingDeck();
 
-        hand = new Hand(deck, discardPile);
+        hand.makeHand(deck, discardPile);
     }
 
     public void createStartingDeck()
@@ -77,7 +76,7 @@ public class Player
             Card newCard = new Card(card);
             newCard.setAmount(1);
 
-            discardPile.addCard(newCard);
+            deck.addCard(newCard);
         } else throw new CardNotAvailableException();
     }
 
@@ -125,7 +124,7 @@ public class Player
         return coins;
     }
 
-    public Hand getHand()
+    public Deck getHand()
     {
         return hand;
     }
@@ -159,7 +158,7 @@ public class Player
             discardPile.addCard(currentHand.get(i));
         }
 
-        hand = new Hand(deck, discardPile);
+        hand.makeHand(deck, discardPile);
     }
 
     /*public void playCard(String cardName)

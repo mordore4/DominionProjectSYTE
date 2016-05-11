@@ -26,7 +26,7 @@ public class Game
 
         for (int i = 0; i < accounts.length; i++)
         {
-            Player newPlayer = new Player(gameEngine, this);
+            Player newPlayer = new Player(this);
 
             newPlayer.setAccount(accounts[i]);
 
