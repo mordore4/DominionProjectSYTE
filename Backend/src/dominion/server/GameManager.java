@@ -2,6 +2,7 @@ package dominion.server;
 
 import com.google.gson.Gson;
 import dominion.*;
+import dominion.exceptions.CardNotAvailableException;
 import dominion.exceptions.LobbyNotFoundException;
 
 import javax.servlet.ServletContext;
@@ -234,7 +235,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                         {
                             enableBuying.put(lobbyName, false);
                             cardsOnTable.put(lobbyName, new CopyOnWriteArrayList<Card>());
-                            game.advancePhase();
+                            game.advancePlayer();
                         }
                     }
                     catch (LobbyNotFoundException e)
@@ -279,6 +280,39 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     catch (LobbyNotFoundException ex)
                     {
                         //Do nothing
+                    }
+                }
+                break;
+                case "buycard":
+                {
+                    String nickname = request.getParameter("nickname");
+                    String lobbyName = request.getParameter("lobbyname");
+                    String cardName = request.getParameter("cardname");
+
+                    Lobby lobby;
+
+                    try
+                    {
+                        lobby = gameEngine.findLobby(lobbyName);
+                        Game game = lobby.getGame();
+                        Player currentPlayer = game.findCurrentPlayer();
+
+                        if (currentPlayer.getAccount().getName().equals(nickname))
+                        {
+                            try
+                            {
+                                currentPlayer.buyCard(cardName);
+                            }
+                            catch (CardNotAvailableException ex)
+                            {
+                                ex.printStackTrace();
+                                //Do nothing
+                            }
+                        }
+                    }
+                    catch (LobbyNotFoundException e)
+                    {
+                        e.printStackTrace();
                     }
                 }
                 break;
@@ -331,7 +365,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
         /*Account testA = new Account("testA", 0);
         Account testB = new Account("testB", 0);
 
-        gameEngine.createLobby(testA, "test", "");
+        gameEngine.ajaxCreateLobby(testA, "test", "");
         Lobby lobby = null;
         try
         {

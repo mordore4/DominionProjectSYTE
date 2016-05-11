@@ -37,7 +37,7 @@ $(document).ready(function () {
                 {
                     if (phase == 1) {
                         setTurnInfo("coins", getTurnInfo("coins") + ($.inArray(cardName, fixedCards) + 1));
-                        putCardOnTable(cardName);
+                        ajaxPutCardOnTable(cardName);
                     }
                     else $(ui.sender).sortable('cancel');
                 }
@@ -53,8 +53,8 @@ $(document).ready(function () {
     $('#play').on('click', enterNickName);
     $("#card-info").on('click', function () {
         $(this).hide();
-    }).hide();
-    $("#end-turn").on('click', endTurn).hide();
+    }).hide().removeClass("hidden");
+    $("#end-turn").on('click', ajaxEndTurn).hide();
 
     //playGame();
 });
@@ -98,8 +98,8 @@ var playGame = function () {
     $("#gamewindow").show();
     $('#cardsComeCenter').show();
 
-    if (isHost) createLobby();
-    else joinLobby();
+    if (isHost) ajaxCreateLobby();
+    else ajaxJoinLobby();
 
 };
 
@@ -131,6 +131,9 @@ var addFixedCards = function (cardsArray) {
     var topStates = $("#topstates");
     var coins = $("#coins");
 
+    topStates.empty();
+    coins.empty();
+
     for (var i = cardsArray.length - 1; i >= 0; i--) {
         var cardName = cardsArray[i].name;
 
@@ -146,6 +149,9 @@ var addFixedCards = function (cardsArray) {
         else
             topStates.append(html);
     }
+
+    topStates.find('figure').on('click', buyCard);
+    coins.find('figure').on('click', buyCard);
 
     topStates.find("a.info").on('click', showCardInfo);
     coins.find("a.info").on('click', showCardInfo);
@@ -170,8 +176,16 @@ var addKingdomCards = function (cardsArray) {
         element.append(html);
     }
 
+    element.find('div.kingdomcard').on('click', buyCard);
     $("a.info").on('click', showCardInfo);
     $("#kingdomcards").show();
+};
+
+var buyCard = function() {
+    var cardName = $(this).attr("data-cardname");
+
+    if (getCardBuyable(cardName) && getTurnInfo("buys") > 0)
+        ajaxBuyCard(cardName);
 };
 
 var showCardInfo = function () {
@@ -216,6 +230,22 @@ var setCardBuyable = function (cardName, buyable) {
     else foundCard.addClass("nobuy");
 };
 
+var getCardBuyable = function (cardName) {
+    var isFixedCard = $.inArray(cardName, fixedCards);
+    var foundCard = findCardElement(cardName);
+
+    //States or coins
+    if (isFixedCard >= 0) {
+        foundCard = foundCard.find("img");
+    }
+    else //Kingdom cards
+    {
+        foundCard = foundCard.find(".kingdomcard-top, .kingdomcard-bottom");
+    }
+
+    return !foundCard.hasClass("nobuy");
+};
+
 var setCardAmount = function (cardName, amount) {
     var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard = findCardElement(cardName);
@@ -256,7 +286,7 @@ var getTurnInfo = function(type)
 };
 
 
-var createLobby = function () {
+var ajaxCreateLobby = function () {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -268,11 +298,11 @@ var createLobby = function () {
         })
         .done(function (data) {
             console.log("Created lobby " + lobbyname);
-            checkLobbyReady();
+            ajaxCheckLobbyReady();
         });
 };
 
-var joinLobby = function () {
+var ajaxJoinLobby = function () {
     $.ajax({
         method: "GET",
         url: "server/gamemanager",
@@ -284,14 +314,14 @@ var joinLobby = function () {
     })
         .done(function (data) {
             console.log("Joined lobby " + lobbyname);
-            retrieveHand();
+            ajaxRetrieveHand();
             isMyTurn = false;
-            retrieveKingdomCards();
-            checkGameStatus();
+            ajaxRetrieveKingdomCards();
+            ajaxCheckGameStatus();
         });
 };
 
-var retrieveKingdomCards = function() {
+var ajaxRetrieveKingdomCards = function() {
     $.ajax({
         method: "GET",
         url: "server/gamemanager",
@@ -305,10 +335,12 @@ var retrieveKingdomCards = function() {
 
             addKingdomCards(cards.kingdomCards);
             addFixedCards(cards.fixedCards);
+
+            ajaxRetrieveBuyableCards();
         });
 };
 
-var checkLobbyReady = function () {
+var ajaxCheckLobbyReady = function () {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -321,14 +353,14 @@ var checkLobbyReady = function () {
             var status = JSON.parse(data);
 
             if (status) {
-                retrieveHand();
+                ajaxRetrieveHand();
                 $("#hand").show();
                 isMyTurn = false;
-                retrieveKingdomCards();
-                checkGameStatus();
+                ajaxRetrieveKingdomCards();
+                ajaxCheckGameStatus();
             }
             else {
-                setTimeout(checkLobbyReady, pollInterval);
+                setTimeout(ajaxCheckLobbyReady, pollInterval);
             }
         });
 };
@@ -345,7 +377,7 @@ var clearBuyableCards = function() {
     }
 };
 
-var retrieveBuyableCards = function() {
+var ajaxRetrieveBuyableCards = function() {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -361,12 +393,10 @@ var retrieveBuyableCards = function() {
             {
                 setCardBuyable(buyableCards[card], true);
             }
-
-            console.log(data)
         });
 };
 
-var endTurn = function() {
+var ajaxEndTurn = function() {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -379,11 +409,11 @@ var endTurn = function() {
         .done(function (data) {
             $("#end-turn").hide();
             clearBuyableCards();
-            retrieveHand();
+            ajaxRetrieveHand();
         });
 };
 
-var checkGameStatus = function () {
+var ajaxCheckGameStatus = function () {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -400,10 +430,16 @@ var checkGameStatus = function () {
             if (phase != status.phase && status.phase == 3)
             {
                 //Request the cards that are buyable
-                retrieveBuyableCards();
+                ajaxRetrieveBuyableCards();
             }
 
             phase = status.phase;
+
+            //Update kingdom cards in case of buy
+            if (phase == 3)
+            {
+                ajaxRetrieveKingdomCards();
+            }
 
             //This is the first time we notice it's our turn
             //So this can be seen as stuff to do on turn start
@@ -435,11 +471,11 @@ var checkGameStatus = function () {
                 $("#hand").sortable("disable");
             }
 
-            setTimeout(checkGameStatus, pollInterval);
+            setTimeout(ajaxCheckGameStatus, pollInterval);
         });
 };
 
-var retrieveHand = function () {
+var ajaxRetrieveHand = function () {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -463,7 +499,7 @@ var retrieveHand = function () {
         });
 };
 
-var putCardOnTable = function (cardname) {
+var ajaxPutCardOnTable = function (cardname) {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -476,5 +512,21 @@ var putCardOnTable = function (cardname) {
         })
         .done(function (data) {
             //Do nothing
+        });
+};
+
+var ajaxBuyCard = function(cardName) {
+    $.ajax({
+        method: "GET",
+        url: "server/gamemanager",
+        data: {
+            command: "buycard",
+            cardname: cardName,
+            lobbyname: lobbyname,
+            nickname: nickname
+        }
+    })
+        .done(function (data) {
+
         });
 };

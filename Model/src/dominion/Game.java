@@ -52,15 +52,14 @@ public class Game
 
         if (phase >= 2)
         {
-            findCurrentPlayer().cleanup();
             advancePlayer();
-            phase = -1;
-            advancePhase();
         }
     }
 
-    private void advancePlayer()
+    public void advancePlayer()
     {
+        findCurrentPlayer().cleanup();
+
         currentPlayerIndex++;
 
         if (currentPlayerIndex > players.length - 1)
@@ -71,6 +70,9 @@ public class Game
         findCurrentPlayer().setBuys(1);
         findCurrentPlayer().setActions(1);
         findCurrentPlayer().setCoins(0);
+
+        phase = -1;
+        advancePhase();
     }
 
     public int getPhase()

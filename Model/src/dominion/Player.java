@@ -82,10 +82,13 @@ public class Player
 
     public void buyCard(String cardName) throws CardNotAvailableException
     {
-        if (coins >= game.retrieveCard(cardName).getCost())
+        int cardCost = game.retrieveCard(cardName).getCost();
+
+        if (coins >= cardCost && buys > 0)
         {
             addCard(cardName);
             buys--;
+            coins -= cardCost;
         }
     }
 
