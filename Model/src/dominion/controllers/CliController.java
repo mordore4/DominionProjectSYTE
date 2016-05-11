@@ -111,14 +111,14 @@ public class CliController
 
     private void actionPhase(Player currentPlayer)
     {
-        printLnInColor(31, "ACTION phase");
+        printlnincolor(31, "ACTION phase");
         printTable(currentPlayer);
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
 
         Boolean hasActionCards = currentPlayerHand.containsActionCards();
 
-        printInColor(34, "You can now use your action cards");
+        printlnincolor(34, "You can now use your action cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
 
@@ -134,7 +134,7 @@ public class CliController
             System.out.println("Which action card would you like to use?");
 
             command = scanner.nextLine().toLowerCase();
-            currentPlayer.playCard(command);
+            game.playCard(command);
             hasActionCards = currentPlayerHand.containsActionCards();
         }
 
@@ -142,7 +142,7 @@ public class CliController
 
     private void buyPhase(Player currentPlayer)
     {
-        printLnInColor(31, "BUY phase");
+        printlnincolor(31, "BUY phase");
 
         printTable(currentPlayer);
 
@@ -295,13 +295,13 @@ public class CliController
         String command = "";
         Hand currentPlayerHand = currentPlayer.getHand();
         Boolean hasTreasureCards = currentPlayerHand.checkHandForType(1);
-        printLnInColor(34, "You can now use your treasure cards");
+        printlnincolor(34, "You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
 
         while (!command.equals("stop") && hasTreasureCards)
         {
-            printLnInColor(32, "Your coins:" + currentPlayer.getCoins());
+            printlnincolor(32, "Your coins:" + currentPlayer.getCoins());
             System.out.println("Your treasures:");
             currentPlayerHand = currentPlayer.getHand();
 
@@ -315,7 +315,7 @@ public class CliController
             {
                 try
                 {
-                    currentPlayer.playCard(command);
+                    game.playCard(command);
                 }
                 catch (Exception e)
                 {
@@ -331,7 +331,7 @@ public class CliController
     {
         buying = true;
         String command = "";
-        printLnInColor(34, "You can now buy cards");
+        printlnincolor(34, "You can now buy cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop buying cards.");
 
         while (!command.equals("stop") && currentPlayer.getBuys() > 0)
@@ -340,14 +340,16 @@ public class CliController
             printCards(currentPlayer, "fixed");
             System.out.println("Your buys:" + currentPlayer.getBuys());
             command = scanner.nextLine().toLowerCase();
-
-            try
+            if (!command.equals("stop"))
             {
-                currentPlayer.buyCard(command);
-            }
-            catch (Exception e)
-            {
-                System.out.println("You don't have " + command + " or no such card exists");
+                try
+                {
+                    currentPlayer.buyCard(command);
+                }
+                catch (Exception e)
+                {
+                    System.out.println("You can't buy a " + command + " card or no such card exists");
+                }
             }
         }
         System.out.println();
@@ -360,7 +362,7 @@ public class CliController
         {
             if (c.getType() == type)
             {
-                printLnInColor(33, c.getName());
+                printlnincolor(33, c.getName());
             }
         }
         System.out.println();
@@ -376,9 +378,9 @@ public class CliController
 
     private void printActionsBuysCoins(Player currentPlayer)
     {
-        printLnInColor(32, "Your actions:" + currentPlayer.getActions());
-        printLnInColor(32, "Your buys:" + currentPlayer.getBuys());
-        printLnInColor(32, "Your coins:" + currentPlayer.getCoins());
+        printlnincolor(32, "Your actions:" + currentPlayer.getActions());
+        printlnincolor(32, "Your buys:" + currentPlayer.getBuys());
+        printlnincolor(32, "Your coins:" + currentPlayer.getCoins());
     }
 
     private void printInColor(int color, String string)
@@ -398,7 +400,7 @@ public class CliController
         System.out.print(printColor + string + resetColor);
     }
 
-    private void printLnInColor(int color, String string)
+    private void printlnincolor(int color, String string)
     {
         printInColor(color, string);
         System.out.println();

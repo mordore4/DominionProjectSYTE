@@ -175,17 +175,5 @@ public class Player
         hand.removeCard(currentCard);
     }*/
 
-    public void playCard(String cardName)
-    {
-        Card currentCard = hand.findCard(cardName);
-        Ability[] cardAbilities = currentCard.getAbilities();
 
-        for (Ability ability : cardAbilities)
-        {
-            ability.doAbility(this);
-        }
-
-        discardPile.addCard(currentCard);
-        hand.removeCard(currentCard);
-    }
 }

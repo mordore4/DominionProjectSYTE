@@ -17,8 +17,9 @@ public class Ability
         this.amount = amount;
     }
 
-    public void doAbility(Player currentPlayer)
+    public void doAbility(Game game)
     {
+        Player currentPlayer = game.findCurrentPlayer();
         switch (id)
         {
             case 1:
@@ -34,6 +35,7 @@ public class Ability
                 addCards(currentPlayer);
                 break;
             case 5:
+
                 break;
             case 6:
                 break;
@@ -74,6 +76,8 @@ public class Ability
             currentPlayer.getHand().addCard(topCard);
         }
     }
+
+
 
 
 

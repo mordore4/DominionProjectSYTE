@@ -171,6 +171,24 @@ public class Game
         return foundCard;
     }
 
+    public void playCard(String cardName)
+    {
+        Player currentPlayer = findCurrentPlayer();
+        Card currentCard = currentPlayer.getHand().findCard(cardName);
+        Ability[] cardAbilities = currentCard.getAbilities();
+
+        for (Ability ability : cardAbilities)
+        {
+            ability.doAbility(this);
+        }
+
+        currentPlayer.getDiscardPile().addCard(currentCard);
+        currentPlayer.getHand().removeCard(currentCard);
+        int cardType = currentCard.getType();
+        if (cardType == 3 || cardType == 4 || cardType == 5)
+            currentPlayer.setActions(currentPlayer.getActions() - 1);
+    }
+
     /*public Card retrieveCard(String cardName, Boolean isKingdomCard)
     {
         Card foundCard = null;
