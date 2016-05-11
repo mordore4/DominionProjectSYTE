@@ -80,10 +80,10 @@ public class DeckTest
         for (int i = 0; i < 11; i++)
         {
             hand.takeTopCard(deck,discardPile);
-
         }
 
-//        assert(lastCard.equals(testCard3));
+        lastCard = hand.getTopCard();
+        assert(lastCard.equals(testCard3));
     }
 
 }
