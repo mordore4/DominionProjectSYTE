@@ -61,8 +61,6 @@ public class Player
                 e.printStackTrace();
             }
         }
-
-        deck.shuffle();
     }
 
     public void addCard(String cardName) throws CardNotAvailableException
@@ -76,7 +74,7 @@ public class Player
             Card newCard = new Card(card);
             newCard.setAmount(1);
 
-            deck.addCard(newCard);
+            discardPile.addCard(newCard);
         } else throw new CardNotAvailableException();
     }
 

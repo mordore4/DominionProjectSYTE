@@ -187,6 +187,7 @@ public class Game
         currentPlayer.getDiscardPile().addCard(currentCard);
         currentPlayer.getHand().removeCard(currentCard);
         int cardType = currentCard.getType();
+
         if (cardType == 3 || cardType == 4 || cardType == 5)
             currentPlayer.setActions(currentPlayer.getActions() - 1);
     }
