@@ -242,6 +242,45 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     }
                 }
                 break;
+                case "retrievekingdomcards":
+                {
+                    String lobbyName = request.getParameter("lobbyname");
+
+                    Lobby lobby;
+
+                    try
+                    {
+                        lobby = gameEngine.findLobby(lobbyName);
+                        Game game = lobby.getGame();
+
+                        HashMap<String, ArrayList<Card>> cardsArray = new HashMap<String, ArrayList<Card>>();
+
+                        ArrayList<Card> kingdomCards = new ArrayList<>();
+
+                        for (Card card : game.getKingdomCards())
+                        {
+                            kingdomCards.add(card);
+                        }
+
+                        cardsArray.put("kingdomCards", kingdomCards);
+
+                        ArrayList<Card> fixedCards = new ArrayList<>();
+
+                        for (Card card : game.getFixedCards())
+                        {
+                            fixedCards.add(card);
+                        }
+
+                        cardsArray.put("fixedCards", fixedCards);
+
+                        writer.print(gson.toJson(cardsArray));
+                    }
+                    catch (LobbyNotFoundException ex)
+                    {
+                        //Do nothing
+                    }
+                }
+                break;
                 case "retrievebuyablecards":
                 {
                     String lobbyName = request.getParameter("lobbyname");

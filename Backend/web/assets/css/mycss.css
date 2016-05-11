@@ -490,8 +490,14 @@ input {
     display: inline-block;
     text-align: center;
     color: white;
-    background-color: gray;
+    z-index: 1500 !important;
+    background-color: goldenrod;
     font-size: 3rem;
     padding: 8px;
-    border: 8px outset dimgray;
+    border: 8px outset darkgoldenrod;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+}
+
+#end-turn:hover {
+    opacity: 0.85;
 }

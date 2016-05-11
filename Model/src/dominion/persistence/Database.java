@@ -24,7 +24,7 @@ public class Database
         {
             System.out.println("[Database] WARNING! Could not connect to global database, starting local fallback!");
 
-            //System.out.println(System.getProperty("user.dir"));
+            System.out.println(System.getProperty("user.dir"));
 
             try
             {

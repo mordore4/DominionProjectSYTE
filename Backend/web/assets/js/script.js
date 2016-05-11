@@ -83,17 +83,16 @@ var enterNickName = function () {
 };
 
 var playGame = function () {
-    addFixedCards();
-    addKingdomCards(kingdomCards);
-
-    $("a.info").on('click', showCardInfo);
-
     createHand(tempHand);
 
     $('body').addClass("game");
 
     $('#menu').hide();
     $("div.mastfoot").hide();
+    $("#hand").hide();
+    $("#kingdomcards").hide();
+    $("#topstates").hide();
+    $("#coins").hide();
     //$("#hand").hide();
 
     $("#gamewindow").show();
@@ -128,32 +127,51 @@ var createCardsOnTable = function (cardsArray) {
     }
 };
 
-var addFixedCards = function () {
-    for (var i = 0, len = fixedCards.length; i < len; i++) {
-        var imgsrc = "images/" + fixedCards[i] + "_top.png";
+var addFixedCards = function (cardsArray) {
+    var topStates = $("#topstates");
+    var coins = $("#coins");
 
-        var html = '<li><figure data-cardname="' + fixedCards[i] + '">' +
-            '<div class="amount">0</div><a href="#" class="info"></a><img class="nobuy" alt="' + fixedCards[i] + '" title="' + fixedCards[i] + '" src="' + imgsrc + '" />' +
+    for (var i = cardsArray.length - 1; i >= 0; i--) {
+        var cardName = cardsArray[i].name;
+
+        var imgsrc = "images/" + cardName + "_top.png";
+
+        var html = '<li><figure data-cardname="' + cardName + '">' +
+            '<div class="amount">' + cardsArray[i].amount + '</div><a href="#" class="info"></a><img class="nobuy" alt="'
+            + cardName + '" title="' + cardName + '" src="' + imgsrc + '" />' +
             '</figure></li>';
 
         if (i > 3)
-            $('#topstates').append(html);
+            coins.append(html);
         else
-            $('#coins').append(html);
+            topStates.append(html);
     }
+
+    topStates.find("a.info").on('click', showCardInfo);
+    coins.find("a.info").on('click', showCardInfo);
+
+    topStates.show();
+    coins.show();
 };
 
 var addKingdomCards = function (cardsArray) {
-    for (var i = 0, len = cardsArray.length; i < len; i++) {
-        var cardName = cardsArray[i];
+    var element = $("#kingdomcards").find('ul');
 
-        var html = '<li><div data-cardname="' + cardsArray[i] + '" class="kingdomcard">';
+    element.empty();
+
+    for (var i = 0, len = cardsArray.length; i < len; i++) {
+        var cardName = cardsArray[i].name;
+
+        var html = '<li><div data-cardname="' + cardName + '" class="kingdomcard">';
         html += '<div class="kingdomcard-top nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
         html += '<div class="kingdomcard-bottom nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
-        html += '<div class="amount">0</div><a href="#" class="info"></a></div></li>';
+        html += '<div class="amount">' + cardsArray[i].amount + '</div><a href="#" class="info"></a></div></li>';
 
-        $("#kingdomcards").find('ul').append(html);
+        element.append(html);
     }
+
+    $("a.info").on('click', showCardInfo);
+    $("#kingdomcards").show();
 };
 
 var showCardInfo = function () {
@@ -254,6 +272,42 @@ var createLobby = function () {
         });
 };
 
+var joinLobby = function () {
+    $.ajax({
+        method: "GET",
+        url: "server/gamemanager",
+        data: {
+            command: "joinlobby",
+            nickname: nickname,
+            lobbyname: lobbyname
+        }
+    })
+        .done(function (data) {
+            console.log("Joined lobby " + lobbyname);
+            retrieveHand();
+            isMyTurn = false;
+            retrieveKingdomCards();
+            checkGameStatus();
+        });
+};
+
+var retrieveKingdomCards = function() {
+    $.ajax({
+        method: "GET",
+        url: "server/gamemanager",
+        data: {
+            command: "retrievekingdomcards",
+            lobbyname: lobbyname
+        }
+    })
+        .done(function (data) {
+            var cards = JSON.parse(data);
+
+            addKingdomCards(cards.kingdomCards);
+            addFixedCards(cards.fixedCards);
+        });
+};
+
 var checkLobbyReady = function () {
     $.ajax({
             method: "GET",
@@ -268,7 +322,9 @@ var checkLobbyReady = function () {
 
             if (status) {
                 retrieveHand();
+                $("#hand").show();
                 isMyTurn = false;
+                retrieveKingdomCards();
                 checkGameStatus();
             }
             else {
@@ -383,24 +439,6 @@ var checkGameStatus = function () {
         });
 };
 
-var joinLobby = function () {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "joinlobby",
-                nickname: nickname,
-                lobbyname: lobbyname
-            }
-        })
-        .done(function (data) {
-            console.log("Joined lobby " + lobbyname);
-            retrieveHand();
-            isMyTurn = false;
-            checkGameStatus();
-        });
-};
-
 var retrieveHand = function () {
     $.ajax({
             method: "GET",
@@ -437,6 +475,6 @@ var putCardOnTable = function (cardname) {
             }
         })
         .done(function (data) {
-            //Don't do jack shit
+            //Do nothing
         });
 };
