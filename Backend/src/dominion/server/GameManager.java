@@ -201,7 +201,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     {
                         try
                         {
-                            currentPlayer.buyCard(cardName);
+                            game.buyCard(cardName);
                         }
                         catch (CardNotAvailableException ex)
                         {

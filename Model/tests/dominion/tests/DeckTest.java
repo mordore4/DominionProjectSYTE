@@ -26,9 +26,11 @@ public class DeckTest
         deck = new Deck();
         discardPile = new Deck();
         hand = new Deck();
+
         Ability copperAbility = new Ability(3, 1);
         abilities = new Ability[1];
         abilities[0] = copperAbility;
+
         testCard1 = new Card("testCard1", 1, 1, 1, abilities);
         testCard2 = new Card("testCard2", 2, 2, 2, abilities);
         testCard3 = new Card("testCard3", 3, 3, 3, abilities);

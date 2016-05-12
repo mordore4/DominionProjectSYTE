@@ -7,6 +7,7 @@ import dominion.persistence.DatabaseResults;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Sam on 23/03/2016.
@@ -15,7 +16,7 @@ public class GameEngine
 {
     private ArrayList<Lobby> lobbies;
     private Database cardDatabase;
-    private ArrayList<Card> cardList;
+    private HashMap<String, Card> cardList;
 
     public GameEngine() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
@@ -43,10 +44,9 @@ public class GameEngine
         return abilities;
     }
 
-    private ArrayList<Card> makeCardList()
+    private HashMap<String, Card> makeCardList()
     {
-
-        ArrayList<Card> cardList = new ArrayList<Card>();
+        HashMap<String, Card> cardList = new HashMap<>();
 
         DatabaseResults result = cardDatabase.executeQuery("SELECT * FROM Card");
         for (int i = 0; i < result.size(); i++)
@@ -60,14 +60,14 @@ public class GameEngine
             Ability[] abilities = findCardAbilities(cardName);
 
             Card currentCard = new Card(cardName, type, cost, 0, abilities);
-            cardList.add(currentCard);
+            cardList.put(cardName, currentCard);
         }
         return cardList;
     }
 
     public void createLobby(Account account, String name, String password)
     {
-        lobbies.add(new Lobby(account, name, password, this));
+        lobbies.add(new Lobby(account, name, password, cardList));
     }
 
     public Lobby findLobby(String name) throws LobbyNotFoundException
@@ -82,22 +82,14 @@ public class GameEngine
         throw new LobbyNotFoundException();
     }
 
-    public ArrayList<Card> getCardList()
+    public HashMap<String, Card> getCardList()
     {
         return cardList;
     }
 
     public Card findCard(String name)
     {
-        Card foundCard = null;
-        for(Card card : cardList)
-        {
-            if (card.getName().equals(name))
-            {
-                foundCard = card;
-            }
-        }
-        return foundCard;
+        return cardList.get(name);
     }
 
 }

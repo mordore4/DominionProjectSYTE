@@ -10,7 +10,6 @@ import org.junit.Test;
  */
 public class GameTest
 {
-    private GameEngine gameEngine;
     private Account accountOne;
     private Account accountTwo;
     private Account[] accounts;
@@ -20,22 +19,13 @@ public class GameTest
     @Before
     public void setUp()
     {
-        try
-        {
-            gameEngine = new GameEngine();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
         accountOne = new Account("bob", 10);
         accountTwo = new Account("alice", 20);
         accounts = new Account[2];
         accounts[0] = accountOne;
         accounts[1] = accountTwo;
 
-        game = new Game(accounts, "default", gameEngine);
+        game = new Game(accounts, "default", TestHelper.getTestCardList());
     }
 
     @Test

@@ -1,6 +1,9 @@
 package dominion;
 
+import dominion.exceptions.CardNotAvailableException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Digaly on 23/03/2016.
@@ -15,12 +18,12 @@ public class Game
     private Player[] players;
     private int phase;
     private boolean isOver;
-    private GameEngine gameEngine;
+    private HashMap<String, Card> cardList;
 
-    public Game(Account[] accounts, String kingdomCardSet, GameEngine gameEngine)
+    public Game(Account[] accounts, String kingdomCardSet, HashMap<String, Card> cardList)
     {
         this.kingdomCardSet = kingdomCardSet;
-        this.gameEngine = gameEngine;
+        this.cardList = cardList;
         this.kingdomCards = cardSet(kingdomCardSet);
         fixedCards = makeFixedCards(accounts.length);
         players = new Player[accounts.length];
@@ -28,9 +31,13 @@ public class Game
 
         for (int i = 0; i < accounts.length; i++)
         {
-            Player newPlayer = new Player(this);
+            Player newPlayer = new Player();
 
             newPlayer.setAccount(accounts[i]);
+
+            createStartingDeck(newPlayer);
+
+            makeHand(newPlayer);
 
             players[i] = newPlayer;
         }
@@ -60,7 +67,7 @@ public class Game
 
     public void advancePlayer()
     {
-        findCurrentPlayer().cleanup();
+        cleanup();
         cardsOnTable = new ArrayList<String>();
 
         currentPlayerIndex++;
@@ -99,7 +106,7 @@ public class Game
 
         for (int i = 0; i < cardSetNames.length; i++)
         {
-            Card card = gameEngine.findCard(cardSetNames[i]);
+            Card card = cardList.get(cardSetNames[i]);
             cardSet[i] = new Card(card);
             cardSet[i].setAmount(10);
         }
@@ -110,13 +117,13 @@ public class Game
     {
         Card[] fixedCards = new Card[7];
 
-        fixedCards[0] = new Card(gameEngine.findCard("province"));
-        fixedCards[1] = new Card(gameEngine.findCard("duchy"));
-        fixedCards[2] = new Card(gameEngine.findCard("estate"));
-        fixedCards[3] = new Card(gameEngine.findCard("curse"));
-        fixedCards[4] = new Card(gameEngine.findCard("gold"));
-        fixedCards[5] = new Card(gameEngine.findCard("silver"));
-        fixedCards[6] = new Card(gameEngine.findCard("copper"));
+        fixedCards[0] = new Card(cardList.get("province"));
+        fixedCards[1] = new Card(cardList.get("duchy"));
+        fixedCards[2] = new Card(cardList.get("estate"));
+        fixedCards[3] = new Card(cardList.get("curse"));
+        fixedCards[4] = new Card(cardList.get("gold"));
+        fixedCards[5] = new Card(cardList.get("silver"));
+        fixedCards[6] = new Card(cardList.get("copper"));
 
 
         if (playerCount == 2)
@@ -124,8 +131,7 @@ public class Game
             fixedCards[0].setAmount(8);
             fixedCards[1].setAmount(8);
             fixedCards[2].setAmount(8);
-        }
-        else
+        } else
         {
             fixedCards[0].setAmount(12);
             fixedCards[1].setAmount(12);
@@ -196,6 +202,39 @@ public class Game
             currentPlayer.setActions(currentPlayer.getActions() - 1);
     }
 
+    public void buyCard(String cardName) throws CardNotAvailableException
+    {
+        int cardCost = retrieveCard(cardName).getCost();
+        Player currentPlayer = findCurrentPlayer();
+
+        if (currentPlayer.getCoins() >= cardCost && currentPlayer.getBuys() > 0)
+        {
+            addCard(cardName);
+            currentPlayer.setBuys(currentPlayer.getBuys() - 1);
+            currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
+        }
+    }
+
+    public void addCardToPlayer(String cardName, Player player) throws CardNotAvailableException
+    {
+        Card card = retrieveCard(cardName);
+
+        if (card.getAmount() > 0)
+        {
+            card.setAmount(card.getAmount() - 1);
+
+            Card newCard = new Card(card);
+            newCard.setAmount(1);
+
+            player.getDiscardPile().addCard(newCard);
+        } else throw new CardNotAvailableException();
+    }
+
+    public void addCard(String cardName) throws CardNotAvailableException
+    {
+        addCardToPlayer(cardName, findCurrentPlayer());
+    }
+
     /*public Card retrieveCard(String cardName, Boolean isKingdomCard)
     {
         Card foundCard = null;
@@ -227,6 +266,52 @@ public class Game
         }
 
         return out;
+    }
+
+    private void createStartingDeck(Player player)
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            try
+            {
+                addCardToPlayer("copper", player);
+            }
+            catch (CardNotAvailableException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            try
+            {
+                addCardToPlayer("estate", player);
+            }
+            catch (CardNotAvailableException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void makeHand(Player player)
+    {
+        player.getHand().makeHand(player.getDeck(), player.getDiscardPile());
+    }
+
+    private void cleanup()
+    {
+        Player currentPlayer = findCurrentPlayer();
+
+        ArrayList<Card> currentHand = currentPlayer.getHand().getCards();
+
+        for (int i = 0; i < currentHand.size(); i++)
+        {
+            currentPlayer.getDiscardPile().addCard(currentHand.get(i));
+        }
+
+        makeHand(currentPlayer);
     }
 
     public ArrayList<String> findBuyableCards()
@@ -271,7 +356,10 @@ public class Game
         return fixedCards;
     }
 
-    public void setCurrentPlayerIndex(int index) {currentPlayerIndex = index;}
+    public void setCurrentPlayerIndex(int index)
+    {
+        currentPlayerIndex = index;
+    }
 
     public ArrayList<String> getCardsOnTable()
     {

@@ -2,6 +2,7 @@ package dominion.tests;
 
 import dominion.*;
 import dominion.persistence.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -13,14 +14,14 @@ import static org.junit.Assert.*;
  */
 public class DatabaseTest
 {
-    @Test
-    public void testDatabaseConnection()
-    {
-        Database db = null;
+    private Database database;
 
+    @Before
+    public void setUp() throws Exception
+    {
         try
         {
-            db = new Database();
+            database = new Database();
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex)
         {
@@ -37,18 +38,7 @@ public class DatabaseTest
     @Test
     public void testImportCards()
     {
-        Database db = null;
-
-        try
-        {
-            db = new Database();
-        }
-        catch (Exception ex)
-        {
-
-        }
-
-        DatabaseResults result = db.executeQuery("SELECT * FROM Card");
+        DatabaseResults result = database.executeQuery("SELECT * FROM Card");
 
         assert (result.size() > 0);
     }

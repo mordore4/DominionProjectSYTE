@@ -5,6 +5,7 @@ import dominion.Card;
 import dominion.GameEngine;
 import dominion.Lobby;
 import dominion.exceptions.LobbyNotFoundException;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -16,23 +17,27 @@ import static org.junit.Assert.*;
  */
 public class GameEngineTest
 {
+    private GameEngine gameEngine;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        try
+        {
+            gameEngine = new GameEngine();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     @Test
     public void testCardList()
     {
         boolean works = false;
-        GameEngine ge = null;
 
-        try
-        {
-            ge = new GameEngine();
-        }
-        catch (Exception ex)
-        {
-
-        }
-
-        ArrayList<Card> cl = ge.getCardList();
-        for (Card c : cl)
+        for (Card c : gameEngine.getCardList().values())
         {
             if (c.toString().equals("village 3 3 0 1 2 4 1 "))
             {
@@ -46,37 +51,15 @@ public class GameEngineTest
     @Test
     public void testFindCard()
     {
-        GameEngine ge = null;
-
-        try
-        {
-            ge = new GameEngine();
-        }
-        catch (Exception ex)
-        {
-
-        }
-
-        assert(ge.findCard("smithy").toString().equals("smithy 3 4 0 4 3 "));
+        assert(gameEngine.findCard("smithy").toString().equals("smithy 3 4 0 4 3 "));
     }
 
     @Test
     public void testFindLobbyException()
     {
-        GameEngine ge = null;
-
         try
         {
-            ge = new GameEngine();
-        }
-        catch (Exception ex)
-        {
-
-        }
-
-        try
-        {
-            ge.findLobby("test");
+            gameEngine.findLobby("test");
         }
         catch (LobbyNotFoundException ex)
         {

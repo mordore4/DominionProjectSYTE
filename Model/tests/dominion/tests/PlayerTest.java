@@ -15,22 +15,12 @@ import static org.junit.Assert.*;
 public class PlayerTest
 {
     private Game game;
-    private GameEngine gameEngine;
 
     @Before
     public void setUp()
     {
-        try
-        {
-            gameEngine = new GameEngine();
-        }
-        catch (Exception ex)
-        {
-
-        }
-
         Account[] accounts = {new Account("bob", 0), new Account("alice", 0)};
-        game = new Game(accounts, "default", gameEngine);
+        game = new Game(accounts, "default", TestHelper.getTestCardList());
     }
 
     @Test
