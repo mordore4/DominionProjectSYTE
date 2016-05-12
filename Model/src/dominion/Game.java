@@ -13,6 +13,7 @@ public class Game
     private Card[] fixedCards;
     private String kingdomCardSet;
     private Card[] kingdomCards;
+    private ArrayList<String> cardsOnTable;
     private int currentPlayerIndex;
     private Player[] players;
     private int phase;
@@ -26,6 +27,7 @@ public class Game
         this.kingdomCards = cardSet(kingdomCardSet);
         fixedCards = makeFixedCards(accounts.length);
         players = new Player[accounts.length];
+        cardsOnTable = new ArrayList<String>();
 
         for (int i = 0; i < accounts.length; i++)
         {
@@ -66,6 +68,7 @@ public class Game
     public void advancePlayer()
     {
         cleanup();
+        cardsOnTable = new ArrayList<String>();
 
         currentPlayerIndex++;
 
@@ -181,6 +184,7 @@ public class Game
 
     public void playCard(String cardName)
     {
+        cardsOnTable.add(cardName);
         Player currentPlayer = findCurrentPlayer();
         Card currentCard = currentPlayer.getHand().findCard(cardName);
         Ability[] cardAbilities = currentCard.getAbilities();
@@ -310,6 +314,33 @@ public class Game
         makeHand(currentPlayer);
     }
 
+    public ArrayList<String> findBuyableCards()
+    {
+        ArrayList<String> buyableCards = new ArrayList<>();
+        for (Card kingdomCard : kingdomCards)
+        {
+            if (isBuyable(kingdomCard))
+            {
+                buyableCards.add(kingdomCard.getName());
+            }
+        }
+
+        for (Card fixedCard : fixedCards)
+        {
+            if (isBuyable(fixedCard))
+            {
+                buyableCards.add(fixedCard.getName());
+            }
+        }
+        return buyableCards;
+    }
+
+    public boolean isBuyable(Card card)
+    {
+        int money = findCurrentPlayer().getCoins();
+        return money >= card.getCost();
+    }
+
     public boolean getIsOver()
     {
         return isOver;
@@ -330,8 +361,8 @@ public class Game
         currentPlayerIndex = index;
     }
 
-    public Player getCurrentPlayer()
+    public ArrayList<String> getCardsOnTable()
     {
-        return players[currentPlayerIndex];
+        return cardsOnTable;
     }
 }

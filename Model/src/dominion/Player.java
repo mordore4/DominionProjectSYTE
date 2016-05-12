@@ -91,15 +91,8 @@ public class Player
         return hand.containsActionCards();
     }
 
-    public void cleanup()
+    public boolean isMyTurn(String nickname)
     {
-        ArrayList<Card> currentHand = hand.getCards();
-
-        for (int i = 0; i < currentHand.size(); i++)
-        {
-            discardPile.addCard(currentHand.get(i));
-        }
-
-        hand.makeHand(deck, discardPile);
+        return this.account.getName().equals(nickname);
     }
 }
