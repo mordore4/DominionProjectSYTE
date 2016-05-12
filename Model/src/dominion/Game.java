@@ -239,4 +239,8 @@ public class Game
     {
         return fixedCards;
     }
+
+    public void setCurrentPlayerIndex(int index) {currentPlayerIndex = index;}
+
+    public Player getCurrentPlayer() {return players[currentPlayerIndex];}
 }

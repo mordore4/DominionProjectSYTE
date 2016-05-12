@@ -1,6 +1,7 @@
 package dominion.tests;
 
 import dominion.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,18 +11,34 @@ import static org.junit.Assert.*;
  */
 public class LobbyTest
 {
+    Account playerOne;
+    Account playerTwo;
+    Lobby lobby;
+
+    @Before
+    public void setUp()
+    {
+        playerOne = new Account("bob", 10);
+        playerTwo = new Account("alice", 20);
+
+        lobby = new Lobby(playerOne, "mygame", "mypassword", null);
+    }
 
     @Test
     public void testAddPlayers()
     {
-        Account playerOne = new Account("bob", 10);
-        Account playerTwo = new Account("alice", 20);
 
-        Lobby newLobby = new Lobby(playerOne, "mygame", "mypassword", null);
+        lobby.addPlayer(playerTwo);
 
-        newLobby.addPlayer(playerTwo);
-
-        assert(newLobby.getPlayer("bob").toString().equals("bob 10"));
-        assert(newLobby.getPlayer("alice").toString().equals("alice 20"));
+        assert(lobby.getPlayer("bob").toString().equals("bob 10"));
+        assert(lobby.getPlayer("alice").toString().equals("alice 20"));
     }
+
+    @Test
+    public void testGetPlayer()
+    {
+        String username = "bob";
+        assert(lobby.getPlayer(username) == playerOne);
+    }
+
 }
