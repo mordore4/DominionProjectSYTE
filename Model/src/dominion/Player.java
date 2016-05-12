@@ -175,5 +175,9 @@ public class Player
         hand.removeCard(currentCard);
     }*/
 
+    public boolean isMyTurn(String nickname)
+    {
+        return this.account.getName().equals(nickname);
+    }
 
 }

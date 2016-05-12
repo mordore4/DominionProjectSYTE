@@ -23,7 +23,6 @@ public class GameManager extends javax.servlet.http.HttpServlet
     public void init()
     {
         ServletContext servletContext = getServletContext();
-        HashMap<String, CopyOnWriteArrayList<Card>> cardsOnTable = new HashMap<>();
         HashMap<String, Boolean> enableBuying = new HashMap<>();
 
         GameEngine gameEngine = null;
@@ -38,7 +37,6 @@ public class GameManager extends javax.servlet.http.HttpServlet
         }
 
         servletContext.setAttribute("gameEngine", gameEngine);
-        servletContext.setAttribute("cardsOnTable", cardsOnTable);
         servletContext.setAttribute("enableBuying", enableBuying);
     }
 
@@ -54,7 +52,6 @@ public class GameManager extends javax.servlet.http.HttpServlet
     {
         ServletContext servletContext = getServletContext();
         GameEngine gameEngine = (GameEngine) servletContext.getAttribute("gameEngine");
-        HashMap<String, CopyOnWriteArrayList<Card>> cardsOnTable = (HashMap<String, CopyOnWriteArrayList<Card>>) servletContext.getAttribute("cardsOnTable");
         HashMap<String, Boolean> enableBuying = (HashMap<String, Boolean>) servletContext.getAttribute("enableBuying");
 
         PrintWriter writer = response.getWriter();
@@ -62,324 +59,165 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
         String command = request.getParameter("command");
 
-
         if (command != null)
         {
+            String nickname = request.getParameter("nickname");
+            String lobbyName = request.getParameter("lobbyname");
+            String cardName = request.getParameter("cardname");
+            Lobby lobby = null;
+            Game game = null;
+            Player thisPlayer = null;
+            Player currentPlayer = null;
+            boolean isMyTurn = false;
+            try
+            {
+                lobby = gameEngine.findLobby(lobbyName);
+                if (lobby.isStarted())
+                {
+                    game = lobby.getGame();
+                    thisPlayer = game.getPlayer(nickname);
+                    currentPlayer = game.findCurrentPlayer();
+                    //isMyTurn = currentPlayer.isMyTurn(nickname);
+                    if (thisPlayer != null)
+                    {
+                        isMyTurn = thisPlayer.equals(currentPlayer);
+                    }
+                }
+            }
+            catch (LobbyNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+
             switch (command)
             {
                 case "createlobby":
                 {
-                    String nickname = request.getParameter("nickname");
-                    String lobbyName = request.getParameter("lobbyname");
                     Account newAccount = new Account(nickname, 0);
 
                     gameEngine.createLobby(newAccount, lobbyName, "");
 
-                    cardsOnTable.put(lobbyName, new CopyOnWriteArrayList<Card>());
                     enableBuying.put(lobbyName, false);
                 }
                 break;
                 case "joinlobby":
                 {
-                    String nickname = request.getParameter("nickname");
-                    String lobbyName = request.getParameter("lobbyname");
                     Account newAccount = new Account(nickname, 0);
-                    Lobby lobby;
 
-                    try
-                    {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        lobby.addPlayer(newAccount);
-
-                        lobby.startGame();
-                    }
-                    catch (LobbyNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    lobby.addPlayer(newAccount);
+                    lobby.startGame();
                 }
                 break;
                 case "haslobbystarted":
                 {
-                    String lobbyName = request.getParameter("lobbyname");
-                    Lobby lobby;
-
-                    try
-                    {
-                        lobby = gameEngine.findLobby(lobbyName);
-
-                        writer.print(lobby.isStarted());
-                    }
-                    catch (LobbyNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    writer.print(lobby.isStarted());
                 }
                 break;
                 case "retrievehand":
                 {
-                    String nickname = request.getParameter("nickname");
-                    String lobbyName = request.getParameter("lobbyname");
-                    Lobby lobby;
-                    Player thisPlayer;
-
-                    try
-                    {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        thisPlayer = lobby.getGame().getPlayer(nickname);
-
-                        writer.print(gson.toJson(thisPlayer.getHand().getCards()));
-                    }
-                    catch (LobbyNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    writer.print(gson.toJson(thisPlayer.getHand().getCards()));
                 }
                 break;
                 case "fetchgamestatus":
                 {
-                    String nickname = request.getParameter("nickname");
-                    String lobbyName = request.getParameter("lobbyname");
-                    Lobby lobby;
+                    HashMap<String, Object> gameStatus = new HashMap<>();
+                    gameStatus.put("isMyTurn", isMyTurn);
+                    gameStatus.put("cardsOnTable", game.getCardsOnTable());
 
-                    try
+                    if (!enableBuying.get(lobbyName))
                     {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        Game game = lobby.getGame();
-                        Player thisPlayer = game.getPlayer(nickname);
-
-                        HashMap<String, Object> gameStatus = new HashMap<>();
-                        gameStatus.put("isMyTurn", game.findCurrentPlayer().getAccount().getName().equals(nickname));
-                        gameStatus.put("cardsOnTable", cardsOnTable.get(lobbyName));
-
-                        if (!enableBuying.get(lobbyName))
-                        {
-                            gameStatus.put("phase", game.getPhase());
-                        }
-                        else
-                        {
-                            gameStatus.put("phase", 3);
-                        }
-
-                        gameStatus.put("actions", thisPlayer.getActions());
-                        gameStatus.put("buys", thisPlayer.getBuys());
-                        gameStatus.put("coins", thisPlayer.getCoins());
-
-                        writer.print(gson.toJson(gameStatus));
+                        gameStatus.put("phase", game.getPhase());
                     }
-                    catch (LobbyNotFoundException e)
+                    else
                     {
-                        e.printStackTrace();
+                        gameStatus.put("phase", 3);
                     }
+
+                    gameStatus.put("actions", thisPlayer.getActions());
+                    gameStatus.put("buys", thisPlayer.getBuys());
+                    gameStatus.put("coins", thisPlayer.getCoins());
+
+                    writer.print(gson.toJson(gameStatus));
 
                 }
                 break;
                 case "putcardontable":
                 {
-                    String nickname = request.getParameter("nickname");
-                    String cardName = request.getParameter("cardname");
-                    String lobbyName = request.getParameter("lobbyname");
 
-                    CopyOnWriteArrayList<Card> cards = cardsOnTable.get(lobbyName);
-
-                    cards.add(gameEngine.findCard(cardName));
-
-                    Lobby lobby;
-
-                    try
+                    if (isMyTurn)
                     {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        Game game = lobby.getGame();
-                        Player currentPlayer = game.findCurrentPlayer();
+                        game.playCard(cardName);
+                        //currentPlayer.playCard(cardName);
 
-                        if (currentPlayer.getAccount().getName().equals(nickname))
+                        if (!currentPlayer.getHand().checkHandForType(1))
                         {
-                            game.playCard(cardName);
-                            //currentPlayer.playCard(cardName);
-
-                            if (!currentPlayer.getHand().checkHandForType(1))
-                            {
-                                enableBuying.put(lobbyName, true);
-                            }
+                            enableBuying.put(lobbyName, true);
                         }
                     }
-                    catch (LobbyNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                break;
-                case "getcardsontable":
-                {
-                    String lobbyName = request.getParameter("lobbyname");
-
-                    CopyOnWriteArrayList<Card> cards = cardsOnTable.get(lobbyName);
-
-                    writer.print(gson.toJson(cards));
                 }
                 break;
                 case "endturn":
                 {
-                    String nickname = request.getParameter("nickname");
-                    String lobbyName = request.getParameter("lobbyname");
-
-                    Lobby lobby;
-
-                    try
+                    if (isMyTurn)
                     {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        Game game = lobby.getGame();
-                        Player currentPlayer = game.findCurrentPlayer();
-
-                        if (currentPlayer.getAccount().getName().equals(nickname))
-                        {
-                            enableBuying.put(lobbyName, false);
-                            cardsOnTable.put(lobbyName, new CopyOnWriteArrayList<Card>());
-                            game.advancePlayer();
-                        }
-                    }
-                    catch (LobbyNotFoundException e)
-                    {
-                        e.printStackTrace();
+                        enableBuying.put(lobbyName, false);
+                        game.advancePlayer();
                     }
                 }
                 break;
                 case "retrievekingdomcards":
                 {
-                    String lobbyName = request.getParameter("lobbyname");
+                    HashMap<String, Card[]> cardsArray = new HashMap<>();
 
-                    Lobby lobby;
+                    cardsArray.put("kingdomCards", game.getKingdomCards());
 
-                    try
-                    {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        Game game = lobby.getGame();
+                    cardsArray.put("fixedCards", game.getFixedCards());
 
-                        HashMap<String, ArrayList<Card>> cardsArray = new HashMap<String, ArrayList<Card>>();
-
-                        ArrayList<Card> kingdomCards = new ArrayList<>();
-
-                        for (Card card : game.getKingdomCards())
-                        {
-                            kingdomCards.add(card);
-                        }
-
-                        cardsArray.put("kingdomCards", kingdomCards);
-
-                        ArrayList<Card> fixedCards = new ArrayList<>();
-
-                        for (Card card : game.getFixedCards())
-                        {
-                            fixedCards.add(card);
-                        }
-
-                        cardsArray.put("fixedCards", fixedCards);
-
-                        writer.print(gson.toJson(cardsArray));
-                    }
-                    catch (LobbyNotFoundException ex)
-                    {
-                        //Do nothing
-                    }
-                }
-                break;
-                case "buycard":
-                {
-                    String nickname = request.getParameter("nickname");
-                    String lobbyName = request.getParameter("lobbyname");
-                    String cardName = request.getParameter("cardname");
-
-                    Lobby lobby;
-
-                    try
-                    {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        Game game = lobby.getGame();
-                        Player currentPlayer = game.findCurrentPlayer();
-
-                        if (currentPlayer.getAccount().getName().equals(nickname))
-                        {
-                            try
-                            {
-                                currentPlayer.buyCard(cardName);
-                            }
-                            catch (CardNotAvailableException ex)
-                            {
-                                ex.printStackTrace();
-                                //Do nothing
-                            }
-                        }
-                    }
-                    catch (LobbyNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    writer.print(gson.toJson(cardsArray));
                 }
                 break;
                 case "retrievebuyablecards":
                 {
-                    String lobbyName = request.getParameter("lobbyname");
+                    ArrayList<Object[]> cards = new ArrayList<>();
 
-                    Lobby lobby;
-
-                    try
+                    for (Card card : game.getKingdomCards())
                     {
-                        lobby = gameEngine.findLobby(lobbyName);
-                        Game game = lobby.getGame();
-                        Player currentPlayer = game.findCurrentPlayer();
-                        int money = currentPlayer.getCoins();
-
-                        ArrayList<String> buyableCards = new ArrayList<>();
-
-                        Card[] kingdomCards = game.getKingdomCards();
-                        Card[] fixedCards = game.getFixedCards();
-
-                        for (Card kingdomCard : kingdomCards)
-                        {
-                            if (money >= kingdomCard.getCost())
-                            {
-                                buyableCards.add(kingdomCard.getName());
-                            }
-                        }
-
-                        for (Card fixedCard : fixedCards)
-                        {
-                            if (money >= fixedCard.getCost())
-                            {
-                                buyableCards.add(fixedCard.getName());
-                            }
-                        }
-
-                        writer.print(gson.toJson(buyableCards));
+                        Object[] cardInfo = {card.getName(), card.getAmount(), game.isBuyable(card)};
+                        cards.add(cardInfo);
                     }
-                    catch (LobbyNotFoundException e)
+
+                    for (Card card : game.getFixedCards())
                     {
-                        e.printStackTrace();
+                        Object[] cardInfo = {card.getName(), card.getAmount(), game.isBuyable(card)};
+                        cards.add(cardInfo);
+                    }
+
+                    writer.print(gson.toJson(cards));
+
+                }
+                case "buycard":
+                {
+                    if (isMyTurn)
+                    {
+                        try
+                        {
+                            currentPlayer.buyCard(cardName);
+                        }
+                        catch (CardNotAvailableException ex)
+                        {
+                            ex.printStackTrace();
+                            //Do nothing
+                        }
                     }
                 }
+                break;
+                /*case "retrievebuyablecards":
+                {
+                    ArrayList<String> buyableCards = game.findBuyableCards();
+
+                    writer.print(gson.toJson(buyableCards));
+                }*/
             }
         }
-
-
-        //TEMPORARY REMOVE LATER
-        /*Account testA = new Account("testA", 0);
-        Account testB = new Account("testB", 0);
-
-        gameEngine.ajaxCreateLobby(testA, "test", "");
-        Lobby lobby = null;
-        try
-        {
-            lobby = gameEngine.findLobby("test");
-            lobby.addPlayer(testB);
-            lobby.startGame();
-
-
-            response.getWriter().print(gson.toJson(lobby.getGame().getPlayer("testA").getHand().getCards()));
-            //gameEngine.
-        }
-        catch (LobbyNotFoundException le)
-        {
-            //do nothing
-        }*/
     }
 }

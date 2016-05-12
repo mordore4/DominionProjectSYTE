@@ -43,6 +43,6 @@ public class GameTest
     {
         game.setCurrentPlayerIndex(0);
         game.advancePlayer();
-        assert (game.getCurrentPlayer().getAccount().equals(accountTwo));
+        assert (game.findCurrentPlayer().getAccount().equals(accountTwo));
     }
 }
