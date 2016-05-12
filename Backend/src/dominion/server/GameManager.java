@@ -93,18 +93,14 @@ public class GameManager extends javax.servlet.http.HttpServlet
             {
                 case "createlobby":
                 {
-                    Account newAccount = new Account(nickname, 0);
-
-                    gameEngine.createLobby(newAccount, lobbyName, "");
+                    gameEngine.createLobby(nickname, lobbyName, "");
 
                     enableBuying.put(lobbyName, false);
                 }
                 break;
                 case "joinlobby":
                 {
-                    Account newAccount = new Account(nickname, 0);
-
-                    lobby.addPlayer(newAccount);
+                    lobby.addPlayer(nickname);
                     lobby.startGame();
                 }
                 break;

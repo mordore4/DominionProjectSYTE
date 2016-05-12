@@ -72,7 +72,10 @@ public class Ability
         Deck deck = currentPlayer.getDeck();
         for (int i = 0; i < amount; i++)
         {
-            currentPlayer.getHand().takeTopCard(deck, discardPile);
+            if (discardPile.size() + deck.size() != 0)
+            {
+                currentPlayer.getHand().takeTopCard(deck, discardPile);
+            }
         }
     }
 

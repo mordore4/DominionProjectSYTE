@@ -365,4 +365,9 @@ public class Game
     {
         return cardsOnTable;
     }
+
+    public Card findCard(String name)
+    {
+        return cardList.get(name);
+    }
 }

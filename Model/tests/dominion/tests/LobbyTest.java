@@ -30,8 +30,8 @@ public class LobbyTest
 
         lobby.addPlayer(playerTwo);
 
-        assert(lobby.getPlayer("bob").toString().equals("bob"));
-        assert(lobby.getPlayer("alice").toString().equals("alice"));
+        assert(lobby.getPlayer("bob").equals("bob"));
+        assert(lobby.getPlayer("alice").equals("alice"));
     }
 
     @Test
