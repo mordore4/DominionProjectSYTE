@@ -182,24 +182,29 @@ public class Game
         return foundCard;
     }
 
-    public void playCard(String cardName)
+    public void playCard(String cardName) throws CardNotAvailableException
     {
-        cardsOnTable.add(cardName);
         Player currentPlayer = findCurrentPlayer();
         Card currentCard = currentPlayer.getHand().findCard(cardName);
-        Ability[] cardAbilities = currentCard.getAbilities();
 
-        for (Ability ability : cardAbilities)
+        if (currentCard != null && currentCard.getType() != 2)
         {
-            ability.doAbility(this);
+            Ability[] cardAbilities = currentCard.getAbilities();
+            cardsOnTable.add(cardName);
+            for (Ability ability : cardAbilities)
+            {
+                ability.doAbility(this);
+            }
+
+            currentPlayer.getDiscardPile().addCard(currentCard);
+            currentPlayer.getHand().removeCard(currentCard);
+            int cardType = currentCard.getType();
+
+            if (cardType == 3 || cardType == 4 || cardType == 5)
+                currentPlayer.setActions(currentPlayer.getActions() - 1);
         }
+        else throw new CardNotAvailableException();
 
-        currentPlayer.getDiscardPile().addCard(currentCard);
-        currentPlayer.getHand().removeCard(currentCard);
-        int cardType = currentCard.getType();
-
-        if (cardType == 3 || cardType == 4 || cardType == 5)
-            currentPlayer.setActions(currentPlayer.getActions() - 1);
     }
 
     public void buyCard(String cardName) throws CardNotAvailableException
