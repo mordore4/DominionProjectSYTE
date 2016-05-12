@@ -344,7 +344,8 @@ public class CliController
             {
                 try
                 {
-                    currentPlayer.buyCard(command);
+                    game.buyCard(command);
+                    //currentPlayer.buyCard(command);
                 }
                 catch (Exception e)
                 {

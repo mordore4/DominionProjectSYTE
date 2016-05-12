@@ -17,12 +17,9 @@ public class Player
     private int actions;
     private int buys;
     private int coins;
-    private Game game;
 
-    public Player(Game game)
+    public Player()
     {
-        this.game = game;
-
         actions = 1;
         buys = 1;
         coins = 0;
@@ -31,63 +28,7 @@ public class Player
         deck = new Deck();
         hand = new Deck();
 
-        createStartingDeck();
-
-        hand.makeHand(deck, discardPile);
-    }
-
-    public void createStartingDeck()
-    {
-        for (int i = 0; i < 7; i++)
-        {
-            try
-            {
-                addCard("copper");
-            }
-            catch (CardNotAvailableException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            try
-            {
-                addCard("estate");
-            }
-            catch (CardNotAvailableException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void addCard(String cardName) throws CardNotAvailableException
-    {
-        Card card = game.retrieveCard(cardName);
-
-        if (card.getAmount() > 0)
-        {
-            card.setAmount(card.getAmount() - 1);
-
-            Card newCard = new Card(card);
-            newCard.setAmount(1);
-
-            discardPile.addCard(newCard);
-        } else throw new CardNotAvailableException();
-    }
-
-    public void buyCard(String cardName) throws CardNotAvailableException
-    {
-        int cardCost = game.retrieveCard(cardName).getCost();
-
-        if (coins >= cardCost && buys > 0)
-        {
-            addCard(cardName);
-            buys--;
-            coins -= cardCost;
-        }
+        //hand.makeHand(deck, discardPile);
     }
 
     public void setAccount(Account account)
@@ -161,19 +102,4 @@ public class Player
 
         hand.makeHand(deck, discardPile);
     }
-
-    /*public void playCard(String cardName)
-    {
-        Card currentCard = hand.findCard(cardName);
-
-        if (currentCard.getType() == 1)
-        {
-            coins += currentCard.getAbilities()[0].getAmount();
-        }
-
-        discardPile.addCard(currentCard);
-        hand.removeCard(currentCard);
-    }*/
-
-
 }

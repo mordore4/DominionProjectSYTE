@@ -1,6 +1,8 @@
 package dominion;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Digaly on 24/03/2016.
@@ -12,14 +14,14 @@ public class Lobby
     private String name;
     private String password;
     private String cardSet;
+    private HashMap<String, Card> cardList;
     private boolean started;
-    private GameEngine gameEngine;
 
-    public Lobby(Account account, String name, String password, GameEngine gameEngine)
+    public Lobby(Account account, String name, String password, HashMap<String, Card> cardList)
     {
         this.name = name;
         this.password = password;
-        this.gameEngine = gameEngine;
+        this.cardList = cardList;
         this.started = false;
 
         playersInLobby = new ArrayList<Account>();
@@ -57,7 +59,7 @@ public class Lobby
     public void startGame()
     {
         Account[] playerArray = playersInLobby.toArray(new Account[playersInLobby.size()]);
-        game = new Game(playerArray, cardSet, gameEngine);
+        game = new Game(playerArray, cardSet, cardList);
         started = true;
     }
 
