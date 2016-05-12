@@ -33,7 +33,14 @@ public class AbilityTest
 
         currentPlayer.getHand().addCard(testCard);
 
-        game.playCard(testCard.getName());
+        try
+        {
+            game.playCard(testCard.getName());
+        }
+        catch (CardNotAvailableException e)
+        {
+            e.printStackTrace();
+        }
 
         assert (currentPlayer.getActions() == 2);
     }
@@ -46,7 +53,14 @@ public class AbilityTest
 
         currentPlayer.getHand().addCard(testCard);
 
-        game.playCard(testCard.getName());
+        try
+        {
+            game.playCard(testCard.getName());
+        }
+        catch (CardNotAvailableException e)
+        {
+            e.printStackTrace();
+        }
 
         assert (currentPlayer.getBuys() == 2);
     }
@@ -59,7 +73,14 @@ public class AbilityTest
 
         currentPlayer.getHand().addCard(testCard);
 
-        game.playCard(testCard.getName());
+        try
+        {
+            game.playCard(testCard.getName());
+        }
+        catch (CardNotAvailableException e)
+        {
+            e.printStackTrace();
+        }
 
         assert (currentPlayer.getCoins() == 5);
     }
@@ -72,7 +93,14 @@ public class AbilityTest
 
         currentPlayer.getHand().addCard(testCard);
 
-        game.playCard(testCard.getName());
+        try
+        {
+            game.playCard(testCard.getName());
+        }
+        catch (CardNotAvailableException e)
+        {
+            e.printStackTrace();
+        }
 
         assert (currentPlayer.getHand().size() == 10);
     }
