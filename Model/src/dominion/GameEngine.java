@@ -65,9 +65,9 @@ public class GameEngine
         return cardList;
     }
 
-    public void createLobby(Account account, String name, String password)
+    public void createLobby(String playerName, String lobbyName, String password)
     {
-        lobbies.add(new Lobby(account, name, password, cardList));
+        lobbies.add(new Lobby(playerName, lobbyName, password, cardList));
     }
 
     public Lobby findLobby(String name) throws LobbyNotFoundException

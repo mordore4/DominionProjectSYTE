@@ -1,6 +1,5 @@
 package dominion.tests;
 
-import dominion.Account;
 import dominion.Card;
 import dominion.GameEngine;
 import dominion.Lobby;

@@ -10,18 +10,18 @@ import org.junit.Test;
  */
 public class GameTest
 {
-    private Account accountOne;
-    private Account accountTwo;
-    private Account[] accounts;
+    private String accountOne;
+    private String accountTwo;
+    private String[] accounts;
 
     private Game game;
 
     @Before
     public void setUp()
     {
-        accountOne = new Account("bob", 10);
-        accountTwo = new Account("alice", 20);
-        accounts = new Account[2];
+        accountOne = "bob";
+        accountTwo = "alice";
+        accounts = new String[2];
         accounts[0] = accountOne;
         accounts[1] = accountTwo;
 
@@ -33,6 +33,6 @@ public class GameTest
     {
         game.setCurrentPlayerIndex(0);
         game.advancePlayer();
-        assert (game.findCurrentPlayer().getAccount().equals(accountTwo));
+        assert (game.findCurrentPlayer().getName().equals(accountTwo));
     }
 }

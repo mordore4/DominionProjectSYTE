@@ -20,20 +20,20 @@ public class Game
     private boolean isOver;
     private HashMap<String, Card> cardList;
 
-    public Game(Account[] accounts, String kingdomCardSet, HashMap<String, Card> cardList)
+    public Game(String[] playerName, String kingdomCardSet, HashMap<String, Card> cardList)
     {
         this.kingdomCardSet = kingdomCardSet;
         this.cardList = cardList;
         this.kingdomCards = cardSet(kingdomCardSet);
-        fixedCards = makeFixedCards(accounts.length);
-        players = new Player[accounts.length];
+        fixedCards = makeFixedCards(playerName.length);
+        players = new Player[playerName.length];
         cardsOnTable = new ArrayList<String>();
 
-        for (int i = 0; i < accounts.length; i++)
+        for (int i = 0; i < playerName.length; i++)
         {
             Player newPlayer = new Player();
 
-            newPlayer.setAccount(accounts[i]);
+            newPlayer.setName(playerName[i]);
 
             createStartingDeck(newPlayer);
 
@@ -153,7 +153,7 @@ public class Game
 
         for (Player p : players)
         {
-            if (p.getAccount().getName().equals(name))
+            if (p.getName().equals(name))
                 player = p;
         }
 

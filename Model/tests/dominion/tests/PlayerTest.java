@@ -1,6 +1,5 @@
 package dominion.tests;
 
-import dominion.Account;
 import dominion.Game;
 import dominion.GameEngine;
 import dominion.Player;
@@ -19,7 +18,7 @@ public class PlayerTest
     @Before
     public void setUp()
     {
-        Account[] accounts = {new Account("bob", 0), new Account("alice", 0)};
+        String[] accounts = {"bob", "alice"};
         game = new Game(accounts, "default", TestHelper.getTestCardList());
     }
 

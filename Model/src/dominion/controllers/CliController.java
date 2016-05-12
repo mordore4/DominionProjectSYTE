@@ -47,13 +47,13 @@ public class CliController
     {
         lobby = null;
         int amountOfPlayers = 2;
-        Account[] accounts = new Account[amountOfPlayers];
+        String[] accounts = new String[amountOfPlayers];
 
         for (int playerNumber = 0; playerNumber < amountOfPlayers; playerNumber++)
         {
             System.out.print("Player "+(playerNumber+1)+", what is your name?\t");
             String name = scanner.nextLine();
-            accounts[playerNumber] = new Account(name, 0);
+            accounts[playerNumber] = name;
         }
 
         /*System.out.print("Player 1, what is your name?\t");
@@ -95,7 +95,7 @@ public class CliController
         while (!game.getIsOver())
         {
             Player currentPlayer = game.findCurrentPlayer();
-            System.out.println(currentPlayer.getAccount().getName() + "'s turn starts.");
+            System.out.println(currentPlayer.getName() + "'s turn starts.");
             switch (game.getPhase())
             {
                 case 0:

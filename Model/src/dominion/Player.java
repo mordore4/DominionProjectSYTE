@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Player
 {
-    private Account account;
+    private String name;
     private Deck hand;
     private Deck discardPile;
     private Deck deck;
@@ -31,14 +31,14 @@ public class Player
         //hand.makeHand(deck, discardPile);
     }
 
-    public void setAccount(Account account)
+    public void setName(String name)
     {
-        this.account = account;
+        this.name = name;
     }
 
-    public Account getAccount()
+    public String getName()
     {
-        return account;
+        return name;
     }
 
     public Deck getDeck()
@@ -93,6 +93,6 @@ public class Player
 
     public boolean isMyTurn(String nickname)
     {
-        return this.account.getName().equals(nickname);
+        return this.name.equals(nickname);
     }
 }

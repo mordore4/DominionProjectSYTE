@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Lobby
 {
-    private ArrayList<Account> playersInLobby;
+    private ArrayList<String> playersInLobby;
     private Game game;
     private String name;
     private String password;
@@ -17,34 +17,34 @@ public class Lobby
     private HashMap<String, Card> cardList;
     private boolean started;
 
-    public Lobby(Account account, String name, String password, HashMap<String, Card> cardList)
+    public Lobby(String playerName, String name, String password, HashMap<String, Card> cardList)
     {
         this.name = name;
         this.password = password;
         this.cardList = cardList;
         this.started = false;
 
-        playersInLobby = new ArrayList<Account>();
-        playersInLobby.add(account);
+        playersInLobby = new ArrayList<String>();
+        playersInLobby.add(playerName);
 
         cardSet = "default";
     }
 
-    public void addPlayer(Account account)
+    public void addPlayer(String playerName)
     {
         if (playersInLobby.size() < 4)
         {
-            playersInLobby.add(account);
+            playersInLobby.add(playerName);
         }
     }
 
-    public Account getPlayer(String username)
+    public String getPlayer(String username)
     {
-        Account player = null;
+        String player = null;
 
-        for (Account a : playersInLobby)
+        for (String a : playersInLobby)
         {
-            if (a.getName().equals(username))
+            if (a.equals(username))
                 player = a;
         }
 
@@ -58,7 +58,7 @@ public class Lobby
 
     public void startGame()
     {
-        Account[] playerArray = playersInLobby.toArray(new Account[playersInLobby.size()]);
+        String[] playerArray = playersInLobby.toArray(new String[playersInLobby.size()]);
         game = new Game(playerArray, cardSet, cardList);
         started = true;
     }
