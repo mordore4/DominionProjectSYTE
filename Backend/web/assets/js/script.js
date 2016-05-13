@@ -3,6 +3,7 @@ var kingdomCards = ["militia", "remodel", "smithy", "market", "mine", "cellar", 
 var fixedCards = ["copper", "silver", "gold", "curse", "province", "duchy", "estate"];
 var forbiddenCards = ["province", "duchy", "estate", "curse"];
 
+var nodeserver = "http://178.117.107.177:17";
 var nickname = "mingebag";
 var lobbyname = "";
 var isHost = false;
@@ -70,8 +71,9 @@ $(document).ready(function () {
         $("#chat").removeClass("visible");
     });
 
+    ioInitialize(nodeserver);
     //enterNickName();
-    playGame();
+    //playGame();
 });
 
 var enterGame = function (ishost)

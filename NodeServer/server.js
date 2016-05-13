@@ -1,6 +1,6 @@
 var http = require('http').Server();
 var io = require('socket.io')(http);
-var port = 443;
+var port = 1025;
 
 http.listen(port, function(){
 	console.log('Dominion-chatserver running on *:' + port);
@@ -16,7 +16,11 @@ http.listen(port, function(){
 });
 
 io.on('connection', function(socket){
-	console.log('a user connected');
+	console.log(getColor(32) + socket.id + getColor(0));
+
+	socket.on('chat message', function(msg){
+		io.emit('chat message', msg);
+	});
 });
 
 var getColor = function(number) {
