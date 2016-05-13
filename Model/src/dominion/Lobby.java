@@ -27,7 +27,7 @@ public class Lobby
         playersInLobby = new ArrayList<String>();
         playersInLobby.add(playerName);
 
-        cardSet = "default";
+        cardSet = "testWitch";
     }
 
     public void addPlayer(String playerName)

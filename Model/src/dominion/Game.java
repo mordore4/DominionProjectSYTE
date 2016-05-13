@@ -20,20 +20,20 @@ public class Game
     private boolean isOver;
     private HashMap<String, Card> cardList;
 
-    public Game(String[] playerName, String kingdomCardSet, HashMap<String, Card> cardList)
+    public Game(String[] playerNames, String kingdomCardSet, HashMap<String, Card> cardList)
     {
         this.kingdomCardSet = kingdomCardSet;
         this.cardList = cardList;
         this.kingdomCards = cardSet(kingdomCardSet);
-        fixedCards = makeFixedCards(playerName.length);
-        players = new Player[playerName.length];
+        fixedCards = makeFixedCards(playerNames.length);
+        players = new Player[playerNames.length];
         cardsOnTable = new ArrayList<String>();
 
-        for (int i = 0; i < playerName.length; i++)
+        for (int i = 0; i < playerNames.length; i++)
         {
             Player newPlayer = new Player();
 
-            newPlayer.setName(playerName[i]);
+            newPlayer.setName(playerNames[i]);
 
             createStartingDeck(newPlayer);
 
@@ -102,6 +102,10 @@ public class Game
         if (name.equals("default"))
         {
             cardSetNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "smithy", "village", "woodcutter", "workshop",};
+        }
+        else if (name.equals("testWitch"))
+        {
+            cardSetNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "witch", "village", "woodcutter", "workshop",};
         }
 
         for (int i = 0; i < cardSetNames.length; i++)
@@ -193,7 +197,14 @@ public class Game
             cardsOnTable.add(cardName);
             for (Ability ability : cardAbilities)
             {
-                ability.doAbility(this);
+                if (ability.getId() < 6 || ability.getId() == 12)
+                {
+                    ability.doAbility(this);
+                }
+                else if (ability.getId() == 6)
+                {
+                    ability.doAbility(this, currentCard);
+                }
             }
 
             currentPlayer.getDiscardPile().addCard(currentCard);
@@ -217,6 +228,17 @@ public class Game
             addCard(cardName);
             currentPlayer.setBuys(currentPlayer.getBuys() - 1);
             currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
+        }
+    }
+
+    public void gainCardCostingUpTo(String cardName, int value) throws CardNotAvailableException
+    {
+        int cardCost = retrieveCard(cardName).getCost();
+        Player currentPlayer = findCurrentPlayer();
+
+        if (value >= cardCost)
+        {
+            addCard(cardName);
         }
     }
 
@@ -374,5 +396,10 @@ public class Game
     public Card findCard(String name)
     {
         return cardList.get(name);
+    }
+
+    public Player[] getPlayers()
+    {
+        return players;
     }
 }

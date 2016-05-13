@@ -1,5 +1,8 @@
 package dominion;
 
+import dominion.exceptions.CardNotAvailableException;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -19,34 +22,54 @@ public class Ability
 
     public void doAbility(Game game)
     {
-        Player currentPlayer = game.findCurrentPlayer();
         switch (id)
         {
             case 1:
-                addActions(currentPlayer);
+                addActions(game.findCurrentPlayer());
                 break;
             case 2:
-                addBuys(currentPlayer);
+                addBuys(game.findCurrentPlayer());
                 break;
             case 3:
-                addCoins(currentPlayer);
+                addCoins(game.findCurrentPlayer());
                 break;
             case 4:
-                addCards(currentPlayer);
+                addCards(game.findCurrentPlayer());
                 break;
             case 5:
-
                 break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
+            case 12:
+                curseOtherPlayers(game);
                 break;
         }
     }
+
+    public void doAbility(Game game, Card card) throws CardNotAvailableException
+    {
+        switch (id)
+        {
+            case 6:
+                game.findCurrentPlayer().getHand().removeCard(card);
+                break;
+            case 9:
+                gainCardCostingUpTo(game, card);
+                break;
+            case 11:
+                playCardTwice(game, card);
+                break;
+        }
+    }
+
+    public void doAbility(Game game, ArrayList<Card> cards)
+    {
+        switch (id)
+        {
+            case 7:
+                trashCards(game.findCurrentPlayer(), cards);
+                break;
+        }
+    }
+
 
     private void addActions(Player currentPlayer)
     {
@@ -79,7 +102,49 @@ public class Ability
         }
     }
 
+    private void trashCards(Player currentPlayer, ArrayList<Card> cards)
+    {
+        Deck hand = currentPlayer.getHand();
+        for (Card card : cards)
+        {
+            hand.removeCard(card);
+        }
+    }
 
+    private void gainCardCostingUpTo(Game game, Card card) throws CardNotAvailableException
+    {
+        int maxValue = amount;
+        game.gainCardCostingUpTo(card.getName(), amount);
+    }
+
+    private void playCardTwice(Game game, Card card) throws CardNotAvailableException
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            int currentActions = game.findCurrentPlayer().getActions();
+            game.findCurrentPlayer().setActions(currentActions + 1);
+            game.playCard(card.getName());
+        }
+    }
+
+    private void curseOtherPlayers(Game game)
+    {
+        Player playingPlayer = game.findCurrentPlayer();
+        for (Player player : game.getPlayers())
+        {
+            if (player != playingPlayer)
+            {
+                try
+                {
+                    game.addCardToPlayer("curse", player);
+                }
+                catch (CardNotAvailableException e)
+                {
+                    //do nothing
+                }
+            }
+        }
+    }
 
 
 
