@@ -2,6 +2,7 @@ package dominion.tests;
 
 import dominion.*;
 
+import dominion.exceptions.CardNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,21 +29,26 @@ public class GameTest
         accounts[1] = accountTwo;
 
         game = new Game(accounts, "default", TestHelper.getTestCardList());
+        game.setCurrentPlayerIndex(0);
     }
 
     @Test
     public void testAdvancePlayer()
     {
-        game.setCurrentPlayerIndex(0);
         game.advancePlayer();
+        assert (game.findCurrentPlayer().getName().equals(accountTwo));
+    }
+
+    @Test
+    public void testAdvancePhase()
+    {
+        game.advancePhase();
         assert (game.findCurrentPlayer().getName().equals(accountTwo));
     }
 
     @Test
     public void testIsBuyable()
     {
-        game.setCurrentPlayerIndex(0);
-
         Player currentPlayer = game.findCurrentPlayer();
 
         assert(!game.isBuyable(game.findCard("cellar")));
@@ -55,8 +61,6 @@ public class GameTest
     @Test
     public void testFindBuyableCards()
     {
-        game.setCurrentPlayerIndex(0);
-
         Player currentPlayer = game.findCurrentPlayer();
         currentPlayer.setCoins(2);
 
@@ -68,17 +72,15 @@ public class GameTest
     @Test
     public void testAddCard()
     {
-        game.setCurrentPlayerIndex(0);
-
         Player currentPlayer = game.findCurrentPlayer();
 
         try
         {
             game.addCard("cellar");
         }
-        catch (Exception ex)
+        catch (CardNotAvailableException ex)
         {
-
+            ex.printStackTrace();
         }
 
         assert(currentPlayer.getDiscardPile().findCard("cellar") != null);
@@ -87,8 +89,6 @@ public class GameTest
     @Test
     public void testBuyCard()
     {
-        game.setCurrentPlayerIndex(0);
-
         Player currentPlayer = game.findCurrentPlayer();
         currentPlayer.setCoins(2);
 
@@ -96,13 +96,44 @@ public class GameTest
         {
             game.buyCard("cellar");
         }
-        catch (Exception ex)
+        catch (CardNotAvailableException ex)
         {
-
+            ex.printStackTrace();
         }
 
         assert(currentPlayer.getCoins() == 0);
         assert(currentPlayer.getBuys() == 0);
         assert(currentPlayer.getDiscardPile().findCard("cellar") != null);
+    }
+
+    @Test
+    public void testGainCardCostingUpTo()
+    {
+        Player currentPlayer = game.findCurrentPlayer();
+
+        try
+        {
+            game.gainCardCostingUpTo("moat", 2);
+        }
+        catch (CardNotAvailableException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        assert(currentPlayer.getDiscardPile().findCard("moat") != null);
+    }
+
+    @Test
+    public void testDiscardCard()
+    {
+        Player currentPlayer = game.findCurrentPlayer();
+
+        currentPlayer.getHand().addCard(game.retrieveCard("moat"));
+
+        assert(currentPlayer.getHand().findCard("moat") != null);
+
+        game.discardCard(currentPlayer.getHand().findCard("moat"));
+
+        assert(currentPlayer.getHand().findCard("moat") == null);
     }
 }

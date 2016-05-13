@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 public class AbilityTest
 {
     private Game game;
+    private Player currentPlayer;
 
     @Before
     public void setUp() throws Exception
@@ -23,87 +24,78 @@ public class AbilityTest
         String[] accounts = {"bob", "alice"};
         game = new Game(accounts, "default", TestHelper.getTestCardList());
         game.setCurrentPlayerIndex(0);
+        currentPlayer = game.findCurrentPlayer();
     }
 
     @Test
-    public void TestAddActionsAbility()
+    public void testAddActionsAbility() throws CardNotAvailableException
     {
-        Player currentPlayer = game.findCurrentPlayer();
         Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(1, 2)});
 
         currentPlayer.getHand().addCard(testCard);
 
-        try
-        {
-            game.playCard(testCard.getName());
-        }
-        catch (CardNotAvailableException e)
-        {
-            e.printStackTrace();
-        }
+        game.playCard(testCard.getName());
 
         assert (currentPlayer.getActions() == 2);
     }
 
     @Test
-    public void TestAddBuysAbility()
+    public void testAddBuysAbility() throws CardNotAvailableException
     {
-        Player currentPlayer = game.findCurrentPlayer();
         Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(2, 1)});
 
         currentPlayer.getHand().addCard(testCard);
 
-        try
-        {
-            game.playCard(testCard.getName());
-        }
-        catch (CardNotAvailableException e)
-        {
-            e.printStackTrace();
-        }
+        game.playCard(testCard.getName());
 
         assert (currentPlayer.getBuys() == 2);
     }
 
     @Test
-    public void TestAddCoinsAbility()
+    public void testAddCoinsAbility() throws CardNotAvailableException
     {
-        Player currentPlayer = game.findCurrentPlayer();
         Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(3, 5)});
 
         currentPlayer.getHand().addCard(testCard);
 
-        try
-        {
-            game.playCard(testCard.getName());
-        }
-        catch (CardNotAvailableException e)
-        {
-            e.printStackTrace();
-        }
+        game.playCard(testCard.getName());
 
         assert (currentPlayer.getCoins() == 5);
     }
 
     @Test
-    public void TestAddCardsAbility()
+    public void testAddCardsAbility() throws CardNotAvailableException
     {
-        Player currentPlayer = game.findCurrentPlayer();
         Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(4, 20)});
 
         currentPlayer.getHand().addCard(testCard);
 
-        try
-        {
-            game.playCard(testCard.getName());
-        }
-        catch (CardNotAvailableException e)
-        {
-            e.printStackTrace();
-        }
+        game.playCard(testCard.getName());
 
         assert (currentPlayer.getHand().size() == 10);
     }
 
+    @Test
+    public void testCurseOtherPlayersAbility() throws CardNotAvailableException
+    {
+        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(12, -1)});
 
+        currentPlayer.getHand().addCard(testCard);
+
+        game.playCard(testCard.getName());
+
+        assert (game.getPlayer("alice").getDiscardPile().findCard("curse") != null);
+    }
+
+    @Test
+    public void testTrashThisCard() throws CardNotAvailableException
+    {
+        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(6, -1)});
+
+        currentPlayer.getHand().addCard(testCard);
+
+        game.playCard(testCard.getName());
+
+        assert (currentPlayer.getHand().findCard("testcard") == null);
+    }
 }
