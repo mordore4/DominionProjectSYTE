@@ -3,7 +3,6 @@ package dominion;
 import dominion.exceptions.CardNotAvailableException;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by Sam on 31/03/2016.
@@ -12,7 +11,6 @@ public class Ability
 {
     private int id;
     private int amount;
-    private Scanner scanner;
 
     public Ability(int id, int amount)
     {
@@ -113,7 +111,6 @@ public class Ability
 
     private void gainCardCostingUpTo(Game game, Card card) throws CardNotAvailableException
     {
-        int maxValue = amount;
         game.gainCardCostingUpTo(card.getName(), amount);
     }
 
@@ -121,10 +118,9 @@ public class Ability
     {
         for (int i = 0; i < 2; i++)
         {
-            int currentActions = game.findCurrentPlayer().getActions();
-            game.findCurrentPlayer().setActions(currentActions + 1);
-            game.playCard(card.getName());
+            game.executeCardAbilities(card);
         }
+        game.discardCard(card);
     }
 
     private void curseOtherPlayers(Game game)

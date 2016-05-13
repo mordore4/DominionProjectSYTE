@@ -6,7 +6,7 @@ package dominion;
 public class Card
 {
     private String name;
-    private Ability[] abilities; //possibly wrong, Abilities might become class
+    private Ability[] abilities;
     private int type;
     private int cost;
     private int amount;
@@ -52,16 +52,6 @@ public class Card
     public Ability[] getAbilities()
     {
         return abilities;
-    }
-
-    public void setType(int type)
-    {
-        this.type = type;
-    }
-
-    public void setCost(int cost)
-    {
-        this.cost = cost;
     }
 
     public void setAmount(int amount)

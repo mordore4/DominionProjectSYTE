@@ -57,15 +57,7 @@ public class CliController
             accounts[playerNumber] = name;
         }
 
-        /*System.out.print("Player 1, what is your name?\t");
-        String name = scanner.nextLine();
-        Account account1 = new Account(name, 0);
-
-        System.out.print("Player 2, what is your name?\t");
-        name = scanner.nextLine();
-        Account account2 = new Account(name, 0);*/
-
-        gameEngine.createLobby(accounts[0], "mygame", "mypassword");
+        gameEngine.createLobby(accounts[0], "mygame");
 
         try
         {
@@ -75,8 +67,6 @@ public class CliController
         {
             //never happens in the CLI
         }
-
-        //lobby.addPlayer(account2);
 
         for (int playerNumber = 1; playerNumber < amountOfPlayers; playerNumber++)
         {
@@ -197,7 +187,6 @@ public class CliController
         for (int i = cards.length - 1; i >= 0; i--)
         {
             Card currentCard = cards[i];
-            Card prevCard = null;
 
             if (currentCard.getAmount() > 0)
             {
@@ -289,7 +278,6 @@ public class CliController
                 try
                 {
                     game.buyCard(command);
-                    //currentPlayer.buyCard(command);
                 }
                 catch (Exception e)
                 {

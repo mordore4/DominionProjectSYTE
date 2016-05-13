@@ -12,12 +12,12 @@ public class Deck
 
     public Deck ()
     {
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
     }
 
     public void makeHand(Deck deck, Deck discardPile)
     {
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         for (int i = 0; i < 5; i++)
         {
             this.takeTopCard(deck, discardPile);
@@ -57,7 +57,7 @@ public class Deck
         return card;
     }
 
-    public int calculatePoints()
+    /*public int calculatePoints() //Move to game
     {
         int points = 0;
         for (int cardnr = 0; cardnr < cards.size(); cardnr++)
@@ -66,14 +66,14 @@ public class Deck
         }
 
         return points;
-    }
+    }*/
 
     public void shuffle()
     {
         Collections.shuffle(cards);
     }
 
-    public void discardToDeck(Deck discardPile)
+    private void discardToDeck(Deck discardPile)
     {
         ArrayList<Card> temp = discardPile.cards;
         discardPile.cards = this.cards;

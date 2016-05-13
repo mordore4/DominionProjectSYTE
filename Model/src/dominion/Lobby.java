@@ -12,19 +12,17 @@ public class Lobby
     private ArrayList<String> playersInLobby;
     private Game game;
     private String name;
-    private String password;
     private String cardSet;
     private HashMap<String, Card> cardList;
     private boolean started;
 
-    public Lobby(String playerName, String name, String password, HashMap<String, Card> cardList)
+    public Lobby(String playerName, String name, HashMap<String, Card> cardList)
     {
         this.name = name;
-        this.password = password;
         this.cardList = cardList;
         this.started = false;
 
-        playersInLobby = new ArrayList<String>();
+        playersInLobby = new ArrayList<>();
         playersInLobby.add(playerName);
 
         cardSet = "testWitch";

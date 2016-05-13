@@ -11,7 +11,6 @@ import java.util.HashMap;
 public class Game
 {
     private Card[] fixedCards;
-    private String kingdomCardSet;
     private Card[] kingdomCards;
     private ArrayList<String> cardsOnTable;
     private int currentPlayerIndex;
@@ -22,12 +21,11 @@ public class Game
 
     public Game(String[] playerNames, String kingdomCardSet, HashMap<String, Card> cardList)
     {
-        this.kingdomCardSet = kingdomCardSet;
         this.cardList = cardList;
         this.kingdomCards = cardSet(kingdomCardSet);
         fixedCards = makeFixedCards(playerNames.length);
         players = new Player[playerNames.length];
-        cardsOnTable = new ArrayList<String>();
+        cardsOnTable = new ArrayList<>();
 
         for (int i = 0; i < playerNames.length; i++)
         {
@@ -68,7 +66,7 @@ public class Game
     public void advancePlayer()
     {
         cleanup();
-        cardsOnTable = new ArrayList<String>();
+        cardsOnTable = new ArrayList<>();
 
         currentPlayerIndex++;
 
@@ -146,7 +144,6 @@ public class Game
         fixedCards[4].setAmount(30);
         fixedCards[5].setAmount(40);
         fixedCards[6].setAmount(60);
-        //fixedCards[6].setAmount(60 - players.length * 7);
 
         return fixedCards;
     }
@@ -193,29 +190,32 @@ public class Game
 
         if (currentCard != null && currentCard.getType() != 2)
         {
-            Ability[] cardAbilities = currentCard.getAbilities();
-            cardsOnTable.add(cardName);
-            for (Ability ability : cardAbilities)
-            {
-                if (ability.getId() < 6 || ability.getId() == 12)
-                {
-                    ability.doAbility(this);
-                }
-                else if (ability.getId() == 6)
-                {
-                    ability.doAbility(this, currentCard);
-                }
-            }
+            executeCardAbilities(currentCard);
 
-            currentPlayer.getDiscardPile().addCard(currentCard);
-            currentPlayer.getHand().removeCard(currentCard);
+            discardCard(currentCard);
             int cardType = currentCard.getType();
 
             if (cardType == 3 || cardType == 4 || cardType == 5)
                 currentPlayer.setActions(currentPlayer.getActions() - 1);
         }
         else throw new CardNotAvailableException();
+    }
 
+    public void executeCardAbilities(Card currentCard) throws CardNotAvailableException
+    {
+        Ability[] cardAbilities = currentCard.getAbilities();
+        cardsOnTable.add(currentCard.getName());
+        for (Ability ability : cardAbilities)
+        {
+            if (ability.getId() < 6 || ability.getId() == 12)
+            {
+                ability.doAbility(this);
+            }
+            else if (ability.getId() == 6)
+            {
+                ability.doAbility(this, currentCard);
+            }
+        }
     }
 
     public void buyCard(String cardName) throws CardNotAvailableException
@@ -234,12 +234,22 @@ public class Game
     public void gainCardCostingUpTo(String cardName, int value) throws CardNotAvailableException
     {
         int cardCost = retrieveCard(cardName).getCost();
-        Player currentPlayer = findCurrentPlayer();
 
         if (value >= cardCost)
         {
             addCard(cardName);
         }
+    }
+
+    public void discardCardFromPlayer(Card card, Player player)
+    {
+        player.getDiscardPile().addCard(card);
+        player.getHand().removeCard(card);
+    }
+
+    public void discardCard(Card card)
+    {
+        discardCardFromPlayer(card, findCurrentPlayer());
     }
 
     public void addCardToPlayer(String cardName, Player player) throws CardNotAvailableException
@@ -260,39 +270,6 @@ public class Game
     public void addCard(String cardName) throws CardNotAvailableException
     {
         addCardToPlayer(cardName, findCurrentPlayer());
-    }
-
-    /*public Card retrieveCard(String cardName, Boolean isKingdomCard)
-    {
-        Card foundCard = null;
-
-        Card[] searchArray = fixedCards;
-        if (isKingdomCard) searchArray = kingdomCards;
-
-        for (Card c : searchArray)
-        {
-            if (c.getName().equals(cardName))
-                foundCard = c;
-        }
-
-        return foundCard;
-    }*/
-
-    public String allCardsToString()
-    {
-        String out = "";
-
-        for (int i = 0; i < kingdomCards.length; i++)
-        {
-            out += kingdomCards[i].toString() + "\n";
-        }
-
-        for (int i = 0; i < fixedCards.length; i++)
-        {
-            out += fixedCards[i].toString() + "\n";
-        }
-
-        return out;
     }
 
     private void createStartingDeck(Player player)

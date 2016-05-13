@@ -12,7 +12,7 @@ public class DatabaseRecord
 
     public DatabaseRecord()
     {
-        rowValues = new HashMap<String, String>();
+        rowValues = new HashMap<>();
     }
 
     public void setValue(String columnName, String value)

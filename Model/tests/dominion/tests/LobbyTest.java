@@ -21,7 +21,7 @@ public class LobbyTest
         playerOne = "bob";
         playerTwo = "alice";
 
-        lobby = new Lobby(playerOne, "mygame", "mypassword", null);
+        lobby = new Lobby(playerOne, "mygame", null);
     }
 
     @Test

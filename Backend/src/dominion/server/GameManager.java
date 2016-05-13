@@ -93,7 +93,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
             {
                 case "createlobby":
                 {
-                    gameEngine.createLobby(nickname, lobbyName, "");
+                    gameEngine.createLobby(nickname, lobbyName);
 
                     enableBuying.put(lobbyName, false);
                 }

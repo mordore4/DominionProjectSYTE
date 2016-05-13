@@ -20,7 +20,7 @@ public class GameEngine
 
     public GameEngine() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
-        lobbies = new ArrayList<Lobby>();
+        lobbies = new ArrayList<>();
         cardDatabase = new Database();
         cardList = makeCardList();
     }
@@ -65,9 +65,9 @@ public class GameEngine
         return cardList;
     }
 
-    public void createLobby(String playerName, String lobbyName, String password)
+    public void createLobby(String playerName, String lobbyName)
     {
-        lobbies.add(new Lobby(playerName, lobbyName, password, cardList));
+        lobbies.add(new Lobby(playerName, lobbyName, cardList));
     }
 
     public Lobby findLobby(String name) throws LobbyNotFoundException
