@@ -5,11 +5,15 @@ var ioInitialize = function(server) {
 };
 
 var ioBindOnChatReceive = function(callback) {
-    socket.on('chat message', function(msg){
-        callback(msg);
+    socket.on('chat message', function(nickname, msg){
+        callback(nickname, msg);
     });
 };
 
-var ioSendChatMessage = function(message) {
-    socket.emit('chat message', message);
+var ioSendChatMessage = function(nickname, message) {
+    socket.emit('chat message', nickname, message);
+};
+
+var ioSetRoom = function(room) {
+    socket.emit('join room', room);
 };

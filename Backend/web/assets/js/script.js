@@ -3,8 +3,11 @@ var kingdomCards = ["militia", "remodel", "smithy", "market", "mine", "cellar", 
 var fixedCards = ["copper", "silver", "gold", "curse", "province", "duchy", "estate"];
 var forbiddenCards = ["province", "duchy", "estate", "curse"];
 
-var nodeserver = "http://178.117.107.177:17";
-var nickname = "mingebag";
+var io_isLocal = true;
+var io_port = 4;
+
+var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.107.177:" + io_port;
+var nickname = "farmboy" + Math.floor((Math.random() * 899) + 100);
 var lobbyname = "";
 var isHost = false;
 var isMyTurn = false;
@@ -58,23 +61,42 @@ $(document).ready(function () {
     $("#end-turn").on('click', ajaxEndTurn).hide();
 
     $(document).keypress(function(e){
-        var chatMessage = $("#chat-message");
+        /*var chatMessage = $("#chat-message");
 
         if (e.which == 116 && !chatMessage.is(":focus")) {
             $("#chat").toggleClass("visible");
             e.preventDefault();
             chatMessage.focus();
-        }
+        }*/
     });
 
     $("#chat-message").on('blur', function() {
-        $("#chat").removeClass("visible");
-    });
+        //$("#chat").removeClass("visible");
+    }).on('keypress', sendChatMessage);
 
     ioInitialize(nodeserver);
+    ioBindOnChatReceive(receiveChatMessage);
     //enterNickName();
     //playGame();
 });
+
+var sendChatMessage = function(e) {
+    var message = $(this).val();
+
+    if (e.which == 13 || e.keyCode == 13)
+    {
+        ioSendChatMessage(nickname, message);
+        $(this).val("");
+    }
+};
+
+var receiveChatMessage = function(nickname, message)
+{
+    var html = '<li><span class="username">' + nickname + '</span>' + message + '</li>';
+
+    $("#chat").find(".message-list").append(html).stop()
+        .animate({ scrollTop: $('#chat .message-list').prop("scrollHeight")}, 350);
+};
 
 var enterGame = function (ishost)
 {
@@ -82,6 +104,7 @@ var enterGame = function (ishost)
     nickname = $("#nickname").val();
     lobbyname = $("#lobbyname").val();
     isHost = ishost;
+    ioSetRoom(lobbyname);
     playGame();
 };
 

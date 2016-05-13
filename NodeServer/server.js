@@ -1,6 +1,6 @@
 var http = require('http').Server();
 var io = require('socket.io')(http);
-var port = 1025;
+var port = 4;
 
 http.listen(port, function(){
 	console.log('Dominion-chatserver running on *:' + port);
@@ -17,9 +17,20 @@ http.listen(port, function(){
 
 io.on('connection', function(socket){
 	console.log(getColor(32) + socket.id + getColor(0));
+	var myRoom = "all";
+	socket.join(myRoom);
 
-	socket.on('chat message', function(msg){
-		io.emit('chat message', msg);
+	socket.on('chat message', function(nickname, message){
+        if (message.trim() != "")
+        {
+            io.to(myRoom).emit('chat message', nickname, message);
+        }
+	});
+
+	socket.on('join room', function(room){
+		socket.leave(myRoom);
+		myRoom = room;
+		socket.join(myRoom);
 	});
 });
 
