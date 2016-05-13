@@ -56,8 +56,22 @@ $(document).ready(function () {
     }).hide().removeClass("hidden");
     $("#end-turn").on('click', ajaxEndTurn).hide();
 
-    enterNickName();
-    //playGame();
+    $(document).keypress(function(e){
+        var chatMessage = $("#chat-message");
+
+        if (e.which == 116 && !chatMessage.is(":focus")) {
+            $("#chat").toggleClass("visible");
+            e.preventDefault();
+            chatMessage.focus();
+        }
+    });
+
+    $("#chat-message").on('blur', function() {
+        $("#chat").removeClass("visible");
+    });
+
+    //enterNickName();
+    playGame();
 });
 
 var enterGame = function (ishost)

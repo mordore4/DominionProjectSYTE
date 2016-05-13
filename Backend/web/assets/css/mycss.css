@@ -537,3 +537,47 @@ input {
     background-image: url("../media/flag.png");
     color: white;
 }
+
+#chat {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 500px;
+    height: 178px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid gray;
+    border-radius: 4px;
+    padding: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#chat.visible {
+    opacity: 1;
+}
+
+#chat .message-list {
+    width: 100%;
+    height: 124px;
+    margin-bottom: 8px;
+}
+
+#chat .compose-message {
+    text-align: left;
+    height: 32px;
+}
+
+#chat .compose-message input {
+    display: inline-block;
+    width: calc(100% - 49px);
+    height: 32px;
+    border: 2px solid gray;
+    padding-left: 4px;
+}
+
+#chat .compose-message label {
+    display: inline-block;
+    width: 42px;
+    height: 32px;
+    line-height: 32px;
+}
