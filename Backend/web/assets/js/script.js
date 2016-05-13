@@ -56,6 +56,7 @@ $(document).ready(function () {
     }).hide().removeClass("hidden");
     $("#end-turn").on('click', ajaxEndTurn).hide();
 
+    enterNickName();
     //playGame();
 });
 

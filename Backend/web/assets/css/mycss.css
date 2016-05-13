@@ -501,3 +501,39 @@ input {
 #end-turn:hover {
     opacity: 0.85;
 }
+
+#enternickname {
+    background-color: rgba(0,0,0,0.6);
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+#enternickname input {
+    display: block;
+    border: 2px solid gray;
+    border-radius: 6px;
+    padding-left: 2px;
+    color: white;
+    opacity: 1;
+}
+
+#enternickname a {
+    background-image: url("../media/flag_n.png");
+    background-position: left center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 100%;
+    padding-left: 8px;
+    line-height: 32px;
+    color: black;
+    display: inline-block;
+}
+
+#enternickname a:hover {
+    text-decoration: none;
+    background-image: url("../media/flag.png");
+    color: white;
+}

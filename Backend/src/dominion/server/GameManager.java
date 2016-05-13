@@ -142,7 +142,14 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
                     if (isMyTurn)
                     {
-                        game.playCard(cardName);
+                        try
+                        {
+                            game.playCard(cardName);
+                        }
+                        catch (CardNotAvailableException ex)
+                        {
+                            ex.printStackTrace();
+                        }
                         //currentPlayer.playCard(cardName);
 
                         if (!currentPlayer.getHand().checkHandForType(1))
