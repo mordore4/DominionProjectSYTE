@@ -253,7 +253,11 @@ public class Game
             if (cardType == 3 || cardType == 4 || cardType == 5)
                 currentPlayer.setActions(currentPlayer.getActions() - 1);
 
-            if (phase == 0 && !currentPlayer.getHand().containsActionCards()) advancePhase();
+            if (phase == 0)
+            {
+                if (!currentPlayer.getHand().containsActionCards() || currentPlayer.getActions() == 0)
+                    advancePhase();
+            }
         }
         else throw new CardNotAvailableException();
     }

@@ -1,5 +1,8 @@
 var http = require('http').Server();
 var io = require('socket.io')(http);
+var Entities = require('html-entities').AllHtmlEntities; 
+entities = new Entities();
+
 var port = 4;
 
 http.listen(port, function(){
@@ -23,7 +26,7 @@ io.on('connection', function(socket){
 	socket.on('chat message', function(nickname, message){
         if (message.trim() != "")
         {
-            io.to(myRoom).emit('chat message', nickname, message);
+            io.to(myRoom).emit('chat message', entities.encode(nickname), entities.encode(message));
         }
 	});
 

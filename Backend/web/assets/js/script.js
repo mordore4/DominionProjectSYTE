@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     ioInitialize(nodeserver);
     ioBindOnChatReceive(receiveChatMessage);
-    enterNickName();
+    //enterNickName();
     //playGame();
 });
 
