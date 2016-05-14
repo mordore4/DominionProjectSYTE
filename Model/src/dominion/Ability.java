@@ -39,6 +39,10 @@ public class Ability
             case 12:
                 curseOtherPlayers(game);
                 break;
+
+            case 25:
+                gainSilver(game);
+                break;
         }
     }
 
@@ -139,6 +143,18 @@ public class Ability
                     //do nothing
                 }
             }
+        }
+    }
+
+    private void gainSilver(Game game)
+    {
+        try
+        {
+            game.addCard("silver");
+        }
+        catch (CardNotAvailableException e)
+        {
+            //do nothing
         }
     }
 
