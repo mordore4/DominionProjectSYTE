@@ -1,6 +1,8 @@
 package dominion;
 
 import dominion.exceptions.CardNotAvailableException;
+import dominion.persistence.Database;
+import dominion.persistence.DatabaseResults;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,13 +21,26 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
+    private Database database;
 
     public Game(String[] playerNames, String kingdomCardSet, HashMap<String, Card> cardList)
     {
         this.cardList = cardList;
-        //this.kingdomCards = cardSet(kingdomCardSet);
-        //cards = makeFixedCards(playerNames.length);
+        initDatabase();
         makeCards(kingdomCardSet, playerNames.length);
+        initGameState(playerNames);
+    }
+
+    public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
+    {
+        this.cardList = cardList;
+        initDatabase();
+        makeCards(kingdomCards, playerNames.length);
+        initGameState(playerNames);
+    }
+
+    private void initGameState(String[] playerNames)
+    {
         players = new Player[playerNames.length];
         cardsOnTable = new ArrayList<>();
 
@@ -46,6 +61,18 @@ public class Game
         phase = -1;
         isOver = false;
         advancePhase();
+    }
+
+    private void initDatabase()
+    {
+        try
+        {
+            database = new Database();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     private int pickRandomPlayer()
@@ -98,23 +125,28 @@ public class Game
     private void makeCards(String name, int playerCount)
     {
         String[] kingdomCardsInSet = getKingdomCardsIn(name);
+        makeCards(kingdomCardsInSet, playerCount);
+    }
+
+    private void makeCards(String[] kingdomCards, int playerCount)
+    {
         cards = new Card[17];
-        addKingdomCardsToCards(kingdomCardsInSet);
+        addKingdomCardsToCards(kingdomCards);
         addFixedCardsToCards(playerCount);
     }
 
+
     private String[] getKingdomCardsIn(String cardSet)
     {
-        String[] cardNames = null;
-        switch (cardSet)
+        DatabaseResults results = database.executeQuery("SELECT cardName FROM CardsetCard WHERE cardset = ?", cardSet);
+
+        String[] cardNames = new String[results.size()];
+
+        for (int i = 0; i < results.size(); i++)
         {
-            case "default":
-                cardNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "smithy", "village", "woodcutter", "workshop",};
-                break;
-            case "testWitch":
-                cardNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "witch", "village", "woodcutter", "workshop",};
-                break;
+            cardNames[i] = results.getRecord(i).getValue("cardName");
         }
+
         return cardNames;
     }
 
@@ -165,7 +197,8 @@ public class Game
             cards[10].setAmount(8);
             cards[11].setAmount(8);
             cards[12].setAmount(8);
-        } else
+        }
+        else
         {
             cards[10].setAmount(12);
             cards[11].setAmount(12);
@@ -286,7 +319,8 @@ public class Game
             newCard.setAmount(1);
 
             player.getDiscardPile().addCard(newCard);
-        } else throw new CardNotAvailableException();
+        }
+        else throw new CardNotAvailableException();
     }
 
     public void addCard(String cardName) throws CardNotAvailableException

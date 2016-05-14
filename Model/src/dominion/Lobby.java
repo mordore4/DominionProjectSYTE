@@ -25,7 +25,14 @@ public class Lobby
         playersInLobby = new ArrayList<>();
         playersInLobby.add(playerName);
 
-        cardSet = "testWitch";
+        cardSet = "first game";
+    }
+
+    public Lobby(String playerName, String name, String cardSet, HashMap<String, Card> cardList)
+    {
+        this(playerName, name, cardList);
+
+        this.cardSet = cardSet;
     }
 
     public void addPlayer(String playerName)

@@ -599,3 +599,6 @@ span.username:after {
     content: ': ';
 }
 
+#cardset {
+    color: black;
+}

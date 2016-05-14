@@ -17,12 +17,15 @@ public class AbilityTest
 {
     private Game game;
     private Player currentPlayer;
+    private TestHelper testHelper;
 
     @Before
     public void setUp() throws Exception
     {
+        testHelper = new TestHelper();
+
         String[] accounts = {"bob", "alice"};
-        game = new Game(accounts, "default", TestHelper.getTestCardList());
+        game = new Game(accounts, testHelper.getDefaultKingdomCards(), testHelper.getTestCardList());
         game.setCurrentPlayerIndex(0);
         currentPlayer = game.findCurrentPlayer();
     }
