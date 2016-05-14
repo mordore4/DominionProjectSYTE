@@ -12,6 +12,7 @@ public class Game
 {
     private Card[] fixedCards;
     private Card[] kingdomCards;
+    private Card[] cards;
     private ArrayList<String> cardsOnTable;
     private int currentPlayerIndex;
     private Player[] players;
@@ -91,6 +92,38 @@ public class Game
     public Player findCurrentPlayer()
     {
         return players[currentPlayerIndex];
+    }
+
+    private void makeCards(String name, int playerCount)
+    {
+        String[] kingdomCardsInSet = getKingdomCardsIn(name);
+        cards = new Card[17];
+        addKingdomCardsToCards(kingdomCardsInSet);
+    }
+
+    private String[] getKingdomCardsIn(String cardSet)
+    {
+        String[] cardNames = null;
+        switch (cardSet)
+        {
+            case "default":
+                cardNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "smithy", "village", "woodcutter", "workshop",};
+                break;
+            case "testWitch":
+                cardNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "witch", "village", "woodcutter", "workshop",};
+                break;
+        }
+        return cardNames;
+    }
+
+    private void addKingdomCardsToCards(String[] kingdomCardsInSet)
+    {
+        for (int i = 0; i < kingdomCardsInSet.length; i++)
+        {
+            Card card = cardList.get(kingdomCardsInSet[i]);
+            cards[i] = new Card(card);
+            cards[i].setAmount(10);
+        }
     }
 
     private Card[] cardSet(String name)
