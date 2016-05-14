@@ -37,11 +37,18 @@ $(document).ready(function () {
             if (!isMyTurn || $.inArray(cardName, forbiddenCards) != -1) {
                 $(ui.sender).sortable('cancel');
             } else {
-                //Treasure cards
-                if ($.inArray(cardName, fixedCards) >= 0 && $.inArray(cardName, fixedCards) <= 2)
+                if (phase == 0) //Action phase
                 {
-                    if (phase == 1) {
-                        setTurnInfo("coins", getTurnInfo("coins") + ($.inArray(cardName, fixedCards) + 1));
+                    if (!($.inArray(cardName, fixedCards) >= 0)) //Don't allow treasures
+                    {
+                        ajaxPutCardOnTable(cardName, ajaxRetrieveHand);
+                    }
+                    else $(ui.sender).sortable('cancel');
+                }
+                else if (phase == 1) //Treasure phase
+                {
+                    if ($.inArray(cardName, fixedCards) >= 0)
+                    {
                         ajaxPutCardOnTable(cardName);
                     }
                     else $(ui.sender).sortable('cancel');
@@ -588,7 +595,7 @@ var ajaxRetrieveHand = function () {
         });
 };
 
-var ajaxPutCardOnTable = function (cardname) {
+var ajaxPutCardOnTable = function (cardname, callback) {
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -599,6 +606,9 @@ var ajaxPutCardOnTable = function (cardname) {
                 nickname: nickname
             }
         })
+        .done(function() {
+            if (typeof callback !== 'undefined') callback();
+        });
 };
 
 var ajaxBuyCard = function(cardname) {
