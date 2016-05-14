@@ -3,6 +3,7 @@ package dominion;
 import dominion.exceptions.CardNotAvailableException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -367,6 +368,16 @@ public class Game
     public Card[] getCards()
     {
         return cards;
+    }
+
+    public Card[] getKingdomCards()
+    {
+        return Arrays.copyOfRange(cards, 0, 10);
+    }
+
+    public Card[] getFixedCards()
+    {
+        return Arrays.copyOfRange(cards, 10, 17);
     }
 
     public void setCurrentPlayerIndex(int index)
