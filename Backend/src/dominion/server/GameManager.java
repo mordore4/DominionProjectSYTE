@@ -170,6 +170,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                 break;
                 case "retrievekingdomcards":
                 {
+
                     HashMap<String, Card[]> cardsArray = new HashMap<>();
 
                     cardsArray.put("kingdomCards", game.getKingdomCards());
