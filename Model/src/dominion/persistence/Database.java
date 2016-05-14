@@ -10,15 +10,19 @@ import java.sql.*;
  */
 public class Database
 {
-    private Connection connection;
+    private String connectionString;
 
     public Database() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
 
+        connectionString = "jdbc:mysql://178.117.107.177/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN";
+
+        Connection testConnection = null;
+
         try
         {
-            this.connection = DriverManager.getConnection("jdbc:mysql://178.117.107.177/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN");
+            testConnection = DriverManager.getConnection(connectionString);
         }
         catch (CommunicationsException e)
         {
@@ -45,7 +49,11 @@ public class Database
                 //Turn over and weep silently
             }
 
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3311/dominion?user=root&password=root");
+            connectionString = "jdbc:mysql://localhost:3311/dominion?user=root&password=root";
+        }
+        finally
+        {
+            cleanup(null, null, testConnection);
         }
 
     }
@@ -56,10 +64,20 @@ public class Database
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        Connection conn = null;
 
         try
         {
-            stmt = connection.prepareStatement(parametrizedSQL);
+            conn = DriverManager.getConnection(connectionString);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            stmt = conn.prepareStatement(parametrizedSQL);
             parametrizeStatement(stmt, parameterValues);
 
             if (stmt.execute()) //If this is true, it means it's a resultset
@@ -80,7 +98,7 @@ public class Database
         }
         finally
         {
-            cleanup(stmt, rs);
+            cleanup(stmt, rs, conn);
         }
 
         return null;
@@ -122,7 +140,7 @@ public class Database
         }
     }
 
-    private void cleanup(PreparedStatement stmt, ResultSet rs)
+    private void cleanup(PreparedStatement stmt, ResultSet rs, Connection conn)
     {
         if (rs != null)
         {
@@ -150,6 +168,20 @@ public class Database
             }
 
             stmt = null;
+        }
+
+        if (conn != null)
+        {
+            try
+            {
+                conn.close();
+            }
+            catch (SQLException SQLeX)
+            {
+                //iGNORE
+            }
+
+            conn = null;
         }
     }
 }
