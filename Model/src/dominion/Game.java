@@ -10,8 +10,7 @@ import java.util.HashMap;
  */
 public class Game
 {
-    private Card[] fixedCards;
-    private Card[] kingdomCards;
+    //private Card[] kingdomCards;
     private Card[] cards;
     private ArrayList<String> cardsOnTable;
     private int currentPlayerIndex;
@@ -23,8 +22,9 @@ public class Game
     public Game(String[] playerNames, String kingdomCardSet, HashMap<String, Card> cardList)
     {
         this.cardList = cardList;
-        this.kingdomCards = cardSet(kingdomCardSet);
-        fixedCards = makeFixedCards(playerNames.length);
+        //this.kingdomCards = cardSet(kingdomCardSet);
+        //cards = makeFixedCards(playerNames.length);
+        makeCards(kingdomCardSet, playerNames.length);
         players = new Player[playerNames.length];
         cardsOnTable = new ArrayList<>();
 
@@ -99,6 +99,7 @@ public class Game
         String[] kingdomCardsInSet = getKingdomCardsIn(name);
         cards = new Card[17];
         addKingdomCardsToCards(kingdomCardsInSet);
+        addFixedCardsToCards(playerCount);
     }
 
     private String[] getKingdomCardsIn(String cardSet)
@@ -126,7 +127,7 @@ public class Game
         }
     }
 
-    private Card[] cardSet(String name)
+    /*private Card[] cardSet(String name)
     {
         String[] cardSetNames = null;
         Card[] cardSet = new Card[10];
@@ -146,39 +147,34 @@ public class Game
             cardSet[i].setAmount(10);
         }
         return cardSet;
-    }
+    }*/
 
-    private Card[] makeFixedCards(int playerCount)
+    private void addFixedCardsToCards(int playerCount)
     {
-        Card[] fixedCards = new Card[7];
-
-        fixedCards[0] = new Card(cardList.get("province"));
-        fixedCards[1] = new Card(cardList.get("duchy"));
-        fixedCards[2] = new Card(cardList.get("estate"));
-        fixedCards[3] = new Card(cardList.get("curse"));
-        fixedCards[4] = new Card(cardList.get("gold"));
-        fixedCards[5] = new Card(cardList.get("silver"));
-        fixedCards[6] = new Card(cardList.get("copper"));
-
+        cards[10] = new Card(cardList.get("province"));
+        cards[11] = new Card(cardList.get("duchy"));
+        cards[12] = new Card(cardList.get("estate"));
+        cards[13] = new Card(cardList.get("curse"));
+        cards[14] = new Card(cardList.get("gold"));
+        cards[15] = new Card(cardList.get("silver"));
+        cards[16] = new Card(cardList.get("copper"));
 
         if (playerCount == 2)
         {
-            fixedCards[0].setAmount(8);
-            fixedCards[1].setAmount(8);
-            fixedCards[2].setAmount(8);
+            cards[10].setAmount(8);
+            cards[11].setAmount(8);
+            cards[12].setAmount(8);
         } else
         {
-            fixedCards[0].setAmount(12);
-            fixedCards[1].setAmount(12);
-            fixedCards[2].setAmount(12);
+            cards[10].setAmount(12);
+            cards[11].setAmount(12);
+            cards[12].setAmount(12);
         }
 
-        fixedCards[3].setAmount(playerCount * 10 - 10);
-        fixedCards[4].setAmount(30);
-        fixedCards[5].setAmount(40);
-        fixedCards[6].setAmount(60);
-
-        return fixedCards;
+        cards[13].setAmount(playerCount * 10 - 10);
+        cards[14].setAmount(30);
+        cards[15].setAmount(40);
+        cards[16].setAmount(60);
     }
 
     public Player getPlayer(String name)
@@ -196,21 +192,13 @@ public class Game
 
     public Card retrieveCard(String cardName)
     {
+
         Card foundCard = null;
 
-        for (Card c : fixedCards)
+        for (Card c : cards)
         {
             if (c.getName().equals(cardName))
                 foundCard = c;
-        }
-
-        if (foundCard == null)
-        {
-            for (Card c : kingdomCards)
-            {
-                if (c.getName().equals(cardName))
-                    foundCard = c;
-            }
         }
 
         return foundCard;
@@ -354,19 +342,12 @@ public class Game
     public ArrayList<String> findBuyableCards()
     {
         ArrayList<String> buyableCards = new ArrayList<>();
-        for (Card kingdomCard : kingdomCards)
-        {
-            if (isBuyable(kingdomCard))
-            {
-                buyableCards.add(kingdomCard.getName());
-            }
-        }
 
-        for (Card fixedCard : fixedCards)
+        for (Card card : cards)
         {
-            if (isBuyable(fixedCard))
+            if (isBuyable(card))
             {
-                buyableCards.add(fixedCard.getName());
+                buyableCards.add(card.getName());
             }
         }
         return buyableCards;
@@ -383,14 +364,9 @@ public class Game
         return isOver;
     }
 
-    public Card[] getKingdomCards()
+    public Card[] getCards()
     {
-        return kingdomCards;
-    }
-
-    public Card[] getFixedCards()
-    {
-        return fixedCards;
+        return cards;
     }
 
     public void setCurrentPlayerIndex(int index)
