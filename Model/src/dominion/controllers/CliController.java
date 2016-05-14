@@ -5,6 +5,7 @@ import dominion.exceptions.CardNotAvailableException;
 import dominion.exceptions.LobbyNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 /**
  * Created by Sam on 28/04/2016.
