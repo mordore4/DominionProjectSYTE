@@ -3,6 +3,7 @@ package dominion.tests;
 import dominion.Ability;
 import dominion.Card;
 import dominion.GameEngine;
+import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -13,16 +14,28 @@ import java.util.HashMap;
  */
 public class TestHelper
 {
-    private static HashMap<String, Card> testCardList = fillTestCardList();
+    private HashMap<String, Card> testCardList;
+    private String[] defaultKingdomCards;
 
-    public static HashMap<String, Card> getTestCardList()
+    public TestHelper()
+    {
+        fillTestCardList();
+        defaultKingdomCards = new String[] {"cellar", "market", "militia", "mine", "moat", "remodel", "smithy", "village", "woodcutter", "workshop"};
+    }
+
+    public String[] getDefaultKingdomCards()
+    {
+        return defaultKingdomCards;
+    }
+
+    public HashMap<String, Card> getTestCardList()
     {
         return testCardList;
     }
 
-    public static HashMap<String, Card> fillTestCardList()
+    public void fillTestCardList()
     {
-        HashMap<String, Card> testCardList = new HashMap<>();
+        testCardList = new HashMap<>();
 
         testCardList.put("adventurer", new Card("adventurer", 3, 6, 0, new Ability[] {}));
         testCardList.put("bureaucrat", new Card("bureaucrat", 4, 4, 0, new Ability[] {}));
@@ -56,11 +69,9 @@ public class TestHelper
         testCardList.put("witch", new Card("witch", 4, 4, 0, new Ability[] {new Ability(4, 2), new Ability(9, 0)}));
         testCardList.put("woodcutter", new Card("woodcutter", 3, 3, 0, new Ability[] {new Ability(2, 1), new Ability(3, 2)}));
         testCardList.put("workshop", new Card("workshop", 3, 3, 0, new Ability[] {}));
-
-        return testCardList;
     }
 
-    public static void printArrayStatements()
+    public void printArrayStatements()
     {
         GameEngine gameEngine = null;
 
@@ -95,7 +106,7 @@ public class TestHelper
         }
     }
 
-    public static void main(String[] args)
+    public void main(String[] args)
     {
         printArrayStatements();
     }

@@ -91,9 +91,17 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
             switch (command)
             {
+                case "getcardsets":
+                {
+                    String[] cardSets = gameEngine.retrieveCardSets();
+                    writer.print(gson.toJson(cardSets));
+                }
+                break;
                 case "createlobby":
                 {
-                    gameEngine.createLobby(nickname, lobbyName);
+                    String cardSet = request.getParameter("cardset");
+
+                    gameEngine.createLobby(nickname, lobbyName, cardSet);
 
                     enableBuying.put(lobbyName, false);
                 }

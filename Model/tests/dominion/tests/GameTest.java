@@ -16,6 +16,7 @@ public class GameTest
     private String accountOne;
     private String accountTwo;
     private String[] accounts;
+    private TestHelper testHelper;
 
     private Game game;
 
@@ -27,8 +28,9 @@ public class GameTest
         accounts = new String[2];
         accounts[0] = accountOne;
         accounts[1] = accountTwo;
+        testHelper = new TestHelper();
 
-        game = new Game(accounts, "default", TestHelper.getTestCardList());
+        game = new Game(accounts, testHelper.getDefaultKingdomCards(), testHelper.getTestCardList());
         game.setCurrentPlayerIndex(0);
     }
 
@@ -135,5 +137,13 @@ public class GameTest
         game.discardCard(currentPlayer.getHand().findCard("moat"));
 
         assert(currentPlayer.getHand().findCard("moat") == null);
+    }
+
+    @Test
+    public void testCardsetFromDatabase()
+    {
+        game = new Game(accounts, "first game", testHelper.getTestCardList());
+
+        assert(game.findCard("mine") != null);
     }
 }

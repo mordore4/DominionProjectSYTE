@@ -14,12 +14,15 @@ import static org.junit.Assert.*;
 public class PlayerTest
 {
     private Game game;
+    private TestHelper testHelper;
 
     @Before
     public void setUp()
     {
+        testHelper = new TestHelper();
+
         String[] accounts = {"bob", "alice"};
-        game = new Game(accounts, "default", TestHelper.getTestCardList());
+        game = new Game(accounts, testHelper.getDefaultKingdomCards(), testHelper.getTestCardList());
     }
 
     @Test

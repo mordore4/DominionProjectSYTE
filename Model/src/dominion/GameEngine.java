@@ -70,6 +70,11 @@ public class GameEngine
         lobbies.add(new Lobby(playerName, lobbyName, cardList));
     }
 
+    public void createLobby(String playerName, String lobbyName, String cardSet)
+    {
+        lobbies.add(new Lobby(playerName, lobbyName, cardSet, cardList));
+    }
+
     public Lobby findLobby(String name) throws LobbyNotFoundException
     {
         for (Lobby lobby : lobbies)
@@ -92,4 +97,17 @@ public class GameEngine
         return cardList.get(name);
     }
 
+    public String[] retrieveCardSets()
+    {
+        DatabaseResults results = cardDatabase.executeQuery("SELECT name FROM Cardset");
+
+        String[] cardSets = new String[results.size()];
+
+        for (int i = 0; i < results.size(); i++)
+        {
+            cardSets[i] = results.getRecord(i).getValue("name");
+        }
+
+        return cardSets;
+    }
 }

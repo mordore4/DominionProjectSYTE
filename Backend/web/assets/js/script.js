@@ -9,6 +9,7 @@ var io_port = 4;
 var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.107.177:" + io_port;
 var nickname = "farmboy" + Math.floor((Math.random() * 899) + 100);
 var lobbyname = "";
+var cardset = "";
 var isHost = false;
 var isMyTurn = false;
 var phase = 0;
@@ -74,9 +75,11 @@ $(document).ready(function () {
         //$("#chat").removeClass("visible");
     }).on('keypress', sendChatMessage);
 
+    ajaxGetCardsets();
+
     ioInitialize(nodeserver);
     ioBindOnChatReceive(receiveChatMessage);
-    //enterNickName();
+    enterNickName();
     //playGame();
 });
 
@@ -103,6 +106,7 @@ var enterGame = function (ishost)
     $("#enternickname").hide();
     nickname = $("#nickname").val();
     lobbyname = $("#lobbyname").val();
+    cardset = $("#cardset").val();
     isHost = ishost;
     ioSetRoom(lobbyname);
     playGame();
@@ -209,8 +213,8 @@ var addKingdomCards = function (cardsArray) {
         var cardName = cardsArray[i].name;
 
         var html = '<li><div data-cardname="' + cardName + '" class="kingdomcard">';
-        html += '<div class="kingdomcard-top nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
-        html += '<div class="kingdomcard-bottom nobuy" style="background-image: url(images/cards/' + cardName + '.jpg);"></div>';
+        html += '<div class="kingdomcard-top nobuy" style="background-image: url(\'images/cards/' + cardName + '.jpg\');"></div>';
+        html += '<div class="kingdomcard-bottom nobuy" style="background-image: url(\'images/cards/' + cardName + '.jpg\');"></div>';
         html += '<div class="amount">' + cardsArray[i].amount + '</div><a href="#" class="info"></a></div></li>';
 
         element.append(html);
@@ -334,6 +338,39 @@ var setUpGame = function ()
     ajaxCheckGameStatus();
 };
 
+var addCardSets = function(cardSets) {
+    var element = $("#cardset");
+
+    element.empty();
+
+    for (var i = 0; i < cardSets.length; i++)
+    {
+        var setName = cardSets[i];
+
+        var html = "<option>" + setName + "</option>";
+        element.append(html);
+    }
+
+    element.val("first game");
+};
+
+var ajaxGetCardsets = function() {
+    $.ajax
+        ({
+            method: "GET",
+            url: "server/gamemanager",
+            data:
+            {
+                command: "getcardsets"
+            }
+        })
+        .done(function (data)
+        {
+            var cardSets = JSON.parse(data);
+
+            addCardSets(cardSets);
+        });
+};
 
 var ajaxCreateLobby = function () {
     $.ajax
@@ -344,7 +381,8 @@ var ajaxCreateLobby = function () {
         {
             command: "createlobby",
             nickname: nickname,
-            lobbyname: lobbyname
+            lobbyname: lobbyname,
+            cardset: cardset
         }
     })
         .done(function ()
