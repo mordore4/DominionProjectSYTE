@@ -239,10 +239,12 @@ var buyCard = function() {
         ajaxBuyCard(cardName);
 };
 
-var showCardInfo = function () {
+var showCardInfo = function (e) {
     var cardName = $(this).parent().attr("data-cardname");
 
     $("#card-info").show().find("img").attr("src", "images/cards/" + cardName + ".jpg");
+
+    e.stopPropagation();
 };
 
 var findCardElement = function(cardName)
@@ -558,7 +560,7 @@ var ajaxCheckGameStatus = function () {
             if (!isMyTurn) {
                 var cardNames = [];
                 status.cardsOnTable.forEach(function (item) {
-                    cardNames.push(item);
+                    cardNames.push(item.name);
                 });
                 createCardsOnTable(cardNames);
 

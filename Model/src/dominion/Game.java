@@ -15,7 +15,7 @@ public class Game
 {
     //private Card[] kingdomCards;
     private Card[] cards;
-    private ArrayList<String> cardsOnTable;
+    private ArrayList<Card> cardsOnTable;
     private int currentPlayerIndex;
     private Player[] players;
     private int phase;
@@ -95,7 +95,6 @@ public class Game
     public void advancePlayer()
     {
         cleanup();
-        cardsOnTable = new ArrayList<>();
 
         currentPlayerIndex++;
 
@@ -247,7 +246,10 @@ public class Game
         {
             executeCardAbilities(currentCard);
 
-            discardCard(currentCard);
+            //discardCard(currentCard);
+            cardsOnTable.add(currentCard);
+            currentPlayer.getHand().removeCard(currentCard);
+
             int cardType = currentCard.getType();
 
             if (cardType == 3 || cardType == 4 || cardType == 5)
@@ -265,7 +267,7 @@ public class Game
     public void executeCardAbilities(Card currentCard) throws CardNotAvailableException
     {
         Ability[] cardAbilities = currentCard.getAbilities();
-        cardsOnTable.add(currentCard.getName());
+
         for (Ability ability : cardAbilities)
         {
             if (ability.getId() < 6 || ability.getId() == 12)
@@ -370,6 +372,12 @@ public class Game
     {
         Player currentPlayer = findCurrentPlayer();
 
+        for (int i = 0; i < cardsOnTable.size(); i++)
+        {
+            currentPlayer.getDiscardPile().addCard(cardsOnTable.get(i));
+        }
+        cardsOnTable = new ArrayList<>();
+
         ArrayList<Card> currentHand = currentPlayer.getHand().getCards();
 
         for (int i = 0; i < currentHand.size(); i++)
@@ -397,7 +405,7 @@ public class Game
     public boolean isBuyable(Card card)
     {
         int money = findCurrentPlayer().getCoins();
-        return money >= card.getCost();
+        return money >= card.getCost() && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0;
     }
 
     public boolean getIsOver()
@@ -425,7 +433,7 @@ public class Game
         currentPlayerIndex = index;
     }
 
-    public ArrayList<String> getCardsOnTable()
+    public ArrayList<Card> getCardsOnTable()
     {
         return cardsOnTable;
     }
