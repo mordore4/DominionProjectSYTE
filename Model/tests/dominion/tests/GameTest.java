@@ -53,11 +53,11 @@ public class GameTest
     {
         Player currentPlayer = game.findCurrentPlayer();
 
-        assert(!game.isBuyable(game.findCard("cellar")));
+        assert(!game.isBuyable(game.retrieveCard("cellar")));
 
         currentPlayer.setCoins(2);
 
-        assert(game.isBuyable(game.findCard("cellar")));
+        assert(game.isBuyable(game.retrieveCard("cellar")));
     }
 
     @Test
@@ -144,6 +144,6 @@ public class GameTest
     {
         game = new Game(accounts, "first game", testHelper.getTestCardList());
 
-        assert(game.findCard("mine") != null);
+        assert(game.retrieveCard("mine") != null);
     }
 }
