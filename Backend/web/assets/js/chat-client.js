@@ -10,8 +10,18 @@ var ioBindOnChatReceive = function(callback) {
     });
 };
 
+var ioBindOnNoticeReceive = function(callback) {
+    socket.on('chat notice', function(message){
+        callback(message);
+    });
+};
+
 var ioSendChatMessage = function(nickname, message) {
     socket.emit('chat message', nickname, message);
+};
+
+var ioSendChatNotice = function(message) {
+    socket.emit('chat notice', message);
 };
 
 var ioSetRoom = function(room) {

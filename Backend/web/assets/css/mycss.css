@@ -602,3 +602,8 @@ span.username:after {
 #cardset {
     color: black;
 }
+
+span.notice {
+    color: goldenrod;
+    font-weight: bold;
+}

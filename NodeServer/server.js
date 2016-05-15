@@ -30,6 +30,13 @@ io.on('connection', function(socket){
         }
 	});
 
+	socket.on('chat notice', function(message){
+		if (message.trim() != "")
+		{
+			io.to(myRoom).emit('chat notice',entities.encode(message));
+		}
+	});
+
 	socket.on('join room', function(room){
 		socket.leave(myRoom);
 		myRoom = room;

@@ -13,6 +13,7 @@ var cardset = "";
 var isHost = false;
 var isMyTurn = false;
 var phase = 0;
+var isInGame = false;
 
 var pollInterval = 2000;
 
@@ -49,7 +50,7 @@ $(document).ready(function () {
                 {
                     if ($.inArray(cardName, fixedCards) >= 0)
                     {
-                        ajaxPutCardOnTable(cardName);
+                        ajaxPutCardOnTable(cardName, ajaxRetrieveBuyableCards);
                     }
                     else $(ui.sender).sortable('cancel');
                 }
@@ -86,6 +87,7 @@ $(document).ready(function () {
 
     ioInitialize(nodeserver);
     ioBindOnChatReceive(receiveChatMessage);
+    ioBindOnNoticeReceive(receiveChatNotice);
     //enterNickName();
     //playGame();
 });
@@ -95,8 +97,41 @@ var sendChatMessage = function(e) {
 
     if (e.which == 13 || e.keyCode == 13)
     {
-        ioSendChatMessage(nickname, message);
+        if (!checkMessageIsCommand(message))
+        {
+            ioSendChatMessage(nickname, message);
+        }
+        else
+        {
+            executeCommand(message);
+        }
+
         $(this).val("");
+    }
+};
+
+var checkMessageIsCommand = function(message) {
+    return (message.indexOf("/") == 0); //Starts with a /
+};
+
+var executeCommand = function(message) {
+    message = message.substr(1);
+
+
+    var command = message.split(' ')[0];
+    var data = message.substr(message.indexOf(' ') + 1);
+
+    switch(command)
+    {
+        case "nickname":
+        case "nick":
+            if (!isInGame) {
+                ioSendChatNotice(nickname + " changed his nickname to " + data);
+                nickname = data;
+            } else {
+                receiveChatNotice("You can't change nicknames while in a game");
+            }
+            break;
     }
 };
 
@@ -104,6 +139,17 @@ var receiveChatMessage = function(nickname, message)
 {
     var html = '<li><span class="username">' + nickname + '</span>' + message + '</li>';
 
+    appendToChat(html);
+};
+
+var receiveChatNotice = function(message)
+{
+    var html = '<li><span class="notice">' + message + '</span></li>';
+
+    appendToChat(html);
+};
+
+var appendToChat = function(html) {
     $("#chat").find(".message-list").append(html).stop()
         .animate({ scrollTop: $('#chat .message-list').prop("scrollHeight")}, 350);
 };
@@ -135,6 +181,8 @@ var enterNickName = function () {
 };
 
 var playGame = function () {
+    isInGame = true;
+
     createHand(tempHand);
 
     $('body').addClass("game");
@@ -363,110 +411,6 @@ var addCardSets = function(cardSets) {
     element.val("first game");
 };
 
-var ajaxGetCardsets = function() {
-    $.ajax
-        ({
-            method: "GET",
-            url: "server/gamemanager",
-            data:
-            {
-                command: "getcardsets"
-            }
-        })
-        .done(function (data)
-        {
-            var cardSets = JSON.parse(data);
-
-            addCardSets(cardSets);
-        });
-};
-
-var ajaxCreateLobby = function () {
-    $.ajax
-    ({
-        method: "GET",
-        url: "server/gamemanager",
-        data:
-        {
-            command: "createlobby",
-            nickname: nickname,
-            lobbyname: lobbyname,
-            cardset: cardset
-        }
-    })
-        .done(function ()
-        {
-            console.log("Created lobby " + lobbyname);
-            ajaxCheckLobbyReady();
-        });
-};
-
-var ajaxCheckLobbyReady = function () {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "haslobbystarted",
-                lobbyname: lobbyname
-            }
-        })
-        .done(function (data) {
-            var status = JSON.parse(data);
-
-            if (status) {
-                setUpGame();
-            }
-            else {
-                setTimeout(ajaxCheckLobbyReady, pollInterval);
-            }
-        });
-};
-
-var ajaxJoinLobby = function () {
-    $.ajax({
-        method: "GET",
-        url: "server/gamemanager",
-        data: {
-            command: "joinlobby",
-            nickname: nickname,
-            lobbyname: lobbyname
-        }
-    })
-        .done(function (data) {
-            setUpGame();
-        });
-};
-
-var ajaxRetrieveKingdomCards = function() {
-    $.ajax({
-        method: "GET",
-        url: "server/gamemanager",
-        data: {
-            command: "retrievekingdomcards",
-            lobbyname: lobbyname
-        }
-    })
-        .done(function (data) {
-            var cards = JSON.parse(data);
-
-            addKingdomCards(cards.kingdomCards);
-            addFixedCards(cards.fixedCards);
-
-            ajaxRetrieveBuyableCards();
-        });
-};
-
-var ajaxRetrieveKingdomCardSatus = function () {
-    $.ajax({
-        method: "GET",
-        url: "server/gamemanager",
-        data: {
-            command: "retrievekingdomcardstatus",
-            lobbyname: lobbyname
-        }
-    })
-};
-
 var clearBuyableCards = function() {
     for (var card in kingdomCards)
     {
@@ -477,151 +421,4 @@ var clearBuyableCards = function() {
     {
         setCardBuyable(fixedCards[card], false);
     }
-};
-
-var ajaxRetrieveBuyableCards = function() {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "retrievebuyablecards",
-                lobbyname: lobbyname
-            }
-        })
-        .done(function (data) {
-            var buyableCards = JSON.parse(data);
-
-            for (var card in buyableCards)
-            {
-                currentCardName = buyableCards[card][0];
-                setCardBuyable(currentCardName, buyableCards[card][2]);
-                setCardAmount(currentCardName, buyableCards[card][1])
-            }
-        });
-};
-
-var ajaxEndTurn = function() {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "endturn",
-                lobbyname: lobbyname,
-                nickname: nickname
-            }
-        })
-        .done(function (data) {
-            $("#end-turn").hide();
-            clearBuyableCards();
-            ajaxRetrieveHand();
-        });
-};
-
-var ajaxCheckGameStatus = function () {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "fetchgamestatus",
-                nickname: nickname,
-                lobbyname: lobbyname
-            }
-        })
-        .done(function (data) {
-            var status = JSON.parse(data);
-
-            //First time we notice the phase is after-treasure mode
-
-            phase = status.phase;
-
-            //Update kingdom cards in case of buy
-            if (phase == 1 || phase == 3)
-            {
-                ajaxRetrieveBuyableCards();
-            }
-
-            //This is the first time we notice it's our turn
-            //So this can be seen as stuff to do on turn start
-            if (!isMyTurn && status.isMyTurn)
-            {
-                $("body").addClass("myturn");
-                $("#cardsComeCenter").empty();
-                $("#end-turn").show();
-                clearBuyableCards();
-                $("#hand").sortable("enable");
-            }
-
-            isMyTurn = status.isMyTurn;
-
-            setTurnInfo("actions", status.actions);
-            setTurnInfo("buys", status.buys);
-            setTurnInfo("coins", status.coins);
-
-            if (!isMyTurn) {
-                var cardNames = [];
-                status.cardsOnTable.forEach(function (item) {
-                    cardNames.push(item.name);
-                });
-                createCardsOnTable(cardNames);
-
-                $("body").removeClass("myturn");
-                $("#hand").sortable("disable");
-            }
-
-            setTimeout(ajaxCheckGameStatus, pollInterval);
-        });
-};
-
-
-var ajaxRetrieveHand = function () {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "retrievehand",
-                nickname: nickname,
-                lobbyname: lobbyname
-            }
-        })
-        .done(function (data) {
-            var cardArray = JSON.parse(data);
-            var cardNames = [];
-
-            cardArray.forEach(function (item) {
-                cardNames.push(item.name);
-            });
-
-            $("#hand").show();
-
-            createHand(cardNames);
-        });
-};
-
-var ajaxPutCardOnTable = function (cardname, callback) {
-    $.ajax({
-            method: "GET",
-            url: "server/gamemanager",
-            data: {
-                command: "putcardontable",
-                cardname: cardname,
-                lobbyname: lobbyname,
-                nickname: nickname
-            }
-        })
-        .done(function() {
-            if (typeof callback !== 'undefined') callback();
-        });
-};
-
-var ajaxBuyCard = function(cardname) {
-    $.ajax({
-        method: "GET",
-        url: "server/gamemanager",
-        data: {
-            command: "buycard",
-            cardname: cardname,
-            lobbyname: lobbyname,
-            nickname: nickname
-        }
-    })
 };
