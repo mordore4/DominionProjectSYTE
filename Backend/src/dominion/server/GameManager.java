@@ -160,7 +160,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                         }
                         //currentPlayer.playCard(cardName);
 
-                        if (!currentPlayer.getHand().checkHandForType(1))
+                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
                         {
                             enableBuying.put(lobbyName, true);
                         }
