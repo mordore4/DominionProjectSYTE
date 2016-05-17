@@ -484,21 +484,42 @@ input {
 }
 
 #end-turn {
+     position: absolute;
+     top: 500px;
+     right: 16px;
+     display: inline-block;
+     text-align: center;
+     color: white;
+     z-index: 1500 !important;
+     background-color: #ab9872;
+     font-size: 3rem;
+     padding: 8px;
+     border: 2px outset darkgoldenrod;
+     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+     font-family: sans-serif;
+ }
+
+
+#end-turn:hover {
+    opacity: 0.85;
+}
+#play-treasures {
     position: absolute;
-    top: 500px;
+    top: 530px;
     right: 16px;
     display: inline-block;
     text-align: center;
     color: white;
     z-index: 1500 !important;
-    background-color: goldenrod;
+    background-color: #ab9872;
     font-size: 3rem;
     padding: 8px;
-    border: 8px outset darkgoldenrod;
+    border: 2px outset darkgoldenrod;
     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    font-family: sans-serif;
 }
 
-#end-turn:hover {
+#play-treasures:hover {
     opacity: 0.85;
 }
 
