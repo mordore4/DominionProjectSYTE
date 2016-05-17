@@ -11,7 +11,7 @@ public class Ability
 {
     private int id;
     private int amount;
-    ArrayList<Card> cardsToDiscard;
+    private ArrayList<Card> cardsToDiscard;
 
     public Ability(int id, int amount)
     {

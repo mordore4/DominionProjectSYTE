@@ -6,6 +6,8 @@ import dominion.exceptions.CardNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -146,4 +148,20 @@ public class GameTest
 
         assert(game.retrieveCard("mine") != null);
     }*/
+
+    @Test
+    public void testMoveThisCardFromTo()
+    {
+        Card testCard = new Card("testCard", 0, 0, 0, null);
+        Deck discardPile = game.findCurrentPlayer().getDiscardPile();
+        ArrayList<Card> randomList = new ArrayList<>();
+        randomList.add(testCard);
+        boolean cardIsInRandomListFirst = randomList.contains(testCard);
+        boolean cardDidNotStartInDiscardPile = !discardPile.getCards().contains(testCard);
+        game.moveThisCardFromTo(testCard, randomList, discardPile.getCards());
+        boolean cardLeftRandomList = !randomList.contains(testCard);
+        boolean cardWentToDiscard = discardPile.getCards().contains(testCard);
+
+        assert (cardIsInRandomListFirst && cardDidNotStartInDiscardPile && cardLeftRandomList && cardWentToDiscard);
+    }
 }
