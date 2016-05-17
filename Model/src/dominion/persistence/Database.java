@@ -1,5 +1,6 @@
 package dominion.persistence;
 
+import com.mysql.jdbc.ExceptionInterceptor;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.sql.*;
 public class Database
 {
     private String connectionString;
+    private Connection conn;
 
     public Database() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
@@ -53,9 +55,19 @@ public class Database
         }
         finally
         {
-            cleanup(null, null, testConnection);
+            if (testConnection != null) {
+                try
+                {
+                    testConnection.close();
+                }
+                catch(SQLException ex)
+                {
+                    //Do nothing
+                }
+            }
         }
 
+        conn = DriverManager.getConnection(connectionString);
     }
 
     public DatabaseResults executeQuery(String parametrizedSQL, String... parameterValues)
@@ -64,16 +76,6 @@ public class Database
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Connection conn = null;
-
-        try
-        {
-            conn = DriverManager.getConnection(connectionString);
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
 
         try
         {
@@ -98,7 +100,7 @@ public class Database
         }
         finally
         {
-            cleanup(stmt, rs, conn);
+            cleanup(stmt, rs);
         }
 
         return null;
@@ -140,7 +142,7 @@ public class Database
         }
     }
 
-    private void cleanup(PreparedStatement stmt, ResultSet rs, Connection conn)
+    private void cleanup(PreparedStatement stmt, ResultSet rs)
     {
         if (rs != null)
         {
@@ -168,20 +170,6 @@ public class Database
             }
 
             stmt = null;
-        }
-
-        if (conn != null)
-        {
-            try
-            {
-                conn.close();
-            }
-            catch (SQLException SQLeX)
-            {
-                //iGNORE
-            }
-
-            conn = null;
         }
     }
 }
