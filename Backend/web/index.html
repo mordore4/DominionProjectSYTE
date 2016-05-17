@@ -15,20 +15,36 @@
 </head>
 
 <body>
+<!--<div id="dialog-confirm" title="Empty the recycle bin?">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Did you know you can press 'CTRL + C' to enable/disable chat?</p>
 
+</div>
+-->
+<div id="imgVis"></div>
 <div id="card-info" class="hidden unselectable">
     <img src="images/cards/cellar.jpg"/>
 </div>
 
 <div id="chat" class="visible">
-    <ul class="message-list">
+
+    <div id="imgChat" data-toggle="popover" title="Press 'ALT + C' to enable/disable chat" data-content=""></div>
+
+        <ul class="message-list">
 
     </ul>
     <div class="compose-message">
+
         <label for="chat-message">Chat:</label>
+
         <input type="text" id="chat-message" class="chat-message"/>
-    </div>
+
+
+
 </div>
+
+</div>
+
+
 
 <div class="site-wrapper">
     <div class="site-wrapper-inner">
@@ -208,6 +224,8 @@
 
 <div class="modal"></div>
 
+
+<script type="text/javascript" src="assets/js/jquery-1.4.2.js"></script>
 <script type="text/javascript" src="assets/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui-touchpunch.js"></script>
@@ -215,6 +233,8 @@
 <script type="text/javascript" src="assets/js/chat-client.js"></script>
 <script type="text/javascript" src="assets/js/ajax.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+<!--<script type="text/javascript" src="assets/js/modal.js"></script>-->
+<script type="text/javascript" src="assets/js/jquery.hotkeys.js"></script>
 
 </body>
 </html>
