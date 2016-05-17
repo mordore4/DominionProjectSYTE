@@ -17,7 +17,7 @@ public class Deck
 
     public void makeHand(Deck hand, Deck discardPile)
     {
-        cards = new ArrayList<>();
+        hand.cards = new ArrayList<>();
         for (int i = 0; i < 5; i++)
         {
             this.takeTopCard(hand, discardPile);

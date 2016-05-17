@@ -49,9 +49,6 @@ public class DeckTest
     @Test
     public void testTakeTopCard()
     {
-        Deck deck = new Deck();
-        Deck discardPile = new Deck();
-
         for (int i = 0; i < 7; i ++)
             deck.addCard(new Card(testCard1));
         for (int i = 0; i < 3; i ++)
@@ -67,8 +64,6 @@ public class DeckTest
     @Test
     public void testTakeTopCardWhenDeckIsEmpty()
     {
-        Deck deck = new Deck();
-        Deck discardPile = new Deck();
         Card lastCard = null;
 
         for (int i = 0; i < 7; i ++)
@@ -88,4 +83,22 @@ public class DeckTest
         assert(lastCard.equals(testCard3));
     }
 
+    @Test
+    public void testMakeHand()
+    {
+        for (int i = 0; i < 7; i ++)
+        {
+            deck.addCard(new Card(testCard1));
+        }
+
+        for (int i = 0; i < 3; i ++)
+        {
+            deck.addCard(new Card(testCard2));
+        }
+        deck.makeHand(hand, discardPile);
+        boolean handSize = hand.size() == 5;
+        boolean deckSize = deck.size() == 5;
+        boolean discardSize = discardPile.size() == 0;
+        assert (handSize && deckSize && discardSize);
+    }
 }
