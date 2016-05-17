@@ -59,7 +59,7 @@ public class DeckTest
 
         deck.shuffle();
 
-        hand.takeTopCard(deck, discardPile);
+        deck.takeTopCard(hand, discardPile);
 
         assert(hand.getTopCard().equals(testCard1) || hand.getTopCard().equals(testCard2));
     }
@@ -81,7 +81,7 @@ public class DeckTest
 
         for (int i = 0; i < 11; i++)
         {
-            hand.takeTopCard(deck,discardPile);
+            deck.takeTopCard(hand,discardPile);
         }
 
         lastCard = hand.getTopCard();

@@ -15,33 +15,32 @@ public class Deck
         cards = new ArrayList<>();
     }
 
-    public void makeHand(Deck deck, Deck discardPile)
+    public void makeHand(Deck hand, Deck discardPile)
     {
         cards = new ArrayList<>();
         for (int i = 0; i < 5; i++)
         {
-            this.takeTopCard(deck, discardPile);
+            this.takeTopCard(hand, discardPile);
         }
     }
 
-    public void takeTopCard(Deck deck, Deck discardPile)
+    public void takeTopCard(Deck hand, Deck discardPile) //ALWAYS USE ON deck!
     {
-        putTopCardIn(cards, deck, discardPile);
+        putTopCardIn(hand.getCards(), discardPile);
     }
 
-    public void putTopCardIn (ArrayList<Card> temporaryList, Deck deck, Deck discardPile)
+    public void putTopCardIn (ArrayList<Card> cardList, Deck discardPile) //ALWAYS USE ON deck!
     {
-        ArrayList<Card> deckCards = deck.cards;
-        if (deck.size() == 0)
+        ArrayList<Card> deckCards = cards;
+        if (size() == 0)
         {
-            deck.discardToDeck(discardPile);
+            discardToDeck(discardPile);
         }
 
-        deckCards = deck.cards;
-        Card topCard = deckCards.get(deckCards.size() - 1);
-        deckCards.remove(deckCards.size() - 1);
+        Card topCard = getTopCard();
+        cards.remove(size() - 1);
 
-        temporaryList.add(topCard);
+        cardList.add(topCard);
     }
 
     public Card getTopCard()

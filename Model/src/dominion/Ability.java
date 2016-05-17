@@ -87,11 +87,11 @@ public class Ability
             if (currentCard.getType() == 2)
             {
                 treasuresFound += 1;
-                hand.takeTopCard(deck, discardPile);
+                deck.takeTopCard(hand, discardPile);
             }
             else
             {
-                hand.putTopCardIn(cardsToDiscard, deck, discardPile);
+                deck.putTopCardIn(cardsToDiscard, discardPile);
             }
             revealer.addCardToReveal(currentCard);
         }
@@ -124,7 +124,7 @@ public class Ability
         {
             if (discardPile.size() + deck.size() != 0)
             {
-                currentPlayer.getHand().takeTopCard(deck, discardPile);
+                deck.takeTopCard(currentPlayer.getHand(), discardPile);
             }
         }
     }
