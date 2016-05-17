@@ -103,23 +103,4 @@ public class AbilityTest
 
         assert (currentPlayer.getHand().findCard("testcard") == null);
     }
-
-    @Test
-    public void testDiscardCardsToDiscard() throws CardNotAvailableException
-    {
-        //Set up
-        Card testCard = new Card("testCard", 3, 0, 1, new Ability[]{new Ability(13, -1)});
-        Ability ability = testCard.getAbilities()[0];
-        ArrayList<Card> cardsToDiscard = ability.getCardsToDiscard();
-        cardsToDiscard.add(testCard);
-        cardsToDiscard.add(testCard);
-        //End set up
-
-        ability.discardCardsToDiscard(game);
-
-        boolean cardsToDiscardSize = cardsToDiscard.size() == 0;
-        boolean discardPileSize = game.findCurrentPlayer().getDiscardPile().size() == 2;
-
-        assert (cardsToDiscardSize && discardPileSize);
-    }
 }

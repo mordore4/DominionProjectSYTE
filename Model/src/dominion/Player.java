@@ -31,9 +31,35 @@ public class Player
         //hand.makeHand(deck, discardPile);
     }
 
+    public void addActions(int amount)
+    {
+        actions += amount;
+    }
+
+    public void addBuys(int amount)
+    {
+        buys += amount;
+    }
+
+    public void addCoins(int amount)
+    {
+        coins += amount;
+    }
+
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public void addCards(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            if (discardPile.size() + deck.size() != 0)
+            {
+                deck.takeTopCard(hand, discardPile);
+            }
+        }
     }
 
     public String getName()

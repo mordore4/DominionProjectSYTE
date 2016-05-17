@@ -13,7 +13,6 @@ import java.util.HashMap;
  */
 public class Game
 {
-    //private Card[] kingdomCards;
     private Card[] cards;
     private ArrayList<Card> cardsOnTable;
     private int currentPlayerIndex;
@@ -141,7 +140,7 @@ public class Game
             cards[12].setAmount(12);
         }
 
-        cards[13].setAmount(playerCount * 10 - 10);
+        cards[13].setAmount((playerCount - 1) * 10);
         cards[14].setAmount(30);
         cards[15].setAmount(40);
         cards[16].setAmount(60);
@@ -245,18 +244,12 @@ public class Game
         }
     }
 
-    public void discardCardFromPlayer(Card card, Player player)
-    {
-        player.getDiscardPile().addCard(card);
-        player.getHand().removeCard(card);
-    }
-
-    public void discardCard(Card card)
-    {
-        discardCardFromPlayer(card, findCurrentPlayer());
-    }
-
     public void addCardToPlayer(String cardName, Player player) throws CardNotAvailableException
+    {
+        addCardToPileFromPlayer(cardName, player.getDiscardPile());
+    }
+
+    public void addCardToPileFromPlayer(String cardName, Deck pile) throws CardNotAvailableException
     {
         Card card = retrieveCard(cardName);
 
@@ -267,7 +260,7 @@ public class Game
             Card newCard = new Card(card);
             newCard.setAmount(1);
 
-            player.getDiscardPile().addCard(newCard);
+            pile.addCard(newCard);
         }
         else throw new CardNotAvailableException();
     }
@@ -332,6 +325,11 @@ public class Game
         makeHand(currentPlayer);
     }
 
+    public void moveCardsToDiscardPile (ArrayList<Card> fromPile)
+    {
+        moveCardsFromTo(fromPile, findCurrentPlayer().getDiscardPile().getCards());
+    }
+
     public void moveCardsFromTo (ArrayList<Card> fromPile, ArrayList<Card> toPile)
     {
         for (int i = fromPile.size() - 1; i >= 0; i--)
@@ -346,6 +344,16 @@ public class Game
     {
         toPile.add(thisCard);
         fromPile.remove(thisCard);
+    }
+
+    public void discardCardFromPlayer(Card card, Player player)
+    {
+        moveThisCardFromTo(card, player.getHand().getCards(), player.getDiscardPile().getCards());
+    }
+
+    public void discardCard(Card card)
+    {
+        discardCardFromPlayer(card, findCurrentPlayer());
     }
 
     public ArrayList<String> findBuyableCards()

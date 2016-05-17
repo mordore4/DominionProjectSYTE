@@ -105,49 +105,27 @@ public class Ability
             }
             revealer.addCardToReveal(currentCard);
         }
-        discardCardsToDiscard(game);
+        game.moveCardsToDiscardPile(cardsToDiscard);
     }
-
-    public void discardCardsToDiscard(Game game)
-    {
-        Deck discardPile = game.findCurrentPlayer().getDiscardPile();
-        for (int i = cardsToDiscard.size() - 1; i >= 0; i--)
-        {
-            discardPile.addCard(cardsToDiscard.get(i));
-            cardsToDiscard.remove(cardsToDiscard.get(i));
-        }
-    }
-
 
     private void addActions(Player currentPlayer)
     {
-        int currentPlayerActions = currentPlayer.getActions();
-        currentPlayer.setActions(currentPlayerActions + amount);
+        currentPlayer.addActions(amount);
     }
 
     private void addBuys(Player currentPlayer)
     {
-        int currentPlayerBuys = currentPlayer.getBuys();
-        currentPlayer.setBuys(currentPlayerBuys + amount);
+        currentPlayer.addBuys(amount);
     }
 
     private void addCoins(Player currentPlayer)
     {
-        int currentPlayerCoins = currentPlayer.getCoins();
-        currentPlayer.setCoins(currentPlayerCoins + amount);
+        currentPlayer.addCoins(amount);
     }
 
     private void addCards(Player currentPlayer)
     {
-        Deck discardPile = currentPlayer.getDiscardPile();
-        Deck deck = currentPlayer.getDeck();
-        for (int i = 0; i < amount; i++)
-        {
-            if (discardPile.size() + deck.size() != 0)
-            {
-                deck.takeTopCard(currentPlayer.getHand(), discardPile);
-            }
-        }
+        currentPlayer.addCards(amount);
     }
 
     private void trashCards(Player currentPlayer, ArrayList<Card> cards)
@@ -194,17 +172,16 @@ public class Ability
 
     private void gainSilver(Game game)
     {
+        Deck deck = game.findCurrentPlayer().getDeck();
         try
         {
-            game.addCard("silver");
+            game.addCardToPileFromPlayer("silver", deck);
         }
         catch (CardNotAvailableException e)
         {
             //do nothing
         }
     }
-
-
 
     public int getId()
     {
