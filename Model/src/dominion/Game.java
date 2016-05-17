@@ -365,7 +365,10 @@ public class Game
 
     private void makeHand(Player player)
     {
-        player.getHand().makeHand(player.getDeck(), player.getDiscardPile());
+        Deck deck = player.getDeck();
+        Deck hand = player.getHand();
+        Deck discardPile = player.getDiscardPile();
+        deck.makeHand(hand, discardPile);
     }
 
     private void cleanup()
