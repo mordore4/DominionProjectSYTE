@@ -11,11 +11,13 @@ public class Ability
 {
     private int id;
     private int amount;
+    ArrayList<Card> cardsToDiscard;
 
     public Ability(int id, int amount)
     {
         this.id = id;
         this.amount = amount;
+        cardsToDiscard = new ArrayList<>();
     }
 
     public void doAbility(Game game)
@@ -43,6 +45,15 @@ public class Ability
             case 25:
                 gainSilver(game);
                 break;
+        }
+    }
+
+    public void doAbility(Game game, Revealer revealer)
+    {
+        switch (id)
+        {
+            case 13:
+                adventurerSpecialAbility(game, revealer);
         }
     }
 
@@ -75,7 +86,6 @@ public class Ability
     public void adventurerSpecialAbility(Game game, Revealer revealer)
     {
         int treasuresFound = 0;
-        ArrayList<Card> cardsToDiscard = new ArrayList<>();
         Player currentPlayer = game.findCurrentPlayer();
         Deck deck = currentPlayer.getDeck();
         Deck discardPile = currentPlayer.getDiscardPile();
@@ -83,8 +93,8 @@ public class Ability
 
         for (int i = 0; treasuresFound < 2 && i < (deck.size() + discardPile.size()); i++)
         {
-            Card currentCard = deck.getTopCard();
-            if (currentCard.getType() == 2)
+            Card currentCard = deck.getTopCard(discardPile);
+            if (currentCard.getType() == 1)
             {
                 treasuresFound += 1;
                 deck.takeTopCard(hand, discardPile);
@@ -94,6 +104,17 @@ public class Ability
                 deck.putTopCardIn(cardsToDiscard, discardPile);
             }
             revealer.addCardToReveal(currentCard);
+        }
+        discardCardsToDiscard(game);
+    }
+
+    public void discardCardsToDiscard(Game game)
+    {
+        Deck discardPile = game.findCurrentPlayer().getDiscardPile();
+        for (int i = cardsToDiscard.size() - 1; i >= 0; i--)
+        {
+            discardPile.addCard(cardsToDiscard.get(i));
+            cardsToDiscard.remove(cardsToDiscard.get(i));
         }
     }
 
@@ -200,5 +221,8 @@ public class Ability
         return id + " " + amount + " ";
     }
 
-
+    public ArrayList<Card> getCardsToDiscard()
+    {
+        return cardsToDiscard;
+    }
 }

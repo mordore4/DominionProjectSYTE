@@ -22,6 +22,7 @@ public class Game
     private boolean isOver;
     private HashMap<String, Card> cardList;
     private Database database;
+    private Revealer revealer;
 
     public Game(String[] playerNames, String kingdomCardSet, HashMap<String, Card> cardList)
     {
@@ -29,6 +30,7 @@ public class Game
         initDatabase();
         makeCards(kingdomCardSet, playerNames.length);
         initGameState(playerNames);
+        revealer = new Revealer();
     }
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
@@ -37,6 +39,7 @@ public class Game
         initDatabase();
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
+        revealer = new Revealer();
     }
 
     private void initGameState(String[] playerNames)
@@ -277,6 +280,10 @@ public class Game
             else if (ability.getId() == 6)
             {
                 ability.doAbility(this, currentCard);
+            }
+            else if (ability.getId() == 13)
+            {
+                ability.doAbility(this, revealer);
             }
         }
     }

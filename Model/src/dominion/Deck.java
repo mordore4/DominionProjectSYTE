@@ -31,20 +31,23 @@ public class Deck
 
     public void putTopCardIn (ArrayList<Card> cardList, Deck discardPile) //ALWAYS USE ON deck!
     {
-        ArrayList<Card> deckCards = cards;
         if (size() == 0)
         {
             discardToDeck(discardPile);
         }
 
-        Card topCard = getTopCard();
+        Card topCard = getTopCard(discardPile);
         cards.remove(size() - 1);
 
         cardList.add(topCard);
     }
 
-    public Card getTopCard()
+    public Card getTopCard(Deck discardPile)
     {
+        if (size() == 0)
+        {
+            discardToDeck(discardPile);
+        }
         return cards.get(cards.size() - 1);
     }
 

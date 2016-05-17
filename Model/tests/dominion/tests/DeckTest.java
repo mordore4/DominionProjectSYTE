@@ -58,7 +58,7 @@ public class DeckTest
 
         deck.takeTopCard(hand, discardPile);
 
-        assert(hand.getTopCard().equals(testCard1) || hand.getTopCard().equals(testCard2));
+        assert(hand.getTopCard(discardPile).equals(testCard1) || hand.getTopCard(discardPile).equals(testCard2));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class DeckTest
             deck.takeTopCard(hand,discardPile);
         }
 
-        lastCard = hand.getTopCard();
+        lastCard = hand.getTopCard(discardPile);
         assert(lastCard.equals(testCard3));
     }
 

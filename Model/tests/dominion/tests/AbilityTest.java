@@ -8,6 +8,8 @@ import dominion.exceptions.CardNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -100,5 +102,34 @@ public class AbilityTest
         game.playCard(testCard.getName());
 
         assert (currentPlayer.getHand().findCard("testcard") == null);
+    }
+
+    @Test
+    public void testDiscardCardsToDiscard() throws CardNotAvailableException
+    {
+        Card testCard = new Card("testCard", 3, 0, 1, new Ability[]{new Ability(13, -1)});
+
+        currentPlayer.getDiscardPile().getCards().clear();
+        currentPlayer.getHand().getCards().clear();
+        currentPlayer.getDeck().getCards().clear();
+        currentPlayer.getHand().addCard(testCard);
+
+        Ability ability = currentPlayer.getHand().findCard(testCard.getName()).getAbilities()[0];
+                //testCard.getAbilities()[0];
+
+        ArrayList<Card> cardsToDiscard = ability.getCardsToDiscard();
+
+        cardsToDiscard.add(testCard);
+        cardsToDiscard.add(testCard);
+
+        ability.discardCardsToDiscard(game);
+
+        boolean cardsToDiscardSize = cardsToDiscard.size() == 0;
+        boolean discardPileSize = game.findCurrentPlayer().getDiscardPile().size() == 2;
+
+        System.out.println(cardsToDiscard.size());
+        System.out.println(game.findCurrentPlayer().getDiscardPile().size());
+
+        assert (cardsToDiscardSize && discardPileSize);
     }
 }

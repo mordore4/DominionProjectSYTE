@@ -58,7 +58,7 @@ public class CliController
             accounts[playerNumber] = name;
         }
 
-        gameEngine.createLobby(accounts[0], "mygame");
+        gameEngine.createLobby(accounts[0], "mygame", "big money");
 
         try
         {
@@ -126,7 +126,7 @@ public class CliController
             System.out.println("Which action card would you like to use?");
 
             command = scanner.nextLine().toLowerCase();
-            int cardType = gameEngine.findCard(command).getType();
+            int cardType = game.findCard(command).getType();
             if (cardType == 3 || cardType == 4 || cardType == 5)
             {
                 try
@@ -232,7 +232,8 @@ public class CliController
         printlnincolor(34, "You can now use your treasure cards");
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
-
+        currentPlayer.setCoins(10000);
+        currentPlayer.setBuys(5);
         while (!command.equals("stop") && hasTreasureCards)
         {
             printlnincolor(32, "Your coins:" + currentPlayer.getCoins());
