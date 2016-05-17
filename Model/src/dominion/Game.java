@@ -21,22 +21,11 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
-    private Database database;
     private Revealer revealer;
-
-    public Game(String[] playerNames, String kingdomCardSet, HashMap<String, Card> cardList)
-    {
-        this.cardList = cardList;
-        initDatabase();
-        makeCards(kingdomCardSet, playerNames.length);
-        initGameState(playerNames);
-        revealer = new Revealer();
-    }
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
     {
         this.cardList = cardList;
-        initDatabase();
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
         revealer = new Revealer();
@@ -64,18 +53,6 @@ public class Game
         phase = -1;
         isOver = false;
         advancePhase();
-    }
-
-    private void initDatabase()
-    {
-        try
-        {
-            database = new Database();
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
     }
 
     private int pickRandomPlayer()
@@ -124,32 +101,11 @@ public class Game
         return players[currentPlayerIndex];
     }
 
-    private void makeCards(String name, int playerCount)
-    {
-        String[] kingdomCardsInSet = getKingdomCardsIn(name);
-        makeCards(kingdomCardsInSet, playerCount);
-    }
-
     private void makeCards(String[] kingdomCards, int playerCount)
     {
         cards = new Card[17];
         addKingdomCardsToCards(kingdomCards);
         addFixedCardsToCards(playerCount);
-    }
-
-
-    private String[] getKingdomCardsIn(String cardSet)
-    {
-        DatabaseResults results = database.executeQuery("SELECT cardName FROM CardsetCard WHERE cardset = ?", cardSet);
-
-        String[] cardNames = new String[results.size()];
-
-        for (int i = 0; i < results.size(); i++)
-        {
-            cardNames[i] = results.getRecord(i).getValue("cardName");
-        }
-
-        return cardNames;
     }
 
     private void addKingdomCardsToCards(String[] kingdomCardsInSet)
@@ -161,28 +117,6 @@ public class Game
             cards[i].setAmount(10);
         }
     }
-
-    /*private Card[] cardSet(String name)
-    {
-        String[] cardSetNames = null;
-        Card[] cardSet = new Card[10];
-        if (name.equals("default"))
-        {
-            cardSetNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "smithy", "village", "woodcutter", "workshop",};
-        }
-        else if (name.equals("testWitch"))
-        {
-            cardSetNames = new String[]{"cellar", "market", "militia", "mine", "moat", "remodel", "witch", "village", "woodcutter", "workshop",};
-        }
-
-        for (int i = 0; i < cardSetNames.length; i++)
-        {
-            Card card = cardList.get(cardSetNames[i]);
-            cardSet[i] = new Card(card);
-            cardSet[i].setAmount(10);
-        }
-        return cardSet;
-    }*/
 
     private void addFixedCardsToCards(int playerCount)
     {

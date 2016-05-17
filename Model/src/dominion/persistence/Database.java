@@ -172,4 +172,30 @@ public class Database
             stmt = null;
         }
     }
+
+    public void close()
+    {
+        if (conn != null) {
+            try
+            {
+                conn.close();
+            }
+            catch(SQLException ex)
+            {
+                //Do nothing
+            }
+        }
+    }
+
+    public void open()
+    {
+        try
+        {
+            conn = DriverManager.getConnection(connectionString);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

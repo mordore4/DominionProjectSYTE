@@ -14,14 +14,16 @@ public class LobbyTest
     String playerOne;
     String playerTwo;
     Lobby lobby;
+    TestHelper testHelper;
 
     @Before
     public void setUp()
     {
         playerOne = "bob";
         playerTwo = "alice";
+        testHelper = new TestHelper();
 
-        lobby = new Lobby(playerOne, "mygame", null);
+        lobby = new Lobby(playerOne, "mygame", testHelper.getDefaultKingdomCards(),  null);
     }
 
     @Test

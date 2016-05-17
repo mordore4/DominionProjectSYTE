@@ -12,27 +12,19 @@ public class Lobby
     private ArrayList<String> playersInLobby;
     private Game game;
     private String name;
-    private String cardSet;
+    private String[] kingdomCards;
     private HashMap<String, Card> cardList;
     private boolean started;
 
-    public Lobby(String playerName, String name, HashMap<String, Card> cardList)
+    public Lobby(String playerName, String name, String[] kingdomCards, HashMap<String, Card> cardList)
     {
         this.name = name;
         this.cardList = cardList;
         this.started = false;
+        this.kingdomCards = kingdomCards;
 
         playersInLobby = new ArrayList<>();
         playersInLobby.add(playerName);
-
-        cardSet = "first game";
-    }
-
-    public Lobby(String playerName, String name, String cardSet, HashMap<String, Card> cardList)
-    {
-        this(playerName, name, cardList);
-
-        this.cardSet = cardSet;
     }
 
     public void addPlayer(String playerName)
@@ -64,7 +56,7 @@ public class Lobby
     public void startGame()
     {
         String[] playerArray = playersInLobby.toArray(new String[playersInLobby.size()]);
-        game = new Game(playerArray, cardSet, cardList);
+        game = new Game(playerArray, kingdomCards, cardList);
         started = true;
     }
 
