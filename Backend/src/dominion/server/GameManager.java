@@ -176,6 +176,14 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     }
                 }
                 break;
+                case "endactions":
+                {
+                    if (isMyTurn && game.getPhase() == 0)
+                    {
+                        game.advancePhase();
+                    }
+                }
+                break;
                 case "retrievekingdomcards":
                 {
 

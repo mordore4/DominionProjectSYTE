@@ -118,7 +118,9 @@ $(document).ready(function () {
     $("#card-info").on('click', function () {
         $(this).hide();
     }).hide().removeClass("hidden");
-    $("#end-turn").on('click', ajaxEndTurn).hide();
+    $("#end-turn").on('click', endTurn).hide();
+    $("#end-actions").on('click', endActions).hide();
+    $("#play-treasures").on('click', playTreasures).hide();
 
     $(document).keypress(function (e) {
         /*var chatMessage = $("#chat-message");
@@ -211,6 +213,17 @@ var enterGame = function (ishost) {
     playGame();
 };
 
+var endTurn = function() {
+    $("#end-turn").hide();
+    $("#play-treasures").hide();
+    ajaxEndTurn();
+};
+
+var endActions = function() {
+    $("#end-actions").hide();
+    ajaxEndActions();
+};
+
 var enterNickName = function () {
     $('#menu').hide();
     $("div.mastfoot").hide();
@@ -245,7 +258,6 @@ var playGame = function () {
 
     if (isHost) ajaxCreateLobby();
     else ajaxJoinLobby();
-
 };
 
 var createHand = function (cardsArray) {
@@ -420,6 +432,19 @@ var highlightCardsOfType = function (type) {
         }
 
     });
+};
+
+var playTreasures = function() {
+    var treasuresToPlay = $("#hand").find("li").filter("[data-cardname=copper],[data-cardname=silver],[data-cardname=gold]");
+
+    treasuresToPlay.each(function() {
+        ajaxPutCardOnTable($(this).attr("data-cardname"));
+
+        $("#cardsComeCenter").append($(this).clone());
+        $(this).remove();
+    });
+
+    setTimeout(ajaxRetrieveBuyableCards, 0);
 };
 
 var setTurnInfo = function (type, value) {

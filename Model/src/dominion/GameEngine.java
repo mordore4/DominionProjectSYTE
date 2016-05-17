@@ -131,15 +131,10 @@ public class GameEngine
 
     public String[] retrieveCardSets()
     {
-        DatabaseResults results = database.executeQuery("SELECT name FROM Cardset");
+        String[] cardSetNames = new String[cardSets.size()];
 
-        String[] cardSets = new String[results.size()];
+        cardSets.keySet().toArray(cardSetNames);
 
-        for (int i = 0; i < results.size(); i++)
-        {
-            cardSets[i] = results.getRecord(i).getValue("name");
-        }
-
-        return cardSets;
+        return cardSetNames;
     }
 }
