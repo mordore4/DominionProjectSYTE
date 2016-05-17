@@ -5,6 +5,7 @@ import dominion.GameEngine;
 import dominion.Lobby;
 import dominion.exceptions.LobbyNotFoundException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ import static org.junit.Assert.*;
  */
 public class GameEngineTest
 {
-    private GameEngine gameEngine;
+    private static GameEngine gameEngine;
 
-    @Before
-    public void setUp() throws Exception
+    @BeforeClass
+    public static void beforeClass() throws Exception
     {
         try
         {
