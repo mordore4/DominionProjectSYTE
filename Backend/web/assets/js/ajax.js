@@ -131,7 +131,7 @@ var ajaxEndTurn = function() {
         });
 };
 
-var ajaxCheckGameStatus = function () {
+var ajaxCheckGameStatus = function () { //Tom fix it plz xoxo
     $.ajax({
             method: "GET",
             url: "server/gamemanager",
@@ -183,7 +183,7 @@ var ajaxCheckGameStatus = function () {
             }
 
             if (timeOut != null) clearTimeout(timeOut);
-            timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
+            timeOut = setTimeout(ajaxCheckGameStatus, pollInterval); //Tom fix it plz xoxo
         });
 };
 

@@ -26,17 +26,22 @@ public class Deck
 
     public void takeTopCard(Deck deck, Deck discardPile)
     {
+        putTopCardIn(cards, deck, discardPile);
+    }
+
+    public void putTopCardIn (ArrayList<Card> temporaryList, Deck deck, Deck discardPile)
+    {
         ArrayList<Card> deckCards = deck.cards;
-        if (deckCards.size() == 0)
+        if (deck.size() == 0)
         {
             deck.discardToDeck(discardPile);
         }
 
-        deckCards = deck.getCards();
+        deckCards = deck.cards;
         Card topCard = deckCards.get(deckCards.size() - 1);
         deckCards.remove(deckCards.size() - 1);
 
-        cards.add(topCard);
+        temporaryList.add(topCard);
     }
 
     public Card getTopCard()

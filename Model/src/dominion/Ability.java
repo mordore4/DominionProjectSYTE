@@ -72,6 +72,31 @@ public class Ability
         }
     }
 
+    public void adventurerSpecialAbility(Game game, Revealer revealer)
+    {
+        int treasuresFound = 0;
+        ArrayList<Card> cardsToDiscard = new ArrayList<>();
+        Player currentPlayer = game.findCurrentPlayer();
+        Deck deck = currentPlayer.getDeck();
+        Deck discardPile = currentPlayer.getDiscardPile();
+        Deck hand = currentPlayer.getHand();
+
+        for (int i = 0; treasuresFound < 2 && i < (deck.size() + discardPile.size()); i++)
+        {
+            Card currentCard = deck.getTopCard();
+            if (currentCard.getType() == 2)
+            {
+                treasuresFound += 1;
+                hand.takeTopCard(deck, discardPile);
+            }
+            else
+            {
+                hand.putTopCardIn(cardsToDiscard, deck, discardPile);
+            }
+            revealer.addCardToReveal(currentCard);
+        }
+    }
+
 
     private void addActions(Player currentPlayer)
     {
