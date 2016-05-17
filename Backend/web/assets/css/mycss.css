@@ -551,6 +551,34 @@ input {
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     z-index: 2000;
+
+
+}
+
+#imgChat{
+    background-image: url("../media/hideicon.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+
+}
+
+
+#imgVis{
+    background-image: url("../media/visible.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    position: absolute;
+    right: 0;
+    bottom: 138px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px;
+    width: 40px;
+    height: 40px;
 }
 
 #chat.visible {
@@ -607,3 +635,4 @@ span.notice {
     color: goldenrod;
     font-weight: bold;
 }
+
