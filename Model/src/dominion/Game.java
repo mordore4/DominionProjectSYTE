@@ -398,6 +398,22 @@ public class Game
         makeHand(currentPlayer);
     }
 
+    public void moveCardsFromTo (ArrayList<Card> fromPile, ArrayList<Card> toPile)
+    {
+        for (int i = fromPile.size() - 1; i >= 0; i--)
+        {
+            Card cardToMove = fromPile.get(i);
+            moveThisCardFromTo(cardToMove, fromPile, toPile);
+        }
+    }
+
+
+    public void moveThisCardFromTo (Card thisCard, ArrayList<Card> fromPile, ArrayList<Card> toPile)
+    {
+        toPile.add(thisCard);
+        fromPile.remove(thisCard);
+    }
+
     public ArrayList<String> findBuyableCards()
     {
         ArrayList<String> buyableCards = new ArrayList<>();
