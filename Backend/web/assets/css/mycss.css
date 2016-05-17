@@ -595,8 +595,10 @@ span.username {
     font-weight: bold;
 }
 
-span.username:after {
-    content: ': ';
+span.cardname {
+    color: paleturquoise;
+    font-weight: bold;
+    font-style: italic;
 }
 
 #cardset {

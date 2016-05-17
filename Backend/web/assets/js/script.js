@@ -88,6 +88,7 @@ $(document).ready(function () {
     ioInitialize(nodeserver);
     ioBindOnChatReceive(receiveChatMessage);
     ioBindOnNoticeReceive(receiveChatNotice);
+    //ioSendChatNotice(nickname + " has joined");
     //enterNickName();
     //playGame();
 });
@@ -137,7 +138,7 @@ var executeCommand = function(message) {
 
 var receiveChatMessage = function(nickname, message)
 {
-    var html = '<li><span class="username">' + nickname + '</span>' + message + '</li>';
+    var html = '<li><span class="username">' + nickname + ': </span> ' + message + '</li>';
 
     appendToChat(html);
 };
@@ -284,7 +285,10 @@ var buyCard = function() {
     var cardName = $(this).attr("data-cardname");
 
     if (getCardBuyable(cardName) && getTurnInfo("buys") > 0)
+    {
+        ioSendChatNotice("<span class=\"username\">" + nickname + "</span> bought a <span class=\"cardname\">" + cardName + "</span>");
         ajaxBuyCard(cardName);
+    }
 };
 
 var showCardInfo = function (e) {

@@ -126,6 +126,7 @@ var ajaxEndTurn = function() {
         })
         .done(function (data) {
             $("#end-turn").hide();
+            ajaxCheckGameStatus();
             clearBuyableCards();
             ajaxRetrieveHand();
         });
@@ -183,7 +184,7 @@ var ajaxCheckGameStatus = function () {
             }
 
             if (timeOut != null) clearTimeout(timeOut);
-            timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
+            if (!isMyTurn) timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
         });
 };
 

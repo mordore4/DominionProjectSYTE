@@ -137,9 +137,9 @@ public class GameManager extends javax.servlet.http.HttpServlet
                         gameStatus.put("phase", 3);
                     }
 
-                    gameStatus.put("actions", thisPlayer.getActions());
-                    gameStatus.put("buys", thisPlayer.getBuys());
-                    gameStatus.put("coins", thisPlayer.getCoins());
+                    gameStatus.put("actions", game.findCurrentPlayer().getActions());
+                    gameStatus.put("buys", game.findCurrentPlayer().getBuys());
+                    gameStatus.put("coins", game.findCurrentPlayer().getCoins());
 
                     writer.print(gson.toJson(gameStatus));
 
