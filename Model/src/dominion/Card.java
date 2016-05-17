@@ -82,4 +82,9 @@ public class Card
         return(nameCorrect && abilitiesCorrect && typeCorrect && costCorrect && amountCorrect);
     }
 
+    public boolean isActionCard()
+    {
+        return type == 3 || type == 4 || type == 5;
+    }
+
 }

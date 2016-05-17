@@ -107,9 +107,10 @@ public class Deck
 
         for (int i = 0; i < cards.size(); i++)
         {
-            int type = cards.get(i).getType();
-
-            if (type == 3 || type == 4 || type == 5) out = true;
+            if (cards.get(i).isActionCard())
+            {
+                out = true;
+            }
         }
 
         return out;

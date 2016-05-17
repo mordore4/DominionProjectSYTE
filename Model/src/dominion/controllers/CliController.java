@@ -88,16 +88,21 @@ public class CliController
         {
             Player currentPlayer = game.findCurrentPlayer();
             System.out.println(currentPlayer.getName() + "'s turn starts.");
+            printlnincolor(31, "test1 " + game.getPhase());
             switch (game.getPhase())
             {
                 case 0:
                     actionPhase(currentPlayer);
+                    printlnincolor(31, "test2 " + game.getPhase());
                     break;
                 case 1:
                     buyPhase(currentPlayer);
+                    game.advancePhase();
+                    printlnincolor(31, "test3 " + game.getPhase());
                     break;
             }
-            game.advancePhase();
+            printlnincolor(31, "test4 " + game.getPhase());
+            printlnincolor(31, "test5 " + game.getPhase());
         }
     }
 
@@ -107,6 +112,7 @@ public class CliController
         printTable(currentPlayer);
         String command = "";
         Deck currentPlayerHand = currentPlayer.getHand();
+        currentPlayer.addActions(10);
 
         Boolean hasActionCards = currentPlayerHand.containsActionCards();
 
@@ -114,7 +120,7 @@ public class CliController
         System.out.println("Enter \"stop\" at any given time if you would like to stop using cards.");
         System.out.println();
 
-        while (hasActionCards && currentPlayer.getBuys() != 0 && !command.equals("stop"))
+        while (hasActionCards && currentPlayer.getActions() > 0 && !command.equals("stop"))
         {
             printActionsBuysCoins(currentPlayer);
 
@@ -126,22 +132,34 @@ public class CliController
             System.out.println("Which action card would you like to use?");
 
             command = scanner.nextLine().toLowerCase();
-            int cardType = game.findCard(command).getType();
-            if (cardType == 3 || cardType == 4 || cardType == 5)
+            if (!command.equals("stop"))
             {
                 try
                 {
-                    game.playCard(command);
+                    Card card = game.findCard(command);
+                    if (card.isActionCard())
+                    {
+                        try
+                        {
+                            game.playCard(command);
+                        }
+                        catch (CardNotAvailableException e)
+                        {
+                            System.out.println("you don't have that card");
+                        }
+                    }
+                    else
+                    {
+                        System.out.println(command + " is not an action card.");
+                    }
                 }
-                catch (CardNotAvailableException e)
+                catch (Exception e)
                 {
-                    System.out.println("you don't have that card");
+                    System.out.println(command + " is not a card.");
                 }
+
             }
-            else
-            {
-                System.out.println(command + " is not an action card.");
-            }
+
             hasActionCards = currentPlayerHand.containsActionCards();
         }
 
@@ -155,7 +173,11 @@ public class CliController
 
         useTreasureCards(currentPlayer);
 
+        printlnincolor(31, "test6 " + game.getPhase());
+
         buyCards(currentPlayer);
+
+        printlnincolor(31, "test7 " + game.getPhase());
     }
 
     private void printHand(Player currentPlayer)

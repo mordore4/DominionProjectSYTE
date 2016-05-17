@@ -63,7 +63,10 @@ public class Game
     {
         phase++;
 
-        if (phase == 0 && !findCurrentPlayer().hasActionCards()) phase++;
+        if (phase == 0 && !findCurrentPlayer().hasActionCards())
+        {
+            phase++;
+        }
 
         if (phase >= 2)
         {
@@ -186,9 +189,7 @@ public class Game
             cardsOnTable.add(currentCard);
             currentPlayer.getHand().removeCard(currentCard);
 
-            int cardType = currentCard.getType();
-
-            if (cardType == 3 || cardType == 4 || cardType == 5)
+            if (currentCard.isActionCard())
                 currentPlayer.setActions(currentPlayer.getActions() - 1);
 
             if (phase == 0)
