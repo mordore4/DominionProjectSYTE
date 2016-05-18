@@ -267,9 +267,10 @@ public class Ability
         boolean destroyedCopper = false;
         for(int i = 0;!destroyedCopper && i< handCards.size();i++ )
         {
-            if (handCards.get(i).getType() == 3)
+            Card currentCard = handCards.get(i);
+            if (currentCard.getName().equals("copper"))
             {
-                hand.removeCard(handCards.get(i));
+                hand.removeCard(currentCard);
                 destroyedCopper = true;
             }
         }
