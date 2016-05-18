@@ -25,13 +25,23 @@ public class Game
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
     {
-        this.cardList = cardList;
+        this.setCardList(cardList);
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
         revealer = new Revealer();
     }
 
     private void initGameState(String[] playerNames)
+    {
+        addPlayers(playerNames);
+
+        currentPlayerIndex = pickRandomPlayer();
+        phase = -1;
+        isOver = false;
+        advancePhase();
+    }
+
+    private void addPlayers(String[] playerNames)
     {
         players = new Player[playerNames.length];
         cardsOnTable = new CopyOnWriteArrayList<>();
@@ -42,17 +52,17 @@ public class Game
 
             newPlayer.setName(playerNames[i]);
 
-            createStartingDeck(newPlayer);
-
-            makeHand(newPlayer);
+            setUpPlayerCards(newPlayer);
 
             players[i] = newPlayer;
         }
+    }
 
-        currentPlayerIndex = pickRandomPlayer();
-        phase = -1;
-        isOver = false;
-        advancePhase();
+    private void setUpPlayerCards(Player newPlayer)
+    {
+        createStartingDeck(newPlayer);
+
+        makeHand(newPlayer);
     }
 
     private int pickRandomPlayer()
@@ -438,5 +448,10 @@ public class Game
     public Player[] getPlayers()
     {
         return players;
+    }
+
+    private void setCardList(HashMap<String, Card> cardList)
+    {
+        this.cardList = cardList;
     }
 }

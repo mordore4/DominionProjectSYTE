@@ -15,8 +15,8 @@ public class Ability
 
     public Ability(int id, int amount)
     {
-        this.id = id;
-        this.amount = amount;
+        this.setId(id);
+        this.setAmount(amount);
         cardsToDiscard = new ArrayList<>();
     }
 
@@ -201,5 +201,15 @@ public class Ability
     public ArrayList<Card> getCardsToDiscard()
     {
         return cardsToDiscard;
+    }
+
+    private void setId(int id)
+    {
+        this.id = id;
+    }
+
+    private void setAmount(int amount)
+    {
+        this.amount = amount;
     }
 }

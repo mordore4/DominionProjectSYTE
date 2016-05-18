@@ -20,15 +20,26 @@ public class Player
 
     public Player()
     {
-        actions = 1;
-        buys = 1;
-        coins = 0;
+        this.setActions(1);
+        this.setBuys(1);
+        this.setCoins(0);
 
         discardPile = new Deck();
         deck = new Deck();
         hand = new Deck();
 
         //hand.makeHand(deck, discardPile);
+    }
+
+    public void addCards(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            if (discardPile.size() + deck.size() != 0)
+            {
+                deck.takeTopCard(hand, discardPile);
+            }
+        }
     }
 
     public void addActions(int amount)
@@ -49,17 +60,6 @@ public class Player
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public void addCards(int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            if (discardPile.size() + deck.size() != 0)
-            {
-                deck.takeTopCard(hand, discardPile);
-            }
-        }
     }
 
     public String getName()

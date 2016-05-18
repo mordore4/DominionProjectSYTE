@@ -13,50 +13,25 @@ public class Card
 
     public Card(String cardName, int type, int cost, int amount, Ability[] abilities)
     {
-        name = cardName;
-        this.type = type;
-        this.cost = cost;
-        this.amount = amount;
-        this.abilities = abilities;
+        this.setName(cardName);
+        this.setType(type);
+        this.setCost(cost);
+        this.setAmount(amount);
+        this.setAbilities(abilities);
     }
 
     public Card(Card card)
     {
-        name = card.getName();
-        abilities = card.getAbilities();
-        type = card.getType();
-        cost = card.getCost();
-        amount = card.getAmount();
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public int getType()
-    {
-        return type;
-    }
-
-    public int getCost()
-    {
-        return cost;
-    }
-
-    public int getAmount()
-    {
-        return amount;
+        this.setName(card.getName());
+        this.setAbilities(card.getAbilities());
+        this.setType(card.getType());
+        this.setCost(card.getCost());
+        this.setAmount(card.getAmount());
     }
 
     public Ability[] getAbilities()
     {
         return abilities;
-    }
-
-    public void setAmount(int amount)
-    {
-        this.amount = amount;
     }
 
     public String toString()
@@ -84,7 +59,51 @@ public class Card
 
     public boolean isActionCard()
     {
-        return type == 3 || type == 4 || type == 5;
+        return (type == 3 || type == 4 || type == 5);
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public int getCost()
+    {
+        return cost;
+    }
+
+    public int getAmount()
+    {
+        return amount;
+    }
+
+    public void setAmount(int amount)
+    {
+        this.amount = amount;
+    }
+
+    private void setName(String name)
+    {
+        this.name = name;
+    }
+
+    private void setAbilities(Ability[] abilities)
+    {
+        this.abilities = abilities;
+    }
+
+    private void setType(int type)
+    {
+        this.type = type;
+    }
+
+    private void setCost(int cost)
+    {
+        this.cost = cost;
+    }
 }
