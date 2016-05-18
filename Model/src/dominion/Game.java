@@ -21,7 +21,7 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
-    Revealer revealer;
+    private Revealer revealer;
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
     {

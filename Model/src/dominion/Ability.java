@@ -47,8 +47,14 @@ public class Ability
             case 14:
                 bureaucratSpecialAbility(game);
                 break;
+            case 17:
+                councilRoomSpecial(game);
+                break;
             case 25:
                 gainSilver(game);
+                break;
+            case 27:
+                moneylenderSpecialAbility(game);
                 break;
         }
     }
@@ -79,7 +85,17 @@ public class Ability
         }
     }
 
-    public void adventurerSpecialAbility(Game game)
+    public void doAbility(Game game, boolean discardDeck)
+    {
+        switch (id)
+        {
+            case 16:
+                chancellorSpecialAbility(game, discardDeck);
+                break;
+        }
+    }
+
+    private void adventurerSpecialAbility(Game game)
     {
         Revealer revealer = game.getRevealer();
         int treasuresFound = 0;
@@ -105,7 +121,7 @@ public class Ability
         game.moveCardsToDiscardPile(cardsToDiscard);
     }
 
-    public void bureaucratSpecialAbility(Game game)
+    private void bureaucratSpecialAbility(Game game)
     {
         Revealer revealer = game.getRevealer();
         Player playingPlayer = game.findCurrentPlayer();
@@ -138,6 +154,35 @@ public class Ability
             }
         }
 
+    }
+
+    private void chancellorSpecialAbility(Game game, boolean discardDeck)
+    {
+        if (discardDeck)
+        {
+            game.moveCardsToDiscardPile(game.findCurrentPlayer().getDeck().getCards());
+        }
+    }
+
+    /*private void chapelSpecial(Game game, ArrayList<Card> cardsToTrash)
+    {
+        Deck hand = game.findCurrentPlayer().getHand();
+        for (Card currentCard : cardsToTrash)
+        {
+            hand.removeCard(currentCard);
+        }
+    }*/ //Yannis Baas xoxox
+
+    private void councilRoomSpecial(Game game)
+    {
+        Player playingPlayer = game.findCurrentPlayer();
+        for (Player player : game.getPlayers())
+        {
+            if (player != playingPlayer)
+            {
+                player.getDeck().takeTopCard(player.getHand(),player.getDiscardPile());
+            }
+        }
     }
 
     private void addActions(Player currentPlayer)
@@ -214,6 +259,23 @@ public class Ability
             //do nothing
         }
     }
+
+    private void moneylenderSpecialAbility(Game game)
+    {
+        Deck hand = game.findCurrentPlayer().getHand();
+        ArrayList<Card> handCards = hand.getCards();
+        boolean destroyedCopper = false;
+        for(int i = 0;!destroyedCopper && i< handCards.size();i++ )
+        {
+            if (handCards.get(i).getType() == 3)
+            {
+                hand.removeCard(handCards.get(i));
+                destroyedCopper = true;
+            }
+        }
+    }
+
+
 
     public int getId()
     {
