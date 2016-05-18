@@ -21,14 +21,12 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
-    private Revealer revealer;
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
     {
         this.setCardList(cardList);
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
-        revealer = new Revealer();
     }
 
     private void initGameState(String[] playerNames)
@@ -250,7 +248,7 @@ public class Game
             }
             else if (ability.getId() == 13)
             {
-                ability.doAbility(this, revealer);
+                ability.doAbility(this);
             }
         }
     }

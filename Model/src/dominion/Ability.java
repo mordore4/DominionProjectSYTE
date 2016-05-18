@@ -41,19 +41,12 @@ public class Ability
             case 12:
                 curseOtherPlayers(game);
                 break;
-
+            case 13:
+                adventurerSpecialAbility(game);
+                break;
             case 25:
                 gainSilver(game);
                 break;
-        }
-    }
-
-    public void doAbility(Game game, Revealer revealer)
-    {
-        switch (id)
-        {
-            case 13:
-                adventurerSpecialAbility(game, revealer);
         }
     }
 
@@ -83,8 +76,9 @@ public class Ability
         }
     }
 
-    public void adventurerSpecialAbility(Game game, Revealer revealer)
+    public void adventurerSpecialAbility(Game game)
     {
+        Revealer revealer = game.findCurrentPlayer().getRevealer();
         int treasuresFound = 0;
         Player currentPlayer = game.findCurrentPlayer();
         Deck deck = currentPlayer.getDeck();
@@ -106,6 +100,12 @@ public class Ability
             revealer.addCardToReveal(currentCard);
         }
         game.moveCardsToDiscardPile(cardsToDiscard);
+    }
+
+    public void bureaucratSpecialAbility(game game, Revealer revealer)
+    {
+
+
     }
 
     private void addActions(Player currentPlayer)
