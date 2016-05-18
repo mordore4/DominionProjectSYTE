@@ -81,7 +81,7 @@ public class Ability
 
     public void adventurerSpecialAbility(Game game)
     {
-        Revealer revealer = game.findCurrentPlayer().getRevealer();
+        Revealer revealer = game.getRevealer();
         int treasuresFound = 0;
         Player currentPlayer = game.findCurrentPlayer();
         Deck deck = currentPlayer.getDeck();
@@ -100,20 +100,20 @@ public class Ability
             {
                 deck.putTopCardIn(cardsToDiscard, discardPile);
             }
-            revealer.addCardToReveal(currentCard);
+            revealer.addCardToReveal(currentPlayer.getName(), currentCard);
         }
         game.moveCardsToDiscardPile(cardsToDiscard);
     }
 
     public void bureaucratSpecialAbility(Game game)
     {
+        Revealer revealer = game.getRevealer();
         Player playingPlayer = game.findCurrentPlayer();
         for (Player player : game.getPlayers())
         {
             if (player != playingPlayer)
             {
                 Deck hand = player.getHand();
-                Revealer revealer = player.getRevealer();
                 if (hand.checkHandForType(2))
                 {
                     boolean foundCard = false;
@@ -124,16 +124,15 @@ public class Ability
                         {
                             game.moveThisCardFromTo(currentCard,hand.getCards(),player.getDeck().getCards());
                             foundCard = true;
-                            revealer.addCardToReveal(currentCard);
+                            revealer.addCardToReveal(player.getName(), currentCard);
                         }
                     }
                 }
                 else
                 {
-                    for (int j = 0; j < hand.size();j++)
+                    for (Card currentCard : hand.getCards())
                     {
-                        Card currentCard = hand.getCards().get(j);
-                        revealer.addCardToReveal(currentCard);
+                        revealer.addCardToReveal(player.getName(), currentCard);
                     }
                 }
             }

@@ -17,7 +17,6 @@ public class Player
     private int actions;
     private int buys;
     private int coins;
-    private Revealer revealer;
 
     public Player()
     {
@@ -28,8 +27,6 @@ public class Player
         discardPile = new Deck();
         deck = new Deck();
         hand = new Deck();
-
-        revealer = new Revealer();
 
         //hand.makeHand(deck, discardPile);
     }
@@ -123,9 +120,5 @@ public class Player
     public boolean isMyTurn(String nickname)
     {
         return this.name.equals(nickname);
-    }
-
-    public Revealer getRevealer() {
-        return revealer;
     }
 }

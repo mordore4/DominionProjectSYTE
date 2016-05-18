@@ -21,12 +21,14 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
+    Revealer revealer;
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
     {
         this.setCardList(cardList);
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
+        revealer = new Revealer();
     }
 
     private void initGameState(String[] playerNames)
@@ -451,5 +453,10 @@ public class Game
     private void setCardList(HashMap<String, Card> cardList)
     {
         this.cardList = cardList;
+    }
+
+    public Revealer getRevealer ()
+    {
+        return revealer;
     }
 }

@@ -1,25 +1,27 @@
 package dominion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Sam on 17/05/2016.
  */
 public class Revealer
 {
-    private ArrayList<Card> cardsToReveal;
+    private Map<String, String> cardsToReveal;
 
     public Revealer()
     {
-        cardsToReveal = new ArrayList<>();
+        cardsToReveal = new HashMap<>();
     }
 
-    public void addCardToReveal(Card card)
+    public void addCardToReveal(String playerName, Card card)
     {
-        cardsToReveal.add(card);
+        cardsToReveal.put(playerName, card.getName());
     }
 
-    public ArrayList<Card> getCardsToReveal()
+    public Map<String, String> getCardsToReveal()
     {
         return cardsToReveal;
     }
