@@ -89,6 +89,68 @@ public class GameManager extends javax.servlet.http.HttpServlet
                 e.printStackTrace();
             }
 
+            if (isMyTurn)
+            {
+                switch (command)
+                {
+                    case "putcardontable":
+                    {
+                        try
+                        {
+                            game.playCard(cardName);
+                        }
+                        catch (CardNotAvailableException ex)
+                        {
+                            ex.printStackTrace();
+                        }
+                        //currentPlayer.playCard(cardName);
+
+                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
+                        {
+                            enableBuying.put(lobbyName, true);
+                        }
+                    }
+                    break;
+                    case "playtreasures":
+                    {
+                        game.playTreasures();
+
+                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
+                        {
+                            enableBuying.put(lobbyName, true);
+                        }
+                    }
+                    break;
+                    case "endturn":
+                    {
+                        enableBuying.put(lobbyName, false);
+                        game.advancePlayer();
+                    }
+                    break;
+                    case "endactions":
+                    {
+                        if (game.getPhase() == 0)
+                        {
+                            game.advancePhase();
+                        }
+                    }
+                    break;
+                    case "buycard":
+                    {
+                        try
+                        {
+                            game.buyCard(cardName);
+                        }
+                        catch (CardNotAvailableException ex)
+                        {
+                            ex.printStackTrace();
+                            //Do nothing
+                        }
+                    }
+                    break;
+                }
+            }
+
             switch (command)
             {
                 case "getcardsets":
@@ -145,58 +207,6 @@ public class GameManager extends javax.servlet.http.HttpServlet
 
                 }
                 break;
-                case "putcardontable":
-                {
-
-                    if (isMyTurn)
-                    {
-                        try
-                        {
-                            game.playCard(cardName);
-                        }
-                        catch (CardNotAvailableException ex)
-                        {
-                            ex.printStackTrace();
-                        }
-                        //currentPlayer.playCard(cardName);
-
-                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
-                        {
-                            enableBuying.put(lobbyName, true);
-                        }
-                    }
-                }
-                break;
-                case "playtreasures":
-                {
-                    if (isMyTurn)
-                    {
-                        game.playTreasures();
-
-                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
-                        {
-                            enableBuying.put(lobbyName, true);
-                        }
-                    }
-                }
-                break;
-                case "endturn":
-                {
-                    if (isMyTurn)
-                    {
-                        enableBuying.put(lobbyName, false);
-                        game.advancePlayer();
-                    }
-                }
-                break;
-                case "endactions":
-                {
-                    if (isMyTurn && game.getPhase() == 0)
-                    {
-                        game.advancePhase();
-                    }
-                }
-                break;
                 case "retrievekingdomcards":
                 {
 
@@ -228,28 +238,7 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     writer.print(gson.toJson(cards));
 
                 }
-                case "buycard":
-                {
-                    if (isMyTurn)
-                    {
-                        try
-                        {
-                            game.buyCard(cardName);
-                        }
-                        catch (CardNotAvailableException ex)
-                        {
-                            ex.printStackTrace();
-                            //Do nothing
-                        }
-                    }
-                }
                 break;
-                /*case "retrievebuyablecards":
-                {
-                    ArrayList<String> buyableCards = game.findBuyableCards();
-
-                    writer.print(gson.toJson(buyableCards));
-                }*/
             }
         }
     }
