@@ -102,11 +102,11 @@ public class Ability
         game.moveCardsToDiscardPile(cardsToDiscard);
     }
 
-    public void bureaucratSpecialAbility(game game, Revealer revealer)
+    /*public void bureaucratSpecialAbility(game game, Revealer revealer)
     {
 
 
-    }
+    }*/
 
     private void addActions(Player currentPlayer)
     {

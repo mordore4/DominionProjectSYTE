@@ -33,7 +33,7 @@
 
     <div id="imgChat" data-toggle="popover" title="Press 'ALT + C' to enable/disable chat" data-content=""></div>
 
-        <ul class="message-list">
+    <ul class="message-list">
 
     </ul>
     <div class="compose-message">
@@ -43,11 +43,9 @@
         <input type="text" id="chat-message" class="chat-message"/>
 
 
+    </div>
 
 </div>
-
-</div>
-
 
 
 <div class="site-wrapper">
@@ -70,10 +68,17 @@
             </div>
 
             <div class="cf inner unselectable" id="gamewindow" style="display: none;">
-                <div id="kingdomcards">
-                    <ul>
 
-                    </ul>
+                <div id="kingdomwrapper">
+                    <div class="corner-topleft"></div>
+                    <div class="title">Kingdom cards</div>
+                    <div class="corner-topright"></div>
+
+                    <div id="kingdomcards">
+                        <ul>
+
+                        </ul>
+                    </div>
                 </div>
 
                 <div id="player-turninfo">
@@ -82,10 +87,20 @@
                     <div class="info-sub" id="turn-coins"><span class="info">0</span>Coins</div>
                 </div>
 
-                <ul id="hand"></ul>
+                <div id="handwrapper">
+                    <div id="handdecor">
+                        <div class="corner-topleft"></div>
+                        <div class="title">Your hand</div>
+                        <div class="corner-topright"></div>
 
+                        <ul id="hand"></ul>
+                    </div>
+                </div>
+
+                <div id="topcoins-title">Treasure</div>
                 <ul class="topcoins" id="coins"></ul>
 
+                <div id="topstates-title">States</div>
                 <ul class="topprov" id="topstates"></ul>
 
             </div>
@@ -93,13 +108,14 @@
             <div class="cf inner" id="enternickname" style="display: none;">
                 <p>
                     <label for="nickname">Nickname: </label>
-                        <input type="text" class="nickname" id="nickname"/>
+                    <input type="text" class="nickname" id="nickname"/>
                 </p>
 
                 <p>
                     <label for="lobbyname">Lobby name: </label>
                     <input type="text" class="lobbyname" id="lobbyname"/>
                 </p>
+
                 <p>
                     <label for="cardset">Card set:</label>
                     <select name="cardset" id="cardset">
@@ -235,6 +251,8 @@
 <script type="text/javascript" src="assets/js/chat-client.js"></script>
 <script type="text/javascript" src="assets/js/ajax.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+
+<!--<script type="text/javascript" src="assets/js/test.js"></script>-->
 
 </body>
 </html>

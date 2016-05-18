@@ -170,6 +170,7 @@ var ajaxCheckGameStatus = function () {
                 $("#cardsComeCenter").empty();
                 clearBuyableCards();
                 $("#hand").sortable("enable");
+                $("#handdecor").show();
             }
 
             isMyTurn = status.isMyTurn;
@@ -247,6 +248,7 @@ var ajaxRetrieveHand = function () {
             });
 
             $("#hand").show();
+            $("#handdecor").show();
 
             createHand(cardNames);
         });

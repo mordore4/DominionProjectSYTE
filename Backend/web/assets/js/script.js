@@ -108,6 +108,8 @@ $(document).ready(function () {
                 else {
                     $(ui.sender).sortable('cancel');
                 }
+
+                hideHandIfEmpty();
             }
         }
     });
@@ -144,6 +146,13 @@ $(document).ready(function () {
     //enterNickName();
     //playGame();
 });
+
+var hideHandIfEmpty = function() {
+    if ($("#hand").is(":empty"))
+    {
+        $("#handdecor").hide();
+    }
+};
 
 var sendChatMessage = function (e) {
     var message = $(this).val();
@@ -251,9 +260,14 @@ var playGame = function () {
     $("#kingdomcards").hide();
     $("#topstates").hide();
     $("#coins").hide();
+    $("#handdecor").hide();
+    $("#topcoins-title").hide();
+    $("#topstates-title").hide();
+    $("#kingdomwrapper").hide();
+    $("#cardsComeCenter").hide();
+    $("#player-turninfo").hide();
 
     $("#gamewindow").show();
-    $('#cardsComeCenter').show();
 
     if (isHost) ajaxCreateLobby();
     else ajaxJoinLobby();
@@ -314,6 +328,8 @@ var addFixedCards = function (cardsArray) {
 
     topStates.show();
     coins.show();
+    $("#topcoins-title").show();
+    $("#topstates-title").show();
 };
 
 var addKingdomCards = function (cardsArray) {
@@ -335,6 +351,7 @@ var addKingdomCards = function (cardsArray) {
     element.find('div.kingdomcard').on('click', buyCard);
     $("a.info").on('click', showCardInfo);
     $("#kingdomcards").show();
+    $("#kingdomwrapper").show();
 };
 
 var buyCard = function () {
@@ -443,6 +460,8 @@ var playTreasures = function() {
 
     $("#play-treasures").hide();
     ajaxPlayTreasures();
+
+    hideHandIfEmpty();
 };
 
 var setTurnInfo = function (type, value) {
@@ -456,6 +475,9 @@ var getTurnInfo = function (type) {
 var setUpGame = function () {
     ajaxRetrieveHand();
     $("#hand").show();
+    $("#handdecor").show();
+    $("#cardsComeCenter").show();
+    $("#player-turninfo").show();
     isMyTurn = false;
     ajaxRetrieveKingdomCards();
     ajaxCheckGameStatus();
