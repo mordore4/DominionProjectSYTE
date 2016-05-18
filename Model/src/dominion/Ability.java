@@ -44,6 +44,9 @@ public class Ability
             case 13:
                 adventurerSpecialAbility(game);
                 break;
+            case 14:
+                bureaucratSpecialAbility(game);
+                break;
             case 25:
                 gainSilver(game);
                 break;
@@ -102,11 +105,41 @@ public class Ability
         game.moveCardsToDiscardPile(cardsToDiscard);
     }
 
-    /*public void bureaucratSpecialAbility(game game, Revealer revealer)
+    public void bureaucratSpecialAbility(Game game)
     {
+        Player playingPlayer = game.findCurrentPlayer();
+        for (Player player : game.getPlayers())
+        {
+            if (player != playingPlayer)
+            {
+                Deck hand = player.getHand();
+                Revealer revealer = player.getRevealer();
+                if (hand.checkHandForType(2))
+                {
+                    boolean foundCard = false;
+                    for (int i = 0; !foundCard && i < hand.getCards().size(); i++)
+                    {
+                        Card currentCard = hand.getCards().get(i);
+                        if (currentCard.getType() == 2)
+                        {
+                            game.moveThisCardFromTo(currentCard,hand.getCards(),player.getDeck().getCards());
+                            foundCard = true;
+                            revealer.addCardToReveal(currentCard);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < hand.size();j++)
+                    {
+                        Card currentCard = hand.getCards().get(j);
+                        revealer.addCardToReveal(currentCard);
+                    }
+                }
+            }
+        }
 
-
-    }*/
+    }
 
     private void addActions(Player currentPlayer)
     {
