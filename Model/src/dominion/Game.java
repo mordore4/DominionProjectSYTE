@@ -7,6 +7,7 @@ import dominion.persistence.DatabaseResults;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Digaly on 23/03/2016.
@@ -14,7 +15,7 @@ import java.util.HashMap;
 public class Game
 {
     private Card[] cards;
-    private ArrayList<Card> cardsOnTable;
+    private CopyOnWriteArrayList<Card> cardsOnTable;
     private int currentPlayerIndex;
     private Player[] players;
     private int phase;
@@ -33,7 +34,7 @@ public class Game
     private void initGameState(String[] playerNames)
     {
         players = new Player[playerNames.length];
-        cardsOnTable = new ArrayList<>();
+        cardsOnTable = new CopyOnWriteArrayList<>();
 
         for (int i = 0; i < playerNames.length; i++)
         {
@@ -201,6 +202,28 @@ public class Game
         else throw new CardNotAvailableException();
     }
 
+    public void playTreasures()
+    {
+        Player currentPlayer = findCurrentPlayer();
+
+        ArrayList<Card> handClone = (ArrayList<Card>) currentPlayer.getHand().getCards().clone();
+
+        for (Card card : handClone)
+        {
+            if (card.getType() == 1)
+            {
+                try
+                {
+                    playCard(card.getName());
+                }
+                catch (CardNotAvailableException e)
+                {
+                    //Do nothing
+                }
+            }
+        }
+    }
+
     public void executeCardAbilities(Card currentCard) throws CardNotAvailableException
     {
         Ability[] cardAbilities = currentCard.getAbilities();
@@ -314,7 +337,7 @@ public class Game
         {
             currentPlayer.getDiscardPile().addCard(cardsOnTable.get(i));
         }
-        cardsOnTable = new ArrayList<>();
+        cardsOnTable = new CopyOnWriteArrayList<>();
 
         ArrayList<Card> currentHand = currentPlayer.getHand().getCards();
 
@@ -402,7 +425,7 @@ public class Game
         currentPlayerIndex = index;
     }
 
-    public ArrayList<Card> getCardsOnTable()
+    public CopyOnWriteArrayList<Card> getCardsOnTable()
     {
         return cardsOnTable;
     }

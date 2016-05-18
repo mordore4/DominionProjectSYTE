@@ -30,7 +30,6 @@ $(document).ready(function () {
 
 
     $("#imgChat").on('click', function () {
-        console.log("hey");
         $("#chat").hide();
         /*
          $(function() {
@@ -438,13 +437,12 @@ var playTreasures = function() {
     var treasuresToPlay = $("#hand").find("li").filter("[data-cardname=copper],[data-cardname=silver],[data-cardname=gold]");
 
     treasuresToPlay.each(function() {
-        ajaxPutCardOnTable($(this).attr("data-cardname"));
-
         $("#cardsComeCenter").append($(this).clone());
         $(this).remove();
     });
 
-    setTimeout(ajaxRetrieveBuyableCards, 0);
+    $("#play-treasures").hide();
+    ajaxPlayTreasures();
 };
 
 var setTurnInfo = function (type, value) {

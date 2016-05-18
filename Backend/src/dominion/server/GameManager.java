@@ -167,6 +167,19 @@ public class GameManager extends javax.servlet.http.HttpServlet
                     }
                 }
                 break;
+                case "playtreasures":
+                {
+                    if (isMyTurn)
+                    {
+                        game.playTreasures();
+
+                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
+                        {
+                            enableBuying.put(lobbyName, true);
+                        }
+                    }
+                }
+                break;
                 case "endturn":
                 {
                     if (isMyTurn)

@@ -195,7 +195,9 @@ var ajaxCheckGameStatus = function () {
                 if (status.phase == 3)
                 {
                     if (status.buys == 0 || status.coins == 0)
+                    {
                         ajaxEndTurn();
+                    }
                 }
             }
             else
@@ -263,6 +265,22 @@ var ajaxPutCardOnTable = function (cardname, callback) {
         })
         .done(function () {
             if (typeof callback !== 'undefined') callback();
+            ajaxCheckGameStatus();
+        });
+};
+
+var ajaxPlayTreasures = function() {
+    $.ajax({
+        method: "GET",
+        url: "server/gamemanager",
+        data: {
+            command: "playtreasures",
+            lobbyname: lobbyname,
+            nickname: nickname
+        }
+    })
+        .done(function () {
+            ajaxRetrieveBuyableCards();
             ajaxCheckGameStatus();
         });
 };
