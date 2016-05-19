@@ -128,6 +128,25 @@ public class AbilityTest
     }
 
     @Test
+    public void testMilitiaSpecialAbility() throws CardNotAvailableException
+    {
+        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(19, -1)});
+        currentPlayer.getHand().addCard(testCard);
+
+        game.playCard("testcard");
+
+        assert(game.getConditionsList().conditionsOfPlayer(currentPlayer).size() == 0);
+        assert(game.getConditionsList().conditionsOfPlayer(game.getPlayer("alice")).size() == 1);
+
+        for (int i = 0; i < 3; i++)
+        {
+            game.getPlayer("alice").getHand().getCards().remove(0);
+        }
+        
+        assert(game.getConditionsList().conditionsOfPlayer(game.getPlayer("alice")).size() == 0);
+    }
+
+    @Test
     public void testGainSilver()
     {
 

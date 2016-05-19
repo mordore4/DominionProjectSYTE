@@ -3,6 +3,8 @@ package dominion;
 import dominion.exceptions.CardNotAvailableException;
 import dominion.persistence.Database;
 import dominion.persistence.DatabaseResults;
+import dominion.util.Condition;
+import dominion.util.ConditionsList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +23,7 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
+    private ConditionsList conditionsList;
     private Revealer revealer;
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
@@ -29,6 +32,7 @@ public class Game
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
         revealer = new Revealer();
+        conditionsList = new ConditionsList();
     }
 
     private void initGameState(String[] playerNames)
@@ -458,5 +462,15 @@ public class Game
     public Revealer getRevealer ()
     {
         return revealer;
+    }
+
+    public ConditionsList getConditionsList()
+    {
+        return conditionsList;
+    }
+
+    public void addCondition(Condition condition)
+    {
+        conditionsList.add(condition);
     }
 }

@@ -1,6 +1,7 @@
 package dominion;
 
 import dominion.exceptions.CardNotAvailableException;
+import dominion.util.RemoveCardsCondition;
 
 import java.util.ArrayList;
 
@@ -160,7 +161,14 @@ public class Ability
 
     public void militiaSpecialAbility(Game game)
     {
-        
+        for (Player player : game.getPlayers())
+        {
+            if (player != game.findCurrentPlayer())
+            {
+                RemoveCardsCondition newCondition = new RemoveCardsCondition(player, 3);
+                game.addCondition(newCondition);
+            }
+        }
     }
 
     private void chancellorSpecialAbility(Game game, boolean discardDeck)
