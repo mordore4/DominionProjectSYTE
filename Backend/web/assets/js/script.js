@@ -123,6 +123,8 @@ $(document).ready(function () {
     $("#end-actions").on('click', endActions).hide();
     $("#play-treasures").on('click', playTreasures).hide();
 
+    $("#start-game").on('click', ajaxStartGame);
+
     $(document).keypress(function (e) {
         /*var chatMessage = $("#chat-message");
 

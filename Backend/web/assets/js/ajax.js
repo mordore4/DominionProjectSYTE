@@ -66,7 +66,21 @@ var ajaxJoinLobby = function () {
             }
         })
         .done(function (data) {
-            setUpGame();
+            ajaxCheckLobbyReady();
+        });
+};
+
+var ajaxStartGame = function () {
+    $.ajax({
+        method: "GET",
+        url: "server/gamemanager",
+        data: {
+            command: "startgame",
+            lobbyname: lobbyname
+        }
+    })
+        .done(function (data) {
+
         });
 };
 
