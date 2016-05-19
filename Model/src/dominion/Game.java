@@ -244,7 +244,7 @@ public class Game
 
         for (Ability ability : cardAbilities)
         {
-            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() == 27)
+            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() >= 25)
             {
                 ability.doAbility(this);
             }

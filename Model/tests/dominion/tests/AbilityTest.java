@@ -147,9 +147,29 @@ public class AbilityTest
     }
 
     @Test
-    public void testGainSilver()
+    public void testGainSilver() throws CardNotAvailableException
     {
+        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(25, -1)});
+        Card copper = game.findCard("copper");
+        currentPlayer.getHand().addCard(testCard);
+        currentPlayer.getDeck().getCards().clear();
+        currentPlayer.getDeck().addCard(copper);
+        boolean isFirstCardSilver = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver");
+        /*String currentTopCard = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName();
+        if (currentTopCard == "silver")
+        {
+            isFirstCardSilver = true;
+        } Vervangen door regel erboven */
 
+        game.playCard("testcard");
+        boolean isTopCardSilver = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver");
+        /*String topCard = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName();
+        if (topCard == "silver")
+        {
+            isTopCardSilver = true;
+        } Vervangen door regel erboven*/
+
+        assert (!isFirstCardSilver && isTopCardSilver);
     }
 
 }
