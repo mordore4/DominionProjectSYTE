@@ -21,7 +21,7 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
-    Revealer revealer;
+    private Revealer revealer;
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
     {
@@ -240,7 +240,7 @@ public class Game
 
         for (Ability ability : cardAbilities)
         {
-            if (ability.getId() < 6 || ability.getId() == 12)
+            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() == 27)
             {
                 ability.doAbility(this);
             }

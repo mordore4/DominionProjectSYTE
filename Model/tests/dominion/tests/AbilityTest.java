@@ -1,11 +1,9 @@
 package dominion.tests;
 
-import dominion.Ability;
-import dominion.Card;
-import dominion.Game;
-import dominion.Player;
+import dominion.*;
 import dominion.exceptions.CardNotAvailableException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,13 +17,17 @@ public class AbilityTest
 {
     private Game game;
     private Player currentPlayer;
-    private TestHelper testHelper;
+    private static TestHelper testHelper;
+
+    @BeforeClass
+    public static void setUpHelper()
+    {
+        testHelper = new TestHelper();
+    }
 
     @Before
     public void setUp() throws Exception
     {
-        testHelper = new TestHelper();
-
         String[] accounts = {"bob", "alice"};
         game = new Game(accounts, testHelper.getDefaultKingdomCards(), testHelper.getTestCardList());
         game.setCurrentPlayerIndex(0);
@@ -103,4 +105,32 @@ public class AbilityTest
 
         assert (currentPlayer.getHand().findCard("testcard") == null);
     }
+
+    @Test
+    public void testMoneyLenderSpecialAbility() throws CardNotAvailableException
+    {
+        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(27, -1)});
+        Card copper = game.findCard("copper");
+        Deck hand = currentPlayer.getHand();
+
+        hand.getCards().clear();
+
+        hand.addCard(testCard);
+        hand.addCard(copper);
+
+        boolean handContainsCopper = hand.findCard("copper") != null;
+
+        game.playCard(testCard.getName());
+
+        boolean handDoesNotContainCopper = hand.findCard("copper") == null;
+
+        assert (handContainsCopper && handDoesNotContainCopper);
+    }
+
+    @Test
+    public void testGainSilver()
+    {
+
+    }
+
 }
