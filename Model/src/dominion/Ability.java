@@ -47,6 +47,9 @@ public class Ability
             case 14:
                 bureaucratSpecialAbility(game);
                 break;
+            case 19:
+                militiaSpecialAbility(game);
+                break;
             case 25:
                 gainSilver(game);
                 break;
@@ -137,6 +140,10 @@ public class Ability
                 }
             }
         }
+    }
+
+    public void militiaSpecialAbility()
+    {
 
     }
 

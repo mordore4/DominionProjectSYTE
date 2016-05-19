@@ -248,7 +248,7 @@ public class Game
             {
                 ability.doAbility(this, currentCard);
             }
-            else if (ability.getId() == 13)
+            else if (ability.getId() == 13 || ability.getId() == 14 || ability.getId() == 19)
             {
                 ability.doAbility(this);
             }
