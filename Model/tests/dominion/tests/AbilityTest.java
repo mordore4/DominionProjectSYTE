@@ -154,22 +154,25 @@ public class AbilityTest
         currentPlayer.getHand().addCard(testCard);
         currentPlayer.getDeck().getCards().clear();
         currentPlayer.getDeck().addCard(copper);
-        boolean isFirstCardSilver = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver");
+        assertFalse(currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver"));
+        //boolean isFirstCardSilver = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver");
         /*String currentTopCard = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName();
+
         if (currentTopCard == "silver")
         {
             isFirstCardSilver = true;
         } Vervangen door regel erboven */
 
         game.playCard("testcard");
-        boolean isTopCardSilver = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver");
+        //boolean isTopCardSilver = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver");
+        assertTrue(currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName().equals("silver"));
         /*String topCard = currentPlayer.getDeck().getTopCard(currentPlayer.getDiscardPile()).getName();
         if (topCard == "silver")
         {
             isTopCardSilver = true;
         } Vervangen door regel erboven*/
 
-        assert (!isFirstCardSilver && isTopCardSilver);
+        //assert (!isFirstCardSilver && isTopCardSilver);
     }
 
 }
