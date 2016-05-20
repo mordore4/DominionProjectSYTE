@@ -4,7 +4,7 @@ import dominion.exceptions.CardNotAvailableException;
 import dominion.persistence.Database;
 import dominion.persistence.DatabaseResults;
 import dominion.util.Condition;
-import dominion.util.ConditionsList;
+import dominion.util.ConditionList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class Game
     private int phase;
     private boolean isOver;
     private HashMap<String, Card> cardList;
-    private ConditionsList conditionsList;
+    private ConditionList conditionsList;
     private Revealer revealer;
 
     public Game(String[] playerNames, String[] kingdomCards, HashMap<String, Card> cardList)
@@ -32,7 +32,7 @@ public class Game
         makeCards(kingdomCards, playerNames.length);
         initGameState(playerNames);
         revealer = new Revealer();
-        conditionsList = new ConditionsList();
+        conditionsList = new ConditionList();
     }
 
     private void initGameState(String[] playerNames)
@@ -464,7 +464,7 @@ public class Game
         return revealer;
     }
 
-    public ConditionsList getConditionsList()
+    public ConditionList getConditionsList()
     {
         return conditionsList;
     }

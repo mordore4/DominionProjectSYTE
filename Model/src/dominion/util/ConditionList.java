@@ -7,11 +7,11 @@ import java.util.ArrayList;
 /**
  * Created by Digaly on 19/05/2016.
  */
-public class ConditionsList
+public class ConditionList
 {
     private ArrayList<Condition> conditions;
 
-    public ConditionsList()
+    public ConditionList()
     {
         conditions = new ArrayList<>();
     }

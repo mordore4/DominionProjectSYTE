@@ -1,245 +1,42 @@
 package dominion.server;
 
-import com.google.gson.Gson;
-import dominion.*;
-import dominion.exceptions.CardNotAvailableException;
-import dominion.exceptions.LobbyNotFoundException;
-
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created by Tom Dobbelaere on 7/05/2016.
+ * Created by Digaly on 19/05/2016.
  */
-
-public class GameManager extends javax.servlet.http.HttpServlet
+@WebServlet(name = "GameManager")
+public class GameManager extends HttpServlet
 {
     @Override
     public void init()
     {
         ServletContext servletContext = getServletContext();
-        HashMap<String, Boolean> enableBuying = new HashMap<>();
+        HTMLController htmlController = new HTMLController();
 
-        GameEngine gameEngine = null;
-
-        try
-        {
-            gameEngine = new GameEngine();
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-
-        servletContext.setAttribute("gameEngine", gameEngine);
-        servletContext.setAttribute("enableBuying", enableBuying);
+        servletContext.setAttribute("HTMLController", htmlController);
     }
 
     @Override
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         doGet(request, response);
     }
 
-    @SuppressWarnings(value = "unchecked")
     @Override
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         ServletContext servletContext = getServletContext();
-        GameEngine gameEngine = (GameEngine) servletContext.getAttribute("gameEngine");
-        HashMap<String, Boolean> enableBuying = (HashMap<String, Boolean>) servletContext.getAttribute("enableBuying");
-
+        HTMLController htmlController  = (HTMLController) servletContext.getAttribute("HTMLController");
         PrintWriter writer = response.getWriter();
-        Gson gson = new Gson();
 
-        String command = request.getParameter("command");
-
-        if (command != null)
-        {
-            String nickname = request.getParameter("nickname");
-            String lobbyName = request.getParameter("lobbyname");
-            String cardName = request.getParameter("cardname");
-            Lobby lobby = null;
-            Game game = null;
-            Player thisPlayer = null;
-            Player currentPlayer = null;
-            boolean isMyTurn = false;
-            try
-            {
-                lobby = gameEngine.findLobby(lobbyName);
-                if (lobby.isStarted())
-                {
-                    game = lobby.getGame();
-                    thisPlayer = game.getPlayer(nickname);
-                    currentPlayer = game.findCurrentPlayer();
-                    //isMyTurn = currentPlayer.isMyTurn(nickname);
-                    if (thisPlayer != null)
-                    {
-                        isMyTurn = thisPlayer.equals(currentPlayer);
-                    }
-                }
-            }
-            catch (LobbyNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-
-            if (isMyTurn)
-            {
-                switch (command)
-                {
-                    case "putcardontable":
-                    {
-                        try
-                        {
-                            game.playCard(cardName);
-                        }
-                        catch (CardNotAvailableException ex)
-                        {
-                            ex.printStackTrace();
-                        }
-                        //currentPlayer.playCard(cardName);
-
-                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
-                        {
-                            enableBuying.put(lobbyName, true);
-                        }
-                    }
-                    break;
-                    case "playtreasures":
-                    {
-                        game.playTreasures();
-
-                        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
-                        {
-                            enableBuying.put(lobbyName, true);
-                        }
-                    }
-                    break;
-                    case "endturn":
-                    {
-                        enableBuying.put(lobbyName, false);
-                        game.advancePlayer();
-                    }
-                    break;
-                    case "endactions":
-                    {
-                        if (game.getPhase() == 0)
-                        {
-                            game.advancePhase();
-                        }
-                    }
-                    break;
-                    case "buycard":
-                    {
-                        try
-                        {
-                            game.buyCard(cardName);
-                        }
-                        catch (CardNotAvailableException ex)
-                        {
-                            ex.printStackTrace();
-                            //Do nothing
-                        }
-                    }
-                    break;
-                }
-            }
-
-            switch (command)
-            {
-                case "getcardsets":
-                {
-                    String[] cardSets = gameEngine.retrieveCardSets();
-                    writer.print(gson.toJson(cardSets));
-                }
-                break;
-                case "createlobby":
-                {
-                    String cardSet = request.getParameter("cardset");
-
-                    gameEngine.createLobby(nickname, lobbyName, cardSet);
-
-                    enableBuying.put(lobbyName, false);
-                }
-                break;
-                case "joinlobby":
-                {
-                    lobby.addPlayer(nickname);
-                    lobby.startGame();
-                }
-                break;
-                case "haslobbystarted":
-                {
-                    writer.print(lobby.isStarted());
-                }
-                break;
-                case "retrievehand":
-                {
-                    writer.print(gson.toJson(thisPlayer.getHand().getCards()));
-                }
-                break;
-                case "fetchgamestatus":
-                {
-                    HashMap<String, Object> gameStatus = new HashMap<>();
-                    gameStatus.put("isMyTurn", isMyTurn);
-                    gameStatus.put("cardsOnTable", game.getCardsOnTable());
-
-                    if (!enableBuying.get(lobbyName))
-                    {
-                        gameStatus.put("phase", game.getPhase());
-                    }
-                    else
-                    {
-                        gameStatus.put("phase", 3);
-                    }
-
-                    gameStatus.put("actions", game.findCurrentPlayer().getActions());
-                    gameStatus.put("buys", game.findCurrentPlayer().getBuys());
-                    gameStatus.put("coins", game.findCurrentPlayer().getCoins());
-
-                    writer.print(gson.toJson(gameStatus));
-
-                }
-                break;
-                case "retrievekingdomcards":
-                {
-
-                    HashMap<String, Card[]> cardsArray = new HashMap<>();
-
-                    cardsArray.put("kingdomCards", game.getKingdomCards());
-
-                    cardsArray.put("fixedCards", game.getFixedCards());
-
-                    writer.print(gson.toJson(cardsArray));
-                }
-                break;
-                case "retrievebuyablecards":
-                {
-                    ArrayList<Object[]> cards = new ArrayList<>();
-
-                    for (Card card : game.getKingdomCards())
-                    {
-                        Object[] cardInfo = {card.getName(), card.getAmount(), game.isBuyable(card)};
-                        cards.add(cardInfo);
-                    }
-
-                    for (Card card : game.getFixedCards())
-                    {
-                        Object[] cardInfo = {card.getName(), card.getAmount(), game.isBuyable(card)};
-                        cards.add(cardInfo);
-                    }
-
-                    writer.print(gson.toJson(cards));
-
-                }
-                break;
-            }
-        }
+        htmlController.executeCommand(request, writer);
     }
 }
