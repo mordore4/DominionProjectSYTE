@@ -277,8 +277,6 @@ public class HTMLController
             gameStatus.put("phase", 3);
         }
 
-        gameStatus.put("phase", game.getPhase());
-
         gameStatus.put("actions", game.findCurrentPlayer().getActions());
         gameStatus.put("buys", game.findCurrentPlayer().getBuys());
         gameStatus.put("coins", game.findCurrentPlayer().getCoins());
