@@ -1,6 +1,7 @@
 package dominion;
 
 import dominion.exceptions.CardNotAvailableException;
+import dominion.util.GainCardCondition;
 import dominion.util.RemoveCardsCondition;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class Ability
                 addCards(game.findCurrentPlayer());
                 break;
             case 5:
+                break;
+            case 9:
+                gainCardCostingUpTo(game);
                 break;
             case 12:
                 curseOtherPlayers(game);
@@ -291,6 +295,12 @@ public class Ability
         }
     }
 
+    private void gainCardCostingUpTo(Game game)
+    {
+        GainCardCondition newCondition = new GainCardCondition(game.findCurrentPlayer(), amount);
+
+        game.addCondition(newCondition);
+    }
 
 
     public int getId()
