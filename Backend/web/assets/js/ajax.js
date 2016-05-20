@@ -46,7 +46,15 @@ var ajaxCheckLobbyReady = function () {
         .done(function (data) {
             var status = JSON.parse(data);
 
-            if (status) {
+            var players = status.players;
+
+            $("#player-list").empty();
+            for (var i = 0; i < players.length; i++)
+            {
+                $("#player-list").append(players[i] + "<br/>");
+            }
+
+            if (status.started) {
                 setUpGame();
             }
             else {
