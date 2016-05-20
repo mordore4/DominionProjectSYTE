@@ -394,7 +394,7 @@ var findCardElement = function (cardName) {
     var containerElement = $("#coins");
 
     if (isFixedCard >= 0) {
-        if (isFixedCard > 3) containerElement = $("#topstates");
+        if (isFixedCard >= 3) containerElement = $("#topstates");
 
         foundCard = containerElement.find('figure[data-cardname="' + cardName + '"]');
     }
