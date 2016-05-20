@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Revealer
 {
-    private Map<String, String> cardsToReveal;
+    private Map<String, ArrayList<String>> cardsToReveal;
 
     public Revealer()
     {
@@ -18,10 +18,20 @@ public class Revealer
 
     public void addCardToReveal(String playerName, Card card)
     {
-        cardsToReveal.put(playerName, card.getName());
+        ArrayList<String> thisPlayersCards = new ArrayList<>();
+        if (!cardsToReveal.containsKey(playerName))
+        {
+            thisPlayersCards.add(card.getName());
+            cardsToReveal.put(playerName, thisPlayersCards);
+        }
+        else {
+            thisPlayersCards = cardsToReveal.get(playerName);
+            thisPlayersCards.add(card.getName());
+        }
+        cardsToReveal.put(playerName, thisPlayersCards);
     }
 
-    public Map<String, String> getCardsToReveal()
+    public Map<String, ArrayList<String>> getCardsToReveal()
     {
         return cardsToReveal;
     }
