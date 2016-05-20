@@ -1,9 +1,6 @@
 package dominion.server;
 
-import dominion.Card;
-import dominion.Game;
-import dominion.GameEngine;
-import dominion.Player;
+import dominion.*;
 import dominion.exceptions.CardNotAvailableException;
 import dominion.exceptions.LobbyNotFoundException;
 
@@ -212,14 +209,23 @@ public class HTMLController
 
     public void hasLobbyStarted(String lobbyName, PrintWriter writer)
     {
+        Lobby lobby = null;
+
         try
         {
-            writer.print(gameEngine.findLobby(lobbyName).isStarted());
+            lobby = gameEngine.findLobby(lobbyName);
         }
         catch (LobbyNotFoundException e)
         {
             e.printStackTrace();
         }
+
+
+        HashMap<String, Object> lobbyStatus = new HashMap<>();
+        lobbyStatus.put("started", lobby.isStarted());
+        lobbyStatus.put("players", lobby.getPlayersInLobby());
+
+        writer.print(gson.toJson(lobbyStatus));
     }
 
     public void getCardSets(PrintWriter writer)
