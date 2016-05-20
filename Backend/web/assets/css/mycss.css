@@ -597,13 +597,12 @@ input {
     bottom: calc(178px + 16px);
 }
 
-#enternickname, #lobbyroom {
+#enternickname {
     background-color: rgba(0, 0, 0, 0.6);
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
-    min-width: 250px;
 }
 
 #enternickname input {
@@ -615,7 +614,7 @@ input {
     opacity: 1;
 }
 
-#enternickname a, #lobbyroom a {
+#enternickname a {
     background-image: url("../media/flag_n.png");
     background-position: left center;
     background-size: 100%;
@@ -628,7 +627,7 @@ input {
     display: inline-block;
 }
 
-#enternickname a:hover, #lobbyroom a:hover {
+#enternickname a:hover {
     text-decoration: none;
     background-image: url("../media/flag.png");
     color: white;

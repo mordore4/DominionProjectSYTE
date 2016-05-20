@@ -70,11 +70,6 @@ public class Lobby
         return started;
     }
 
-    public ArrayList<String> getPlayersInLobby()
-    {
-        return playersInLobby;
-    }
-
     private void setGame(Game game)
     {
         this.game = game;

@@ -3,8 +3,8 @@ var kingdomCards = ["militia", "remodel", "smithy", "market", "mine", "cellar", 
 var fixedCards = ["copper", "silver", "gold", "curse", "province", "duchy", "estate"];
 var forbiddenCards = ["province", "duchy", "estate", "curse"];
 
-var io_isLocal = false;
-var io_port = 3000;
+var io_isLocal = true;
+var io_port = 4;
 
 var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.107.177:" + io_port;
 var nickname = "farmboy" + Math.floor((Math.random() * 899) + 100);
@@ -51,7 +51,7 @@ $(document).ready(function () {
         $("#imgVis").show();
     });
 
-    $("#imgVis").on('click', function () {
+    $("#imgVis").on('click', function() {
         $("#chat").show();
         $("#imgVis").hide();
     });
@@ -149,8 +149,9 @@ $(document).ready(function () {
     //playGame();
 });
 
-var hideHandIfEmpty = function () {
-    if ($("#hand").is(":empty")) {
+var hideHandIfEmpty = function() {
+    if ($("#hand").is(":empty"))
+    {
         $("#handdecor").hide();
     }
 };
@@ -194,7 +195,8 @@ var executeCommand = function (message) {
     }
 };
 
-var receiveChatMessage = function (nickname, message) {
+var receiveChatMessage = function(nickname, message)
+{
     var html = '<li><span class="username">' + nickname + ': </span> ' + message + '</li>';
 
     appendToChat(html);
@@ -218,16 +220,16 @@ var enterGame = function (ishost) {
     cardset = $("#cardset").val();
     isHost = ishost;
     ioSetRoom(lobbyname);
-    lobbyRoom();
+    playGame();
 };
 
-var endTurn = function () {
+var endTurn = function() {
     $("#end-turn").hide();
     $("#play-treasures").hide();
     ajaxEndTurn();
 };
 
-var endActions = function () {
+var endActions = function() {
     $("#end-actions").hide();
     ajaxEndActions();
 };
@@ -247,25 +249,6 @@ var enterNickName = function () {
     })
 };
 
-var lobbyRoom = function () {
-    $('#menu').hide();
-    $("div.mastfoot").hide();
-
-    $("#lobbyroom").show();
-    $("#lobby-name").text(lobbyname);
-
-    if (!isHost) $("#startgame").hide();
-
-    $("#startgame").on('click', function () {
-        if (!isInGame) {
-            ajaxStartGame();
-        }
-    });
-
-    if (isHost) ajaxCreateLobby();
-    else ajaxJoinLobby();
-};
-
 var playGame = function () {
     isInGame = true;
 
@@ -273,7 +256,6 @@ var playGame = function () {
 
     $('body').addClass("game");
 
-    $("#lobbyroom").hide();
     $('#menu').hide();
     $("div.mastfoot").hide();
     $("#hand").hide();
@@ -288,6 +270,9 @@ var playGame = function () {
     $("#player-turninfo").hide();
 
     $("#gamewindow").show();
+
+    if (isHost) ajaxCreateLobby();
+    else ajaxJoinLobby();
 };
 
 var createHand = function (cardsArray) {
@@ -374,7 +359,8 @@ var addKingdomCards = function (cardsArray) {
 var buyCard = function () {
     var cardName = $(this).attr("data-cardname");
 
-    if (getCardBuyable(cardName) && getTurnInfo("buys") > 0) {
+    if (getCardBuyable(cardName) && getTurnInfo("buys") > 0)
+    {
         ioSendChatNotice("<span class=\"username\">" + nickname + "</span> bought a <span class=\"cardname\">" + cardName + "</span>");
         ajaxBuyCard(cardName);
     }
@@ -466,10 +452,10 @@ var highlightCardsOfType = function (type) {
     });
 };
 
-var playTreasures = function () {
+var playTreasures = function() {
     var treasuresToPlay = $("#hand").find("li").filter("[data-cardname=copper],[data-cardname=silver],[data-cardname=gold]");
 
-    treasuresToPlay.each(function () {
+    treasuresToPlay.each(function() {
         $("#cardsComeCenter").append($(this).clone());
         $(this).remove();
     });
@@ -489,8 +475,6 @@ var getTurnInfo = function (type) {
 };
 
 var setUpGame = function () {
-    playGame();
-
     ajaxRetrieveHand();
     $("#hand").show();
     $("#handdecor").show();
