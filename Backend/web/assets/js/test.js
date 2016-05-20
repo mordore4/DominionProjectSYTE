@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function() {
+    var tempHand = ["adventurer", "bureaucrat", "gold", "curse", "cellar", "chancellor", "copper", "chapel"];
     playGame();
     $("#kingdomcards").show();
     $("#hand").show();

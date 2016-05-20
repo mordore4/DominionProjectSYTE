@@ -1,19 +1,18 @@
-var tempHand = ["adventurer", "bureaucrat", "gold", "curse", "cellar", "chancellor", "copper", "chapel"];
-var kingdomCards = ["militia", "remodel", "smithy", "market", "mine", "cellar", "moat", "village", "woodcutter", "workshop"];
-var fixedCards = ["copper", "silver", "gold", "curse", "province", "duchy", "estate"];
+var kingdomCards;// = ["militia", "remodel", "smithy", "market", "mine", "cellar", "moat", "village", "woodcutter", "workshop"];
+var fixedCards;// = ["copper", "silver", "gold", "curse", "province", "duchy", "estate"];
 var forbiddenCards = ["province", "duchy", "estate", "curse"];
 
 var io_isLocal = false;
 var io_port = 3000;
 
-var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.107.177:" + io_port;
-var nickname = "farmboy" + Math.floor((Math.random() * 899) + 100);
-var lobbyname = "";
-var cardset = "";
-var isHost = false;
-var isMyTurn = false;
-var phase = 0;
-var isInGame = false;
+var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.107.177:" + io_port,
+    nickname = "farmboy" + Math.floor((Math.random() * 899) + 100),
+    lobbyname = "",
+    cardset = "",
+    isHost = false,
+    isMyTurn = false,
+    phase = 0,
+    isInGame = false;
 
 var pollInterval = 2000;
 
@@ -100,7 +99,7 @@ $(document).ready(function () {
                 }
                 else if (phase == 1) //Treasure phase
                 {
-                    if ($.inArray(cardName, fixedCards) >= 0) {
+                    if ($.inArray(cardName, ["copper", "silver", "gold"]) >= 0) {
                         ajaxPutCardOnTable(cardName, ajaxRetrieveBuyableCards);
                     }
                     else $(ui.sender).sortable('cancel');
@@ -269,7 +268,7 @@ var lobbyRoom = function () {
 var playGame = function () {
     isInGame = true;
 
-    createHand(tempHand);
+    //createHand(tempHand);
 
     $('body').addClass("game");
 

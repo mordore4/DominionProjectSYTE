@@ -104,6 +104,9 @@ var ajaxRetrieveKingdomCards = function () {
         .done(function (data) {
             var cards = JSON.parse(data);
 
+            kingdomCards = cards.kingdomCards;
+            fixedCards = cards.fixedCards;
+            
             addKingdomCards(cards.kingdomCards);
             addFixedCards(cards.fixedCards);
 
