@@ -373,7 +373,7 @@ var addKingdomCards = function (cardsArray) {
 var buyCard = function () {
     var cardName = $(this).attr("data-cardname");
 
-    if (getCardBuyable(cardName) && getTurnInfo("buys") > 0) {
+    if (isMyTurn && getCardBuyable(cardName) && getTurnInfo("buys") > 0) {
         ioSendChatNotice("<span class=\"username\">" + nickname + "</span> bought a <span class=\"cardname\">" + cardName + "</span>");
         ajaxBuyCard(cardName);
     }

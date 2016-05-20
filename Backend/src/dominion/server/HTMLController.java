@@ -129,7 +129,8 @@ public class HTMLController
             @Override
             public void runCommand(HttpServletRequest request, PrintWriter writer)
             {
-                buyCard(request.getParameter("lobbyname"), request.getParameter("cardname"));
+                buyCard(request.getParameter("nickname"), request.getParameter("lobbyname"),
+                        request.getParameter("cardname"));
             }
         });
 
@@ -311,13 +312,16 @@ public class HTMLController
         writer.print(gson.toJson(cards));
     }
 
-    public void buyCard(String lobbyName, String cardName)
+    public void buyCard(String nickname, String lobbyName, String cardName)
     {
         Game game = retrieveGameOfLobby(lobbyName);
 
         try
         {
-            game.buyCard(cardName);
+            if (game.findCurrentPlayer().getName().equals(nickname))
+            {
+                game.buyCard(cardName);
+            }
         }
         catch (CardNotAvailableException ex)
         {
