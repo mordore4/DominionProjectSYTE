@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.google.gson.*;
 import dominion.util.Condition;
+import dominion.util.RemoveCardsCondition;
 
 /**
  * Created by Digaly on 19/05/2016.
@@ -367,11 +368,30 @@ public class HTMLController
         Game game = retrieveGameOfLobby(lobbyName);
 
         Player thisPlayer = game.getPlayer(nickname);
+        Condition thisPlayersCondition = game.getConditionsList().get(thisPlayer);
+        boolean conditionHasType = false;
+        int cardType = 0;
+        if (thisPlayersCondition instanceof RemoveCardsCondition)
+        {
+            RemoveCardsCondition thisPlayerCondition = (RemoveCardsCondition) thisPlayersCondition;
+            cardType = thisPlayerCondition.getType();
+            conditionHasType = (cardType != 0);
+        }
         Card card = thisPlayer.getHand().findCard(cardName);
 
         if (card != null)
         {
-            thisPlayer.getHand().removeCard(card);
+            if (conditionHasType)
+            {
+                if (cardType == card.getType())
+                {
+                    thisPlayer.getHand().removeCard(card);
+                }
+            }
+            else
+            {
+                thisPlayer.getHand().removeCard(card);
+            }
         }
     }
 

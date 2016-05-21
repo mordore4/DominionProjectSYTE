@@ -279,22 +279,6 @@ var ajaxCheckGameStatus = function ()
             {
                 console.log(status.myCondition);
 
-                if (status.myCondition != null)
-                {
-                    switch (status.myCondition.name)
-                    {
-                        case "RemoveCardsCondition":
-                            $("#handdecor").find("div.title").text("Remove " + status.myCondition.condition.cardsToRemove + " cards");
-                            allowDiscard = true;
-                            break;
-                    }
-                }
-                else
-                {
-                    allowDiscard = false;
-                    $("#handdecor").find("div.title").text("Your hand");
-                }
-
                 if (phase == 1 || phase == 3)
                 {
                     ajaxRetrieveBuyableCards()
@@ -308,6 +292,24 @@ var ajaxCheckGameStatus = function ()
                     cardNames.push(item);
                 });
                 createCardsOnTable(cardNames);
+            }
+
+            if (status.myCondition != null)
+            {
+                switch (status.myCondition.name)
+                {
+                    case "RemoveCardsCondition":
+                        $("#handdecor").find("div.title").text("Remove " + status.myCondition.condition.cardsToRemove + " cards");
+                        allowDiscard = true;
+                        break;
+                    case "GainCardCondition":
+                        break;
+                }
+            }
+            else
+            {
+                allowDiscard = false;
+                $("#handdecor").find("div.title").text("Your hand");
             }
 
             //Keep calling this ajax unless it's our turn
