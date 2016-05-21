@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class GainCardCondition extends Condition
 {
     private int amount;
-    private ArrayList<Card> startHand;
+    private transient ArrayList<Card> startHand;
 
     public GainCardCondition(Player player, int amount)
     {

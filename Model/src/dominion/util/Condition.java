@@ -7,7 +7,7 @@ import dominion.Player;
  */
 public abstract class Condition
 {
-    private Player player;
+    private transient Player player;
 
     public Condition(Player player) {
         this.player = player;

@@ -16,19 +16,22 @@ var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.10
 
 var pollInterval = 2000;
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
     /*
      $("#dialog-confirm").hide();
      */
     $("#imgVis").hide();
-    $(".register").on('click', function () {
+    $(".register").on('click', function ()
+    {
         $('#menu').hide();
         $("#form").show();
 
     });
 
 
-    $("#imgChat").on('click', function () {
+    $("#imgChat").on('click', function ()
+    {
         $("#chat").hide();
         /*
          $(function() {
@@ -50,22 +53,28 @@ $(document).ready(function () {
         $("#imgVis").show();
     });
 
-    $("#imgVis").on('click', function () {
+    $("#imgVis").on('click', function ()
+    {
         $("#chat").show();
         $("#imgVis").hide();
     });
 
     var isCtrl = false;
-    $(document).keyup(function (e) {
+    $(document).keyup(function (e)
+    {
         if (e.which == 18) isCtrl = false;
-    }).keydown(function (e) {
+    }).keydown(function (e)
+    {
         if (e.which == 18) isCtrl = true;
-        if (e.which == 67 && isCtrl == true) {
-            if ($("#chat").is(":visible")) {
+        if (e.which == 67 && isCtrl == true)
+        {
+            if ($("#chat").is(":visible"))
+            {
                 $("#chat").hide();
                 $("#imgVis").show();
             }
-            else {
+            else
+            {
                 $("#chat").show();
                 $("#imgVis").hide();
             }
@@ -83,12 +92,16 @@ $(document).ready(function () {
         handle: "none",
         placeholder: false,
         items: "li:not('#cardsComeCenter li')",
-        receive: function (event, ui) {
+        receive: function (event, ui)
+        {
             var cardName = ui.item.attr("data-cardname");
 
-            if (!isMyTurn || $.inArray(cardName, forbiddenCards) != -1) {
+            if (!isMyTurn || $.inArray(cardName, forbiddenCards) != -1)
+            {
                 $(ui.sender).sortable('cancel');
-            } else {
+            }
+            else
+            {
                 if (phase == 0) //Action phase
                 {
                     if (!($.inArray(cardName, fixedCards) >= 0)) //Don't allow treasures
@@ -99,12 +112,14 @@ $(document).ready(function () {
                 }
                 else if (phase == 1) //Treasure phase
                 {
-                    if ($.inArray(cardName, ["copper", "silver", "gold"]) >= 0) {
+                    if ($.inArray(cardName, ["copper", "silver", "gold"]) >= 0)
+                    {
                         ajaxPutCardOnTable(cardName, ajaxRetrieveBuyableCards);
                     }
                     else $(ui.sender).sortable('cancel');
                 }
-                else {
+                else
+                {
                     $(ui.sender).sortable('cancel');
                 }
 
@@ -115,7 +130,8 @@ $(document).ready(function () {
 
     $("label[for=state_id]").parent().load("assets/fragments/states.html");
     $('#play').on('click', enterNickName);
-    $("#card-info").on('click', function () {
+    $("#card-info").on('click', function ()
+    {
         $(this).hide();
     }).hide().removeClass("hidden");
     $("#end-turn").on('click', endTurn).hide();
@@ -124,7 +140,8 @@ $(document).ready(function () {
 
     $("#start-game").on('click', ajaxStartGame);
 
-    $(document).keypress(function (e) {
+    $(document).keypress(function (e)
+    {
         /*var chatMessage = $("#chat-message");
 
          if (e.which == 116 && !chatMessage.is(":focus")) {
@@ -134,7 +151,8 @@ $(document).ready(function () {
          }*/
     });
 
-    $("#chat-message").on('blur', function () {
+    $("#chat-message").on('blur', function ()
+    {
         //$("#chat").removeClass("visible");
     }).on('keypress', sendChatMessage);
 
@@ -148,20 +166,26 @@ $(document).ready(function () {
     //playGame();
 });
 
-var hideHandIfEmpty = function () {
-    if ($("#hand").is(":empty")) {
+var hideHandIfEmpty = function ()
+{
+    if ($("#hand").is(":empty"))
+    {
         $("#handdecor").hide();
     }
 };
 
-var sendChatMessage = function (e) {
+var sendChatMessage = function (e)
+{
     var message = $(this).val();
 
-    if (e.which == 13 || e.keyCode == 13) {
-        if (!checkMessageIsCommand(message)) {
+    if (e.which == 13 || e.keyCode == 13)
+    {
+        if (!checkMessageIsCommand(message))
+        {
             ioSendChatMessage(nickname, message);
         }
-        else {
+        else
+        {
             executeCommand(message);
         }
 
@@ -169,48 +193,58 @@ var sendChatMessage = function (e) {
     }
 };
 
-var checkMessageIsCommand = function (message) {
+var checkMessageIsCommand = function (message)
+{
     return (message.indexOf("/") == 0); //Starts with a /
 };
 
-var executeCommand = function (message) {
+var executeCommand = function (message)
+{
     message = message.substr(1);
 
 
     var command = message.split(' ')[0];
     var data = message.substr(message.indexOf(' ') + 1);
 
-    switch (command) {
+    switch (command)
+    {
         case "nickname":
         case "nick":
-            if (!isInGame) {
+            if (!isInGame)
+            {
                 ioSendChatNotice(nickname + " changed his nickname to " + data);
                 nickname = data;
-            } else {
+            }
+            else
+            {
                 receiveChatNotice("You can't change nicknames while in a game");
             }
             break;
     }
 };
 
-var receiveChatMessage = function (nickname, message) {
+var receiveChatMessage = function (nickname, message)
+{
     var html = '<li><span class="username">' + nickname + ': </span> ' + message + '</li>';
 
     appendToChat(html);
 };
 
-var receiveChatNotice = function (message) {
+var receiveChatNotice = function (message)
+{
     var html = '<li><span class="notice">' + message + '</span></li>';
 
     appendToChat(html);
 };
 
-var appendToChat = function (html) {
+var appendToChat = function (html)
+{
     $("#chat").find(".message-list").append(html).stop()
         .animate({scrollTop: $('#chat .message-list').prop("scrollHeight")}, 350);
 };
 
-var enterGame = function (ishost) {
+var enterGame = function (ishost)
+{
     $("#enternickname").hide();
     nickname = $("#nickname").val();
     lobbyname = $("#lobbyname").val();
@@ -220,33 +254,42 @@ var enterGame = function (ishost) {
     lobbyRoom();
 };
 
-var endTurn = function () {
+var endTurn = function ()
+{
     $("#end-turn").hide();
     $("#play-treasures").hide();
+    $("#end-actions").hide();
+    $("#current-player").removeClass("glow");
+    $("#hand").sortable("disable");
     ajaxEndTurn();
 };
 
-var endActions = function () {
+var endActions = function ()
+{
     $("#end-actions").hide();
     ajaxEndActions();
 };
 
-var enterNickName = function () {
+var enterNickName = function ()
+{
     $('#menu').hide();
     $("div.mastfoot").hide();
 
     $("#enternickname").show();
 
-    $("#createlobby").on('click', function () {
+    $("#createlobby").on('click', function ()
+    {
         enterGame(true);
     });
 
-    $("#joinlobby").on('click', function () {
+    $("#joinlobby").on('click', function ()
+    {
         enterGame(false);
     })
 };
 
-var lobbyRoom = function () {
+var lobbyRoom = function ()
+{
     $('#menu').hide();
     $("div.mastfoot").hide();
 
@@ -255,8 +298,10 @@ var lobbyRoom = function () {
 
     if (!isHost) $("#startgame").hide();
 
-    $("#startgame").on('click', function () {
-        if (!isInGame) {
+    $("#startgame").on('click', function ()
+    {
+        if (!isInGame)
+        {
             ajaxStartGame();
         }
     });
@@ -265,13 +310,14 @@ var lobbyRoom = function () {
     else ajaxJoinLobby();
 };
 
-var playGame = function () {
+var playGame = function ()
+{
     isInGame = true;
-
-    //createHand(tempHand);
 
     $('body').addClass("game");
 
+    //Look at my pet
+    //I call him Hideyoshi
     $("#lobbyroom").hide();
     $('#menu').hide();
     $("div.mastfoot").hide();
@@ -285,15 +331,21 @@ var playGame = function () {
     $("#kingdomwrapper").hide();
     $("#cardsComeCenter").hide();
     $("#player-turninfo").hide();
+    $("#end-actions").hide();
+    $("#play-treasures").hide();
+    $("#end-turn").hide();
 
+    $("#current-player").show();
     $("#gamewindow").show();
 };
 
-var createHand = function (cardsArray) {
+var createHand = function (cardsArray)
+{
     var hand = $('#hand');
     hand.empty();
 
-    for (var i = 0, len = cardsArray.length; i < len; i++) {
+    for (var i = 0, len = cardsArray.length; i < len; i++)
+    {
         var imageSource = "'images/cards/" + cardsArray[i] + ".jpg'";
         var html = '<li data-cardname="' + cardsArray[i] + '" style="background-image: url(' + imageSource + '");">';
 
@@ -301,11 +353,13 @@ var createHand = function (cardsArray) {
     }
 };
 
-var createCardsOnTable = function (cardsArray) {
+var createCardsOnTable = function (cardsArray)
+{
     var hand = $('#cardsComeCenter');
     hand.empty();
 
-    for (var i = 0, len = cardsArray.length; i < len; i++) {
+    for (var i = 0, len = cardsArray.length; i < len; i++)
+    {
         var imageSource = "'images/cards/" + cardsArray[i] + ".jpg'";
         var html = '<li data-cardname="' + cardsArray[i] + '" style="background-image: url(' + imageSource + '");">';
 
@@ -313,14 +367,16 @@ var createCardsOnTable = function (cardsArray) {
     }
 };
 
-var addFixedCards = function (cardsArray) {
+var addFixedCards = function (cardsArray)
+{
     var topStates = $("#topstates");
     var coins = $("#coins");
 
     topStates.empty();
     coins.empty();
 
-    for (var i = cardsArray.length - 1; i >= 0; i--) {
+    for (var i = cardsArray.length - 1; i >= 0; i--)
+    {
         var cardName = cardsArray[i].name;
 
         var imgsrc = "images/" + cardName + "_top.png";
@@ -348,12 +404,14 @@ var addFixedCards = function (cardsArray) {
     $("#topstates-title").show();
 };
 
-var addKingdomCards = function (cardsArray) {
+var addKingdomCards = function (cardsArray)
+{
     var element = $("#kingdomcards").find('ul');
 
     element.empty();
 
-    for (var i = 0, len = cardsArray.length; i < len; i++) {
+    for (var i = 0, len = cardsArray.length; i < len; i++)
+    {
         var cardName = cardsArray[i].name;
 
         var html = '<li><div data-cardname="' + cardName + '" class="kingdomcard">';
@@ -370,16 +428,19 @@ var addKingdomCards = function (cardsArray) {
     $("#kingdomwrapper").show();
 };
 
-var buyCard = function () {
+var buyCard = function ()
+{
     var cardName = $(this).attr("data-cardname");
 
-    if (isMyTurn && getCardBuyable(cardName) && getTurnInfo("buys") > 0) {
+    if (isMyTurn && getCardBuyable(cardName) && getTurnInfo("buys") > 0)
+    {
         ioSendChatNotice("<span class=\"username\">" + nickname + "</span> bought a <span class=\"cardname\">" + cardName + "</span>");
         ajaxBuyCard(cardName);
     }
 };
 
-var showCardInfo = function (e) {
+var showCardInfo = function (e)
+{
     var cardName = $(this).parent().attr("data-cardname");
 
     $("#card-info").show().find("img").attr("src", "images/cards/" + cardName + ".jpg");
@@ -387,7 +448,8 @@ var showCardInfo = function (e) {
     e.stopPropagation();
 };
 
-var findCardElement = function (cardName) {
+var findCardElement = function (cardName)
+{
     var foundCard;
 
     foundCard = $("#coins").find('figure[data-cardname="' + cardName + '"]');
@@ -405,11 +467,13 @@ var findCardElement = function (cardName) {
     return foundCard;
 };
 
-var setCardBuyable = function (cardName, buyable) {
+var setCardBuyable = function (cardName, buyable)
+{
     var foundCard = findCardElement(cardName);
 
     //States or coins
-    if (foundCard.closest("#kingdomcards").size() == 0) {
+    if (foundCard.closest("#kingdomcards").size() == 0)
+    {
         foundCard = foundCard.find("img");
     }
     else //Kingdom cards
@@ -421,12 +485,14 @@ var setCardBuyable = function (cardName, buyable) {
     else foundCard.addClass("nobuy");
 };
 
-var getCardBuyable = function (cardName) {
+var getCardBuyable = function (cardName)
+{
     var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard = findCardElement(cardName);
 
     //States or coins
-    if (isFixedCard >= 0) {
+    if (isFixedCard >= 0)
+    {
         foundCard = foundCard.find("img");
     }
     else //Kingdom cards
@@ -437,7 +503,8 @@ var getCardBuyable = function (cardName) {
     return !foundCard.hasClass("nobuy");
 };
 
-var setCardAmount = function (cardName, amount) {
+var setCardAmount = function (cardName, amount)
+{
     var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard = findCardElement(cardName);
     var containerElement = $("#coins");
@@ -447,15 +514,18 @@ var setCardAmount = function (cardName, amount) {
     foundCard.text(amount);
 };
 
-var highlightCardsOfType = function (type) {
+var highlightCardsOfType = function (type)
+{
     var hand = $("#hand");
 
     hand.find("li").removeClass("contextaware");
 
-    hand.find("li").each(function () {
+    hand.find("li").each(function ()
+    {
         var cardName = $(this).attr("data-cardname");
 
-        switch (type) {
+        switch (type)
+        {
             case "treasure":
                 var index = $.inArray(cardName, fixedCards);
                 if (index >= 0 && index < 3) $(this).addClass("contextaware");
@@ -464,10 +534,12 @@ var highlightCardsOfType = function (type) {
     });
 };
 
-var playTreasures = function () {
+var playTreasures = function ()
+{
     var treasuresToPlay = $("#hand").find("li").filter("[data-cardname=copper],[data-cardname=silver],[data-cardname=gold]");
 
-    treasuresToPlay.each(function () {
+    treasuresToPlay.each(function ()
+    {
         $("#cardsComeCenter").append($(this).clone());
         $(this).remove();
     });
@@ -478,15 +550,18 @@ var playTreasures = function () {
     hideHandIfEmpty();
 };
 
-var setTurnInfo = function (type, value) {
+var setTurnInfo = function (type, value)
+{
     $("#player-turninfo").find("#turn-" + type).find("span").text(value);
 };
 
-var getTurnInfo = function (type) {
+var getTurnInfo = function (type)
+{
     return parseInt($("#player-turninfo").find("#turn-" + type).find("span").text());
 };
 
-var setUpGame = function () {
+var setUpGame = function ()
+{
     playGame();
 
     ajaxRetrieveHand();
@@ -499,12 +574,14 @@ var setUpGame = function () {
     ajaxCheckGameStatus();
 };
 
-var addCardSets = function (cardSets) {
+var addCardSets = function (cardSets)
+{
     var element = $("#cardset");
 
     element.empty();
 
-    for (var i = 0; i < cardSets.length; i++) {
+    for (var i = 0; i < cardSets.length; i++)
+    {
         var setName = cardSets[i];
 
         var html = "<option>" + setName + "</option>";
@@ -514,12 +591,15 @@ var addCardSets = function (cardSets) {
     element.val("first game");
 };
 
-var clearBuyableCards = function () {
-    for (var card in kingdomCards) {
+var clearBuyableCards = function ()
+{
+    for (var card in kingdomCards)
+    {
         setCardBuyable(kingdomCards[card], false);
     }
 
-    for (var card in fixedCards) {
+    for (var card in fixedCards)
+    {
         setCardBuyable(fixedCards[card], false);
     }
 };

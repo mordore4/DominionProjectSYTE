@@ -268,12 +268,16 @@ public class HTMLController
     public void fetchGameStatus(String nickname, String lobbyName, PrintWriter writer)
     {
         Game game = retrieveGameOfLobby(lobbyName);
+        Player thisPlayer = game.getPlayer(nickname);
 
         boolean isMyTurn = game.findCurrentPlayer().getName().equals(nickname);
 
         HashMap<String, Object> gameStatus = new HashMap<>();
         gameStatus.put("isMyTurn", isMyTurn);
         gameStatus.put("cardsOnTable", game.getCardsOnTable());
+        gameStatus.put("conditionsActive", game.getConditionsList().size() > 0);
+        gameStatus.put("conditions", game.getConditionsList().conditionsOfPlayer(thisPlayer));
+        gameStatus.put("currentPlayer", game.findCurrentPlayer().getName());
 
         if (!enableBuying.get(lobbyName))
         {

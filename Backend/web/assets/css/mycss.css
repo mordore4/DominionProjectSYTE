@@ -256,7 +256,7 @@ body.loading .modal {
 }
 
 #topcoins-title {
-    right: 170px;
+    right: 40px;
 }
 
 #topstates-title {
@@ -264,7 +264,7 @@ body.loading .modal {
 }
 
 #coins {
-    right: 150px;
+    right: 20px;
 }
 
 #topstates {
@@ -464,17 +464,6 @@ input[type="text"], input[type="email"], input[type="password"], .form-control {
     color: lightgray; !important
 }
 */
-
-#name {
-}
-
-span {
-    color: red;
-}
-
-.form-group {
-
-}
 
 ::-webkit-input-placeholder {
     color: lightgray !important;
@@ -734,3 +723,22 @@ span.notice {
     font-weight: bold;
 }
 
+#current-player {
+    position: absolute;
+    bottom: 128px;
+    font-size: 2em;
+    width: auto;
+    line-height: 56px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#current-player span.playername {
+    display: block;
+    font-weight: bold;
+}
+
+#current-player.glow {
+    box-shadow: 0 0 10px 5px rgba(0, 150, 0, 1);
+    background-color: rgba(0, 150, 0, 0.3);
+}

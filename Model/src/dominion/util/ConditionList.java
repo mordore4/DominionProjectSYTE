@@ -59,4 +59,9 @@ public class ConditionList
 
         return results;
     }
+
+    public int size()
+    {
+        return conditions.size();
+    }
 }
