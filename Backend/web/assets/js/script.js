@@ -105,7 +105,7 @@ $(document).ready(function ()
             {
                 if (phase == 0) //Action phase
                 {
-                    if (!($.inArray(cardName, fixedCards) >= 0)) //Don't allow treasures
+                    if (!isInFixedCards(cardName)) //Don't allow treasures
                     {
                         ajaxPutCardOnTable(cardName, ajaxRetrieveHand);
                     }
@@ -175,6 +175,18 @@ var hideHandIfEmpty = function ()
     {
         $("#handdecor").hide();
     }
+};
+
+var isInFixedCards = function(cardName) {
+    for (var i = 0; i < fixedCards.length; i++)
+    {
+        if (fixedCards[i].name == cardName)
+        {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 var sendChatMessage = function (e)
