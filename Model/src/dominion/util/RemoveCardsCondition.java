@@ -10,6 +10,7 @@ public class RemoveCardsCondition extends Condition
 {
     private int cardsToRemove;
     private int handSize;
+    private int type;
 
     public RemoveCardsCondition(Player player, int cardsToRemove)
     {
@@ -17,6 +18,12 @@ public class RemoveCardsCondition extends Condition
 
         this.cardsToRemove = cardsToRemove;
         this.handSize = player.getHand().size();
+    }
+
+    public RemoveCardsCondition(Player player, int cardsToRemove, int type)
+    {
+        this(player, cardsToRemove);
+        this.type = type;
     }
 
     @Override
