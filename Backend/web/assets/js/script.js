@@ -388,16 +388,16 @@ var showCardInfo = function (e) {
 };
 
 var findCardElement = function (cardName) {
-    var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard;
-    var containerElement = $("#coins");
 
-    if (isFixedCard >= 0) {
-        if (isFixedCard >= 3) containerElement = $("#topstates");
+    foundCard = $("#coins").find('figure[data-cardname="' + cardName + '"]');
 
-        foundCard = containerElement.find('figure[data-cardname="' + cardName + '"]');
+    if (foundCard.size() == 0)
+    {
+        foundCard = $("#topstates").find('figure[data-cardname="' + cardName + '"]');
     }
-    else //Kingdom cards
+
+    if (foundCard.size() == 0)
     {
         foundCard = $("#kingdomcards").find('div[data-cardname="' + cardName + '"]');
     }
@@ -406,11 +406,10 @@ var findCardElement = function (cardName) {
 };
 
 var setCardBuyable = function (cardName, buyable) {
-    var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard = findCardElement(cardName);
 
     //States or coins
-    if (isFixedCard >= 0) {
+    if (foundCard.closest("#kingdomcards").size() == 0) {
         foundCard = foundCard.find("img");
     }
     else //Kingdom cards
