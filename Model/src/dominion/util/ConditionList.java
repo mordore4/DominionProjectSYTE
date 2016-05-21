@@ -3,61 +3,52 @@ package dominion.util;
 import dominion.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Digaly on 19/05/2016.
  */
 public class ConditionList
 {
-    private ArrayList<Condition> conditions;
+    private Map<Player, Condition> conditions;
 
     public ConditionList()
     {
-        conditions = new ArrayList<>();
+        conditions = new HashMap<>();
     }
 
     public void add(Condition condition)
     {
-        conditions.add(condition);
+        conditions.put(condition.getPlayer(), condition);
     }
 
     private void removeCompleteConditions()
     {
-        ArrayList<Condition> toRemove = new ArrayList<>();
+        ArrayList<Player> keysToRemove = new ArrayList<>();
 
-        for (int i = 0; i < conditions.size(); i++)
+        for (Condition condition : conditions.values())
         {
-            Condition currentCondition = conditions.get(i);
-
-            if (currentCondition.isFulfilled())
+            if (condition.isFulfilled())
             {
-                toRemove.add(currentCondition);
+                if (!keysToRemove.contains(condition.getPlayer()))
+                {
+                    keysToRemove.add(condition.getPlayer());
+                }
             }
         }
 
-        for (Condition condition : toRemove)
+        for (Player player : keysToRemove)
         {
-            conditions.remove(condition);
+            conditions.remove(player);
         }
     }
 
-    public ArrayList<Condition> conditionsOfPlayer(Player player)
+    public Condition get(Player player)
     {
         removeCompleteConditions();
 
-        ArrayList<Condition> results = new ArrayList<>();
-
-        for (int i = 0; i < conditions.size(); i++)
-        {
-            Condition currentCondition = conditions.get(i);
-
-            if (currentCondition.getPlayer() == player)
-            {
-                    results.add(currentCondition);
-            }
-        }
-
-        return results;
+        return conditions.get(player);
     }
 
     public int size()

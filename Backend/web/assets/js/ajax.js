@@ -277,21 +277,16 @@ var ajaxCheckGameStatus = function ()
             }
             else
             {
-                console.log(status.conditions);
+                console.log(status.myCondition);
 
-                if (status.conditions.length > 0)
+                if (status.myCondition != null)
                 {
-                    for (var i = 0; i < status.conditions.length; i++)
+                    switch (status.myCondition.name)
                     {
-                        var condition = status.conditions[i];
-
-                        switch (condition.name)
-                        {
-                            case "RemoveCardsCondition":
-                                $("#handdecor").find("div.title").text("Remove " + condition.condition.cardsToRemove + " cards");
-                                allowDiscard = true;
-                                break;
-                        }
+                        case "RemoveCardsCondition":
+                            $("#handdecor").find("div.title").text("Remove " + status.myCondition.condition.cardsToRemove + " cards");
+                            allowDiscard = true;
+                            break;
                     }
                 }
                 else
@@ -310,14 +305,14 @@ var ajaxCheckGameStatus = function ()
                 var cardNames = [];
                 status.cardsOnTable.forEach(function (item)
                 {
-                    cardNames.push(item.name);
+                    cardNames.push(item);
                 });
                 createCardsOnTable(cardNames);
             }
 
             //Keep calling this ajax unless it's our turn
             if (timeOut != null) clearTimeout(timeOut);
-            if (!isMyTurn ||status.conditionsActive) timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
+            if (!isMyTurn || status.conditionsActive) timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
         });
 };
 

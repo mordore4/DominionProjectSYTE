@@ -32,7 +32,7 @@ public class ConditionTest
         RemoveCardsCondition newCondition = new RemoveCardsCondition(game.getPlayer("testPlayer"), 3);
         game.addCondition(newCondition);
 
-        Condition condition = game.getConditionsList().conditionsOfPlayer(testPlayer).get(0);
+        Condition condition = game.getConditionsList().get(testPlayer);
 
         for (int i = 0; i < 3; i++)
         {
@@ -41,7 +41,7 @@ public class ConditionTest
         }
 
         assert(condition.isFulfilled());
-        assert(game.getConditionsList().conditionsOfPlayer(testPlayer).size() == 0);
+        assert(game.getConditionsList().get(testPlayer) == null);
     }
 
 }

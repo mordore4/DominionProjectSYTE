@@ -135,15 +135,15 @@ public class AbilityTest
 
         game.playCard("testcard");
 
-        assert(game.getConditionsList().conditionsOfPlayer(currentPlayer).size() == 0);
-        assert(game.getConditionsList().conditionsOfPlayer(game.getPlayer("alice")).size() == 1);
+        assert(game.getConditionsList().get(currentPlayer) == null);
+        assert(game.getConditionsList().get(game.getPlayer("alice")) != null);
 
         while (game.getPlayer("alice").getHand().size() > 3)
         {
             game.getPlayer("alice").getHand().getCards().remove(0);
         }
         
-        assert(game.getConditionsList().conditionsOfPlayer(game.getPlayer("alice")).size() == 0);
+        assert(game.getConditionsList().get(game.getPlayer("alice")) == null);
     }
 
     @Test

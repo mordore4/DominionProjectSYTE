@@ -285,17 +285,26 @@ public class HTMLController
 
         HashMap<String, Object> gameStatus = new HashMap<>();
         gameStatus.put("isMyTurn", isMyTurn);
-        gameStatus.put("cardsOnTable", game.getCardsOnTable());
-        gameStatus.put("conditionsActive", game.getConditionsList().size() > 0);
 
-        ArrayList<ConditionWrapper> conditionsWrapped = new ArrayList<>();
+        ArrayList<String> cardsOnTable = new ArrayList<>();
 
-        for (Condition condition : game.getConditionsList().conditionsOfPlayer(thisPlayer))
+        for (Card card : game.getCardsOnTable())
         {
-            conditionsWrapped.add(new ConditionWrapper(condition));
+            cardsOnTable.add(card.getName());
         }
 
-        gameStatus.put("conditions", conditionsWrapped);
+
+        Condition myCondition = game.getConditionsList().get(thisPlayer);
+        ConditionWrapper myConditionWrapper = null;
+
+        if (myCondition != null)
+        {
+            myConditionWrapper = new ConditionWrapper(myCondition);
+        }
+
+        gameStatus.put("cardsOnTable", cardsOnTable);
+        gameStatus.put("conditionsActive", game.getConditionsList().size() > 0);
+        gameStatus.put("myCondition", myConditionWrapper);
         gameStatus.put("currentPlayer", game.findCurrentPlayer().getName());
 
         if (!enableBuying.get(lobbyName))
