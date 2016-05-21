@@ -322,7 +322,7 @@ public class HTMLController
 
         try
         {
-            if (game.findCurrentPlayer().getName().equals(nickname))
+            if (game.findCurrentPlayer().getName().equals(nickname) && enableBuying.get(lobbyName))
             {
                 game.buyCard(cardName);
             }

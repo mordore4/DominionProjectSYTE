@@ -595,11 +595,11 @@ var clearBuyableCards = function ()
 {
     for (var card in kingdomCards)
     {
-        setCardBuyable(kingdomCards[card], false);
+        setCardBuyable(kingdomCards[card].name, false);
     }
 
     for (var card in fixedCards)
     {
-        setCardBuyable(fixedCards[card], false);
+        setCardBuyable(fixedCards[card].name, false);
     }
 };

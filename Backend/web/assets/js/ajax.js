@@ -215,10 +215,11 @@ var ajaxCheckGameStatus = function ()
             //So this can be seen as stuff to do on turn start
             if (!isMyTurn && status.isMyTurn)
             {
+                clearBuyableCards();
+                ajaxRetrieveBuyableCards();
                 $("#current-player").addClass("glow");
                 $("#cardsComeCenter").empty();
                 $("#handdecor").show();
-                clearBuyableCards();
             }
 
             isMyTurn = status.isMyTurn;
