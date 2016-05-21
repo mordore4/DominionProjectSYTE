@@ -138,7 +138,7 @@ public class AbilityTest
         assert(game.getConditionsList().conditionsOfPlayer(currentPlayer).size() == 0);
         assert(game.getConditionsList().conditionsOfPlayer(game.getPlayer("alice")).size() == 1);
 
-        for (int i = 0; i < 3; i++)
+        while (game.getPlayer("alice").getHand().size() > 3)
         {
             game.getPlayer("alice").getHand().getCards().remove(0);
         }

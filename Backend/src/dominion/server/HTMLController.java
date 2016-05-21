@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.*;
+import dominion.util.Condition;
 
 /**
  * Created by Digaly on 19/05/2016.
@@ -130,6 +131,16 @@ public class HTMLController
             public void runCommand(HttpServletRequest request, PrintWriter writer)
             {
                 buyCard(request.getParameter("nickname"), request.getParameter("lobbyname"),
+                        request.getParameter("cardname"));
+            }
+        });
+
+        methodMap.put("discardcard", new Command()
+        {
+            @Override
+            public void runCommand(HttpServletRequest request, PrintWriter writer)
+            {
+                discardCard(request.getParameter("nickname"), request.getParameter("lobbyname"),
                         request.getParameter("cardname"));
             }
         });
@@ -276,7 +287,15 @@ public class HTMLController
         gameStatus.put("isMyTurn", isMyTurn);
         gameStatus.put("cardsOnTable", game.getCardsOnTable());
         gameStatus.put("conditionsActive", game.getConditionsList().size() > 0);
-        gameStatus.put("conditions", game.getConditionsList().conditionsOfPlayer(thisPlayer));
+
+        ArrayList<ConditionWrapper> conditionsWrapped = new ArrayList<>();
+
+        for (Condition condition : game.getConditionsList().conditionsOfPlayer(thisPlayer))
+        {
+            conditionsWrapped.add(new ConditionWrapper(condition));
+        }
+
+        gameStatus.put("conditions", conditionsWrapped);
         gameStatus.put("currentPlayer", game.findCurrentPlayer().getName());
 
         if (!enableBuying.get(lobbyName))
@@ -331,6 +350,19 @@ public class HTMLController
         {
             ex.printStackTrace();
             //Do nothing
+        }
+    }
+
+    public void discardCard(String nickname, String lobbyName, String cardName)
+    {
+        Game game = retrieveGameOfLobby(lobbyName);
+
+        Player thisPlayer = game.getPlayer(nickname);
+        Card card = thisPlayer.getHand().findCard(cardName);
+
+        if (card != null)
+        {
+            thisPlayer.getHand().removeCard(card);
         }
     }
 

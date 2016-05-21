@@ -12,7 +12,8 @@ var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.10
     isHost = false,
     isMyTurn = false,
     phase = 0,
-    isInGame = false;
+    isInGame = false,
+    allowDiscard = false;
 
 var pollInterval = 2000;
 
@@ -155,6 +156,8 @@ $(document).ready(function ()
     {
         //$("#chat").removeClass("visible");
     }).on('keypress', sendChatMessage);
+
+    $("body").on('click', "#hand li", discardCard);
 
     ajaxGetCardsets();
 
@@ -437,6 +440,14 @@ var buyCard = function ()
         ioSendChatNotice("<span class=\"username\">" + nickname + "</span> bought a <span class=\"cardname\">" + cardName + "</span>");
         ajaxBuyCard(cardName);
     }
+};
+
+var discardCard = function() {
+    if (!allowDiscard) return;
+
+    var cardName = $(this).attr("data-cardname");
+
+    ajaxDiscardCard(cardName);
 };
 
 var showCardInfo = function (e)

@@ -215,6 +215,7 @@ var ajaxCheckGameStatus = function ()
             //So this can be seen as stuff to do on turn start
             if (!isMyTurn && status.isMyTurn)
             {
+                allowDiscard = false;
                 clearBuyableCards();
                 ajaxRetrieveBuyableCards();
                 $("#current-player").addClass("glow");
@@ -276,6 +277,29 @@ var ajaxCheckGameStatus = function ()
             }
             else
             {
+                console.log(status.conditions);
+
+                if (status.conditions.length > 0)
+                {
+                    for (var i = 0; i < status.conditions.length; i++)
+                    {
+                        var condition = status.conditions[i];
+
+                        switch (condition.name)
+                        {
+                            case "RemoveCardsCondition":
+                                $("#handdecor").find("div.title").text("Remove " + condition.condition.cardsToRemove + " cards");
+                                allowDiscard = true;
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    allowDiscard = false;
+                    $("#handdecor").find("div.title").text("Your hand");
+                }
+
                 if (phase == 1 || phase == 3)
                 {
                     ajaxRetrieveBuyableCards()
@@ -293,7 +317,7 @@ var ajaxCheckGameStatus = function ()
 
             //Keep calling this ajax unless it's our turn
             if (timeOut != null) clearTimeout(timeOut);
-            if (!isMyTurn) timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
+            if (!isMyTurn ||status.conditionsActive) timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
         });
 };
 
@@ -378,6 +402,25 @@ var ajaxBuyCard = function (cardname)
         .done(function ()
         {
             ajaxRetrieveBuyableCards();
+            ajaxCheckGameStatus();
+        });
+};
+
+var ajaxDiscardCard = function (cardname)
+{
+    $.ajax({
+            method: "GET",
+            url: "server/gamemanager",
+            data: {
+                command: "discardcard",
+                cardname: cardname,
+                lobbyname: lobbyname,
+                nickname: nickname
+            }
+        })
+        .done(function ()
+        {
+            ajaxRetrieveHand();
             ajaxCheckGameStatus();
         });
 };

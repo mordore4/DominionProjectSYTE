@@ -169,7 +169,10 @@ public class Ability
         {
             if (player != game.findCurrentPlayer())
             {
-                RemoveCardsCondition newCondition = new RemoveCardsCondition(player, 3);
+                //Discard down to 3 cards, so we take the hand size and subtract 3
+                //If our hand size is below zero, math.max will take 0 for us
+                //because 0 is larger than any negative number
+                RemoveCardsCondition newCondition = new RemoveCardsCondition(player, Math.max(player.getHand().size() - 3, 0));
                 game.addCondition(newCondition);
             }
         }
