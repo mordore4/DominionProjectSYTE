@@ -18,7 +18,7 @@ public class GainCardCondition extends Condition
     {
         super(player);
 
-        this.startHand = player.getHand().getCards();
+        this.startHand = (ArrayList<Card>) player.getHand().getCards().clone();
         this.amount = amount;
     }
 
@@ -35,8 +35,6 @@ public class GainCardCondition extends Condition
                 newCard = card;
             }
         }
-        System.out.println(newCard == null);
-        System.out.println(startHand.size()+ " " + currentHand.size());
 
         if (newCard != null)
         {

@@ -50,14 +50,12 @@ public class ConditionTest
     @Test
     public void TestGainCardCondition() throws CardNotAvailableException
     {
-        GainCardCondition condition = new GainCardCondition(testPlayer,1);
-        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(19, -1)});
+        GainCardCondition condition = new GainCardCondition(testPlayer, 1);
+        Card testCard = new Card("testcard", 3, 1, 1, new Ability[]{new Ability(19, -1)});
+
         testPlayer.getHand().addCard(testCard);
+
         assertTrue("didn't gain card bleat", condition.isFulfilled());
-        //game.playCard("testcard");
-
-
-
     }
 
 }
