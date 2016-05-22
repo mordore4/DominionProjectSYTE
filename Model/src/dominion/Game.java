@@ -261,7 +261,8 @@ public class Game
 
     public void buyCard(String cardName) throws CardNotAvailableException
     {
-        int cardCost = retrieveCard(cardName).getCost();
+        Card thisCard = retrieveCard(cardName);
+        int cardCost = thisCard.getCost();
         Player currentPlayer = findCurrentPlayer();
 
         if (currentPlayer.getCoins() >= cardCost && currentPlayer.getBuys() > 0)
@@ -269,6 +270,11 @@ public class Game
             addCard(cardName);
             currentPlayer.setBuys(currentPlayer.getBuys() - 1);
             currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
+            if (thisCard.getType() == 2)
+            {
+                int amountToAdd = thisCard.getAbilities()[0].getAmount();
+                currentPlayer.addVictoryPoints(amountToAdd);
+            }
         }
     }
 
@@ -361,6 +367,7 @@ public class Game
         }
 
         makeHand(currentPlayer);
+        checkIfGameIsOver();
     }
 
     public void moveCardsToDiscardPile (ArrayList<Card> fromPile)
@@ -413,6 +420,27 @@ public class Game
         int money = findCurrentPlayer().getCoins();
         return money >= card.getCost() && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0;
     }
+
+    public void checkIfGameIsOver()
+    {
+        int emptyStacks = 0;
+        Card province = cards[10];
+        boolean provinceStackIsEmpty = province.getAmount() == 0;
+        for (Card card : cards)
+        {
+            if (card.getAmount() == 0)
+            {
+                emptyStacks += 1;
+            }
+        }
+        boolean threeStacksAreEmpty = (emptyStacks >= 3);
+        if (provinceStackIsEmpty || threeStacksAreEmpty)
+        {
+            isOver = true;
+        }
+    }
+
+
 
     public boolean getIsOver()
     {

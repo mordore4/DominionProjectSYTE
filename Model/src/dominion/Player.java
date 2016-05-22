@@ -17,12 +17,14 @@ public class Player
     private int actions;
     private int buys;
     private int coins;
+    private int victoryPoints;
 
     public Player()
     {
         this.setActions(1);
         this.setBuys(1);
         this.setCoins(0);
+        this.setVictoryPoints(0);
 
         discardPile = new Deck();
         deck = new Deck();
@@ -120,5 +122,20 @@ public class Player
     public boolean isMyTurn(String nickname)
     {
         return this.name.equals(nickname);
+    }
+
+    public void setVictoryPoints(int victoryPoints)
+    {
+        this.victoryPoints = victoryPoints;
+    }
+
+    public int getVictoryPoints()
+    {
+        return victoryPoints;
+    }
+
+    public void addVictoryPoints(int amount)
+    {
+        this.setVictoryPoints(getVictoryPoints() + amount);
     }
 }
