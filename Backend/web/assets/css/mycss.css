@@ -226,18 +226,18 @@ body.loading .modal {
     -webkit-box-shadow: 2px 2px 10px #000;
 }
 
-#hand li.hoveredcard {
-    z-index: 1000 !important;
-    box-shadow: 0 0 8px 4px green !important;
+#handwrapper #handdecor #hand li.hoveredcard {
+    z-index: 1000;
+    box-shadow: 0 0 8px 4px green;
 }
 
-#hand li.contextaware {
-    z-index: 1000 !important;
-    box-shadow: 0 0 8px 4px white !important;
+#handwrapper #handdecor #hand li.contextaware {
+    z-index: 1000;
+    box-shadow: 0 0 8px 4px white;
 }
 
-#hand li.ui-sortable-helper {
-    box-shadow: 0 0 8px 4px green !important;
+#handwrapper #handdecor #hand li.ui-sortable-helper {
+    box-shadow: 0 0 8px 4px green;
 }
 
 #topstates, #coins {
@@ -443,7 +443,7 @@ div.title {
     display: inline-block;
     height: 40px;
     line-height: 34px;
-    color: black !important;
+    color: black;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -451,41 +451,31 @@ div.title {
 
 }
 
-input[type="text"], input[type="email"], input[type="password"], .form-control {
-    background-color: #3c3c3c;
-    opacity: 0.8;
-    /*color: white;*/
+#form .form-group .form-control, #enternickname input {
+     background-color: #3c3c3c;
+     opacity: 0.8;
+     color: white;
+ }
+
+#form .form-group .form-control::-webkit-input-placeholder {
     color: lightgray;
-!important
-
 }
 
-/*.form-group {
-    color: lightgray; !important
-}
-*/
-
-::-webkit-input-placeholder {
-    color: lightgray !important;
-}
-
-:-moz-placeholder {
+#form .form-group .form-control:-moz-placeholder {
     /* Firefox 18- */
-    color: lightgray !important;
+    color: lightgray;
 }
 
-::-moz-placeholder {
+#form .form-group .form-control::-moz-placeholder {
     /* Firefox 19+ */
-    color: lightgray !important;
+    color: lightgray;
 }
 
-:-ms-input-placeholder {
-    color: lightgray !important;
+#form .form-group .form-control:-ms-input-placeholder {
+    color: lightgray;
 }
 
-input {
-    color: white !important;
-}
+
 
 #hand li:hover {
     -moz-transform: translate(-2px, -2px);

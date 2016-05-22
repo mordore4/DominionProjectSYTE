@@ -1,10 +1,5 @@
 package dominion;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import dominion.exceptions.CardNotAvailableException;
-
-import java.util.ArrayList;
-
 /**
  * Created by Sam on 23/03/2016.
  */
@@ -17,14 +12,15 @@ public class Player
     private int actions;
     private int buys;
     private int coins;
-    private int victoryPoints;
+    private int basicVictoryPoints;
+    private int dynamicVictoryPoints;
 
     public Player()
     {
         this.setActions(1);
         this.setBuys(1);
         this.setCoins(0);
-        this.setVictoryPoints(0);
+        this.setBasicVictoryPoints(0);
 
         discardPile = new Deck();
         deck = new Deck();
@@ -124,18 +120,18 @@ public class Player
         return this.name.equals(nickname);
     }
 
-    public void setVictoryPoints(int victoryPoints)
+    public void setBasicVictoryPoints(int basicVictoryPoints)
     {
-        this.victoryPoints = victoryPoints;
+        this.basicVictoryPoints = basicVictoryPoints;
     }
 
-    public int getVictoryPoints()
+    public int getBasicVictoryPoints()
     {
-        return victoryPoints;
+        return basicVictoryPoints;
     }
 
     public void addVictoryPoints(int amount)
     {
-        this.setVictoryPoints(getVictoryPoints() + amount);
+        this.setBasicVictoryPoints(getBasicVictoryPoints() + amount);
     }
 }
