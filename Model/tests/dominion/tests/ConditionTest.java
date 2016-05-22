@@ -1,7 +1,10 @@
 package dominion.tests;
 
+import dominion.Ability;
+import dominion.Card;
 import dominion.Game;
 import dominion.Player;
+import dominion.exceptions.CardNotAvailableException;
 import dominion.util.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +45,19 @@ public class ConditionTest
 
         assert(condition.isFulfilled());
         assert(game.getConditionsList().get(testPlayer) == null);
+    }
+
+    @Test
+    public void TestGainCardCondition() throws CardNotAvailableException
+    {
+        GainCardCondition condition = new GainCardCondition(testPlayer,1);
+        Card testCard = new Card("testcard", 3, 0, 1, new Ability[]{new Ability(19, -1)});
+        testPlayer.getHand().addCard(testCard);
+        assertTrue("didn't gain card bleat", condition.isFulfilled());
+        //game.playCard("testcard");
+
+
+
     }
 
 }

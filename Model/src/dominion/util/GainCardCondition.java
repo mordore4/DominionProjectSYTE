@@ -35,6 +35,8 @@ public class GainCardCondition extends Condition
                 newCard = card;
             }
         }
+        System.out.println(newCard == null);
+        System.out.println(startHand.size()+ " " + currentHand.size());
 
         if (newCard != null)
         {
