@@ -270,11 +270,6 @@ public class Game
             addCard(cardName);
             currentPlayer.setBuys(currentPlayer.getBuys() - 1);
             currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
-            if (thisCard.getType() == 2)
-            {
-                int amountToAdd = thisCard.getAbilities()[0].getAmount();
-                currentPlayer.addVictoryPoints(amountToAdd);
-            }
         }
     }
 
@@ -291,6 +286,12 @@ public class Game
     public void addCardToPlayer(String cardName, Player player) throws CardNotAvailableException
     {
         addCardToPileFromPlayer(cardName, player.getDiscardPile());
+        Card card = retrieveCard(cardName);
+        if (card.getType() == 2)
+        {
+            int amountToAdd = card.getAbilities()[0].getAmount();
+            player.addVictoryPoints(amountToAdd);
+        }
     }
 
     public void addCardToPileFromPlayer(String cardName, Deck pile) throws CardNotAvailableException
