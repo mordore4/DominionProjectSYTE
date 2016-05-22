@@ -22,20 +22,20 @@
 -->
 
 <div id="imgVis"></div>
-<div id="card-info" class="hidden unselectable">
-    <img src="images/cards/cellar.jpg"/>
-</div>
+<figure id="card-info" class="hidden unselectable">
+    <img alt="cellar" src="images/cards/cellar.jpg"/>
+</figure>
 
 <button id="end-actions" style="display: none;">End Actions</button>
 <button id="end-turn" style="display: none;">End Turn</button>
 <button id="play-treasures" style="display: none;">Play Treasures</button>
 
-<div id="current-player" style="display: none;">
+<aside id="current-player" style="display: none;">
     Current player:
     <span class="playername"></span>
-</div>
+</aside>
 
-<div id="chat" class="visible">
+<aside id="chat" class="visible">
 
     <div id="imgChat" data-toggle="popover" title="Press 'ALT + C' to enable/disable chat" data-content=""></div>
 
@@ -46,214 +46,172 @@
 
         <label for="chat-message">Chat:</label>
 
-        <input type="text" id="chat-message" class="chat-message"/>
+        <input type="text" id="chat-message" class="form-control"/>
 
 
     </div>
 
-</div>
+</aside>
 
 
-<div class="site-wrapper">
+<main class="site-wrapper">
     <div class="site-wrapper-inner">
-        <div class="cover-container">
+        <div class="masthead clearfix">
+            <div class="inner">
+                <h3 class="masthead-brand">Dominion</h3>
+                <nav>
+                    <ul class="nav masthead-nav">
+                        <li class="active home"><a href="#">Home</a></li>
+                        <li class="register"><a href="#">Register</a></li>
+                        <li class="login"><a href="#">Login</a></li>
+                        <li class="about"><a href="#">About</a></li>
+                        <li class="contact"><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
 
-            <div class="masthead clearfix">
-                <div class="inner">
-                    <h3 class="masthead-brand">Dominion</h3>
-                    <nav>
-                        <ul class="nav masthead-nav">
-                            <li class="active home"><a href="#">Home</a></li>
-                            <li class="register"><a href="#">Register</a></li>
-                            <li class="login"><a href="#">Login</a></li>
-                            <li class="about"><a href="#">About</a></li>
-                            <li class="contact"><a href="#">Contact</a></li>
-                        </ul>
-                    </nav>
+        <div class="cf inner unselectable" id="gamewindow" style="display: none;">
+
+            <div id="kingdomwrapper">
+                <div class="corner-topleft"></div>
+                <div class="title">Kingdom cards</div>
+                <div class="corner-topright"></div>
+
+                <div id="kingdomcards">
+                    <ul>
+
+                    </ul>
                 </div>
             </div>
 
-            <div class="cf inner unselectable" id="gamewindow" style="display: none;">
+            <div id="player-turninfo">
+                <div class="info-sub" id="turn-actions"><span class="info">0</span>Actions</div>
+                <div class="info-sub" id="turn-buys"><span class="info">0</span>Buys</div>
+                <div class="info-sub" id="turn-coins"><span class="info">0</span>Coins</div>
+            </div>
 
-                <div id="kingdomwrapper">
+            <div id="handwrapper">
+                <div id="handdecor">
                     <div class="corner-topleft"></div>
-                    <div class="title">Kingdom cards</div>
+                    <div class="title">Your hand</div>
                     <div class="corner-topright"></div>
 
-                    <div id="kingdomcards">
-                        <ul>
-
-                        </ul>
-                    </div>
+                    <ul id="hand"></ul>
                 </div>
-
-                <div id="player-turninfo">
-                    <div class="info-sub" id="turn-actions"><span class="info">0</span>Actions</div>
-                    <div class="info-sub" id="turn-buys"><span class="info">0</span>Buys</div>
-                    <div class="info-sub" id="turn-coins"><span class="info">0</span>Coins</div>
-                </div>
-
-                <div id="handwrapper">
-                    <div id="handdecor">
-                        <div class="corner-topleft"></div>
-                        <div class="title">Your hand</div>
-                        <div class="corner-topright"></div>
-
-                        <ul id="hand"></ul>
-                    </div>
-                </div>
-
-                <div id="topcoins-title">Treasure</div>
-                <ul class="topcoins" id="coins"></ul>
-
-                <div id="topstates-title">States</div>
-                <ul class="topprov" id="topstates"></ul>
-
             </div>
 
-            <div class="cf inner" id="enternickname" style="display: none;">
-                <p>
-                    <label for="nickname">Nickname: </label>
-                    <input type="text" class="nickname" id="nickname"/>
-                </p>
+            <div id="topcoins-title">Treasure</div>
+            <ul class="topcoins" id="coins"></ul>
 
-                <p>
-                    <label for="lobbyname">Lobby name: </label>
-                    <input type="text" class="lobbyname" id="lobbyname"/>
-                </p>
-
-                <p>
-                    <label for="cardset">Card set:</label>
-                    <select name="cardset" id="cardset">
-                        <option>Loading...</option>
-                    </select>
-                </p>
-
-                <a href="#" id="createlobby">Create lobby</a>
-                <a href="#" id="joinlobby">Join lobby</a>
-            </div>
-
-            <div class="cf inner" id="lobbyroom" style="display: none;">
-                <h1 id="lobby-name">Lobby-name</h1>
-                <div id="player-list">
-
-                </div>
-                <a href="#" id="startgame">Start game</a>
-            </div>
-
-            <ul id="cardsComeCenter" style="display: none;"></ul>
-
-            <div class="inner cover cf" id="menu">
-                <h1 class="cover-heading">Become the master of cards!</h1>
-
-                <ul>
-                    <li>
-                        <a href="#" class="btn btn-lg btn-default" id="play"><span class="eerste"></span>Play</a>
-                    </li>
-                    <li>
-                        <a href="#" class="btn btn-lg btn-default" id="highscores"><span class="tweede"></span>Highscores</a>
-                    </li>
-                    <li>
-                        <a href="#" class="btn btn-lg btn-default" id="settings"><span class="derde"></span>Settings</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!--<div class="forms" id="form">
-                <form method = "post" action="#">
-                    <fieldset id="fieldset1">
-                        <legend>Please fill in the form.</legend>
-
-                        <input type='hidden' name='submitted' id='submitted' value='1'/>
-
-                        <label for='name' >Your First Name <span>*</span>: </label>
-                        <input type='text' name='firstname' id='firstname' maxlength="50" />
-
-                        <label for='name' >Your Last Name <span>*</span>: </label>
-                        <input type='text' name='lastname' id='lastname' maxlength="50" />
-
-                        <label for='email' >Email Address<span>*</span>:</label>
-                        <input type='text' name='email' id='email' maxlength="50" />
-
-                      <!--  <label for="sex">Gender:</label>
-                        <input type="checkbox" name="sex" value="Man">Man<br>
-                        <input type="checkbox" name="sex" value="Female">Female<br>
-
-                        <label for='username' >Username<span>*</span>:</label>
-                        <input type='text' name='username' id='username' maxlength="50" />
-
-                        <label for='password' >Password<span>*</span>:</label>
-                        <input type='password' name='password' id='password' maxlength="50" />
-
-                        <input type='submit' name='Submit' value='Submit' />
-
-
-                    </fieldset>
-            </form>
-            -->
-
-            <form id="form" style="display: none;">
-                <fieldset>
-                    <legend>Become the master of cards!</legend>
-                    <div class="form-group"> <!-- Full Name -->
-                        <label for="full_name_id" class="control-label">Full Name<span>*</span></label>
-                        <input type="text" class="form-control" id="full_name_id" name="full_name"
-                               placeholder="Your full name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="emailInput" class="control-label">E-mail<span>*</span></label>
-                        <input type="email" class="form-control" id="email" name="emailInput"
-                               placeholder="E-mail address">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="usernamePlayer" class="usernamePlayer">Username<span>*</span></label>
-                        <input type="text" class="form-control" id="username" name="usernamePlayer"
-                               placeholder="Username">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="passwordPlayer" class="passwordPlayer">Password<span>*</span></label>
-                        <input type="password" class="form-control" id="password" name="passwordPlayer"
-                               placeholder="Password">
-                    </div>
-
-
-                    <div class="form-group"> <!-- City-->
-                        <label for="city_id" class="control-label">City<span>*</span></label>
-                        <input type="text" class="form-control" id="city_id" name="city" placeholder="Brugge">
-                    </div>
-
-                    <div class="form-group"> <!-- State Button -->
-                        <label for="state_id" class="control-label">State<span>*</span></label>
-                    </div>
-
-                    <div class="form-group"> <!-- Zip Code-->
-                        <label for="zip_id" class="control-label">Zip Code<span>*</span></label>
-                        <input type="text" class="form-control" id="zip_id" name="zip" placeholder="#####">
-                    </div>
-
-                    <div class="form-group"> <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary">Register!</button>
-                    </div>
-                </fieldset>
-            </form>
+            <div id="topstates-title">States</div>
+            <ul class="topprov" id="topstates"></ul>
 
         </div>
 
-        <div class="mastfoot">
+        <div class="cf inner" id="enternickname" style="display: none;">
+            <div class="form-group">
+                <label for="nickname">Nickname: </label>
+                <input type="text" class="form-control" id="nickname"/>
+            </div>
+
+            <div class="form-group">
+                <label for="lobbyname">Lobby name: </label>
+                <input type="text" class="form-control" id="lobbyname"/>
+            </div>
+
+            <div class="form-group">
+                <label for="cardset">Card set:</label>
+                <select name="cardset" id="cardset">
+                    <option>Loading...</option>
+                </select>
+            </div>
+
+            <a href="#" id="createlobby">Create lobby</a>
+            <a href="#" id="joinlobby">Join lobby</a>
+        </div>
+
+        <div class="cf inner" id="lobbyroom" style="display: none;">
+            <h1 id="lobby-name">Lobby-name</h1>
+            <div id="player-list">
+
+            </div>
+            <a href="#" id="startgame">Start game</a>
+        </div>
+
+        <ul id="cardsComeCenter" style="display: none;"></ul>
+
+        <div class="inner cover cf" id="menu">
+            <h1 class="cover-heading">Become the master of cards!</h1>
+
+            <ul>
+                <li>
+                    <a href="#" class="btn btn-lg btn-default" id="play"><span class="eerste"></span>Play</a>
+                </li>
+                <li>
+                    <a href="#" class="btn btn-lg btn-default" id="highscores"><span
+                            class="tweede"></span>Highscores</a>
+                </li>
+                <li>
+                    <a href="#" class="btn btn-lg btn-default" id="settings"><span class="derde"></span>Settings</a>
+                </li>
+            </ul>
+        </div>
+
+        <form id="form" style="display: none;">
+            <fieldset>
+                <legend>Become the master of cards!</legend>
+                <div class="form-group"> <!-- Full Name -->
+                    <label for="full_name_id" class="control-label">Full Name<span>*</span></label>
+                    <input type="text" class="form-control" id="full_name_id" name="full_name"
+                           placeholder="Your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="emailInput" class="control-label">E-mail<span>*</span></label>
+                    <input type="email" class="form-control" id="emailInput" name="emailInput"
+                           placeholder="E-mail address">
+                </div>
+
+                <div class="form-group">
+                    <label for="usernamePlayer" class="usernamePlayer">Username<span>*</span></label>
+                    <input type="text" class="form-control" id="usernamePlayer" name="usernamePlayer"
+                           placeholder="Username">
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordPlayer" class="passwordPlayer">Password<span>*</span></label>
+                    <input type="password" class="form-control" id="passwordPlayer" name="passwordPlayer"
+                           placeholder="Password">
+                </div>
+
+
+                <div class="form-group"> <!-- City-->
+                    <label for="city_id" class="control-label">City<span>*</span></label>
+                    <input type="text" class="form-control" id="city_id" name="city" placeholder="Brugge">
+                </div>
+
+                <div class="form-group"> <!-- State Button -->
+                    <label for="state_id" class="control-label">State<span>*</span></label>
+                </div>
+
+                <div class="form-group"> <!-- Zip Code-->
+                    <label for="zip_id" class="control-label">Zip Code<span>*</span></label>
+                    <input type="text" class="form-control" id="zip_id" name="zip" placeholder="#####">
+                </div>
+
+                <div class="form-group"> <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Register!</button>
+                </div>
+            </fieldset>
+        </form>
+
+        <footer>
             <p>© Copyright 2016 Making Fun, Inc. Rewritten and published by Howest students for educational
                 purposes.</p>
-
-            <!--<div class="inner">
-
-            </div>-->
-        </div>
-
+        </footer>
     </div>
-
-</div>
+</main>
 
 <div class="modal"></div>
 

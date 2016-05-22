@@ -288,7 +288,7 @@ var endActions = function ()
 var enterNickName = function ()
 {
     $('#menu').hide();
-    $("div.mastfoot").hide();
+    $("footer").hide();
 
     $("#enternickname").show();
 
@@ -306,7 +306,7 @@ var enterNickName = function ()
 var lobbyRoom = function ()
 {
     $('#menu').hide();
-    $("div.mastfoot").hide();
+    $("footer").hide();
 
     $("#lobbyroom").show();
     $("#lobby-name").text(lobbyname);
@@ -335,7 +335,7 @@ var playGame = function ()
     //I call him Hideyoshi
     $("#lobbyroom").hide();
     $('#menu').hide();
-    $("div.mastfoot").hide();
+    $("footer").hide();
     $("#hand").hide();
     $("#kingdomcards").hide();
     $("#topstates").hide();
