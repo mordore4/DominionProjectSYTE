@@ -31,7 +31,7 @@ public class RemoveCardsCondition extends Condition
     {
         Deck playerHand = getPlayer().getHand();
 
-        return handSize - playerHand.size() == cardsToRemove || playerHand.size() == 0;
+        return (handSize - playerHand.size() == cardsToRemove) || playerHand.size() == 0;
     }
 
     public int getType()
