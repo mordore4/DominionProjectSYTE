@@ -3,12 +3,16 @@ package dominion.tests;
 import dominion.*;
 
 import dominion.exceptions.CardNotAvailableException;
+import dominion.util.GainCardCondition;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Created by Sam on 12/05/2016.
@@ -163,5 +167,20 @@ public class GameTest
         boolean cardWentToDiscard = discardPile.getCards().contains(testCard);
 
         assert (cardIsInRandomListFirst && cardDidNotStartInDiscardPile && cardLeftRandomList && cardWentToDiscard);
+    }
+
+    @Test
+    public void testGainCardCondition()
+    {
+        game.findCurrentPlayer().setCoins(20);
+
+        GainCardCondition newCondition = new GainCardCondition(game.findCurrentPlayer(), 2);
+        Card testCard = new Card("testCard", 3, 8, 1, null);
+
+        assertTrue(game.isBuyable(testCard));
+
+        game.addCondition(newCondition);
+
+        assertFalse(game.isBuyable(testCard));
     }
 }

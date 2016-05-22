@@ -30,6 +30,18 @@ public class ConditionTest
     }
 
     @Test
+    public void TestHasConditionOfType()
+    {
+        assertFalse(game.getConditionsList().hasConditionOfType(RemoveCardsCondition.class));
+
+        RemoveCardsCondition newCondition = new RemoveCardsCondition(game.getPlayer("testPlayer"), 3);
+        game.addCondition(newCondition);
+
+        assertTrue(game.getConditionsList().hasConditionOfType(RemoveCardsCondition.class));
+        assertFalse(game.getConditionsList().hasConditionOfType(GainCardCondition.class));
+    }
+
+    @Test
     public void TestRemoveCardsCondition()
     {
         RemoveCardsCondition newCondition = new RemoveCardsCondition(game.getPlayer("testPlayer"), 3);
@@ -50,12 +62,12 @@ public class ConditionTest
     @Test
     public void TestGainCardCondition() throws CardNotAvailableException
     {
-        GainCardCondition condition = new GainCardCondition(testPlayer, 1);
-        Card testCard = new Card("testcard", 3, 1, 1, new Ability[]{new Ability(19, -1)});
+        GainCardCondition condition = new GainCardCondition(testPlayer, 3);
+        Card testCard = new Card("testcard", 3, 3, 1, new Ability[]{new Ability(19, -1)});
 
         testPlayer.getHand().addCard(testCard);
 
-        assertTrue("didn't gain card bleat", condition.isFulfilled());
+        assertTrue(condition.isFulfilled());
     }
 
 }

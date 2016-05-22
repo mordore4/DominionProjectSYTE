@@ -51,6 +51,20 @@ public class ConditionList
         return conditions.get(player);
     }
 
+    public boolean hasConditionOfType(Class<?> type)
+    {
+        for (Condition condition : conditions.values())
+        {
+            //if (condition.getClass().isInstance(type))
+            if (type.isInstance(condition))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int size()
     {
         return conditions.size();

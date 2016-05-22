@@ -5,6 +5,7 @@ import dominion.persistence.Database;
 import dominion.persistence.DatabaseResults;
 import dominion.util.Condition;
 import dominion.util.ConditionList;
+import dominion.util.GainCardCondition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -419,7 +420,17 @@ public class Game
     public boolean isBuyable(Card card)
     {
         int money = findCurrentPlayer().getCoins();
-        return money >= card.getCost() && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0;
+        boolean isGainCardsConditionActive = conditionsList.hasConditionOfType(GainCardCondition.class);
+        boolean gainCardCostOkay = true;
+
+        if (isGainCardsConditionActive)
+        {
+            GainCardCondition condition = (GainCardCondition) conditionsList.get(findCurrentPlayer());
+
+            gainCardCostOkay = card.getCost() <= condition.getCost();
+        }
+
+        return money >= card.getCost() && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0 && gainCardCostOkay;
     }
 
     public void checkIfGameIsOver()

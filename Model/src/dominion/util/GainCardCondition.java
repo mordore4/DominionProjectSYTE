@@ -11,15 +11,20 @@ import java.util.ArrayList;
  */
 public class GainCardCondition extends Condition
 {
-    private int amount;
+    private int cost;
     private transient ArrayList<Card> startHand;
 
-    public GainCardCondition(Player player, int amount)
+    public GainCardCondition(Player player, int cost)
     {
         super(player);
 
         this.startHand = (ArrayList<Card>) player.getHand().getCards().clone();
-        this.amount = amount;
+        this.cost = cost;
+    }
+
+    public int getCost()
+    {
+        return cost;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class GainCardCondition extends Condition
 
         if (newCard != null)
         {
-            return newCard.getAmount() <= amount;
+            return newCard.getCost() <= cost;
         }
         else
         {
