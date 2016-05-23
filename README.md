@@ -1,5 +1,11 @@
 # DominionProjectSYTE
 
+## Issues
+- Enkel kingdomcards beveiligd
+- Duurdere kaarten kunnen gekocht worden als workshop actief is
+- Amount checken voor chat 
+- Cellar en militia verwijderen kaarten permanent ipv naar discardpile
+
 ## SQL Database
 Card types reference:
 
