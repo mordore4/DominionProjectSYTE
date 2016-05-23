@@ -216,6 +216,7 @@ var ajaxCheckGameStatus = function ()
             if (!isMyTurn && status.isMyTurn)
             {
                 allowDiscard = false;
+                discardMultiple = false;
                 clearBuyableCards();
                 ajaxRetrieveBuyableCards();
                 $("#current-player").addClass("glow");
@@ -228,6 +229,7 @@ var ajaxCheckGameStatus = function ()
             var bEndActions = $("#end-actions");
             var bEndTurn = $("#end-turn");
             var bPlayTreasures = $("#play-treasures");
+            var bFinishDiscarding = $("#finish-discarding");
 
             if (isMyTurn)
             {
@@ -305,12 +307,20 @@ var ajaxCheckGameStatus = function ()
                     case "GainCardCondition":
                         ajaxRetrieveBuyableCards();
                         break;
+                    case "RemoveCardsThenAddCondition":
+                        $("#handdecor").find("div.title").text("Remove unwanted cards");
+                        allowDiscard = true;
+                        discardMultiple = true;
+                        bFinishDiscarding.show();
+                        break;
                 }
             }
             else
             {
                 allowDiscard = false;
+                discardMultiple = false;
                 $("#handdecor").find("div.title").text("Your hand");
+                bFinishDiscarding.hide();
             }
 
             //Keep calling this ajax unless it's our turn
@@ -412,6 +422,27 @@ var ajaxDiscardCard = function (cardname)
             data: {
                 command: "discardcard",
                 cardname: cardname,
+                lobbyname: lobbyname,
+                nickname: nickname
+            }
+        })
+        .done(function ()
+        {
+            ajaxRetrieveHand();
+            ajaxCheckGameStatus();
+        });
+};
+
+var ajaxDiscardMultiple = function (cardlist)
+{
+    var list = cardlist.join(",");
+
+    $.ajax({
+            method: "GET",
+            url: "server/gamemanager",
+            data: {
+                command: "discardmultiple",
+                cardlist: list,
                 lobbyname: lobbyname,
                 nickname: nickname
             }

@@ -13,7 +13,9 @@ var nodeserver = io_isLocal ? "http://localhost:" + io_port : "http://178.117.10
     isMyTurn = false,
     phase = 0,
     isInGame = false,
-    allowDiscard = false;
+    allowDiscard = false,
+    discardMultiple = false,
+    cardsToDiscard = [];
 
 var pollInterval = 2000;
 
@@ -138,6 +140,7 @@ $(document).ready(function ()
     $("#end-turn").on('click', endTurn).hide();
     $("#end-actions").on('click', endActions).hide();
     $("#play-treasures").on('click', playTreasures).hide();
+    $("#finish-discarding").on('click', finishDiscarding).hide();
 
     $("#start-game").on('click', ajaxStartGame);
 
@@ -273,6 +276,7 @@ var endTurn = function ()
 {
     $("#end-turn").hide();
     $("#play-treasures").hide();
+    $("#finish-discarding").hide();
     $("#end-actions").hide();
     $("#current-player").removeClass("glow");
     $("#hand").sortable("disable");
@@ -348,6 +352,7 @@ var playGame = function ()
     $("#player-turninfo").hide();
     $("#end-actions").hide();
     $("#play-treasures").hide();
+    $("#finish-discarding").hide();
     $("#end-turn").hide();
 
     $("#current-player").show();
@@ -459,7 +464,21 @@ var discardCard = function() {
 
     var cardName = $(this).attr("data-cardname");
 
-    ajaxDiscardCard(cardName);
+    if (!discardMultiple)
+    {
+        ajaxDiscardCard(cardName);
+    }
+    else
+    {
+        $(this).remove();
+        cardsToDiscard.push(cardName);
+    }
+};
+
+var finishDiscarding = function() {
+    $("#finish-discarding").hide();
+    ajaxDiscardMultiple(cardsToDiscard);
+    cardsToDiscard = [];
 };
 
 var showCardInfo = function (e)

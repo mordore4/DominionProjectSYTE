@@ -2,6 +2,7 @@ package dominion.tests;
 
 import dominion.*;
 import dominion.exceptions.CardNotAvailableException;
+import dominion.util.RemoveCardsThenAddCondition;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -144,6 +145,29 @@ public class AbilityTest
         }
         
         assert(game.getConditionsList().get(game.getPlayer("alice")) == null);
+    }
+
+    @Test
+    public void testCellarSpecialAbility() throws CardNotAvailableException
+    {
+        currentPlayer.getHand().addCard(game.retrieveCard("cellar"));
+        game.setPhase(0);
+
+        game.playCard("cellar");
+
+        assert(game.getPhase() == 0);
+        assert(game.getConditionsList().size() > 0);
+
+        for (int i = 0; i < 5; i ++)
+        {
+            currentPlayer.getHand().getCards().remove(0);
+        }
+
+        RemoveCardsThenAddCondition condition = (RemoveCardsThenAddCondition) game.getConditionsList().get(currentPlayer);
+        condition.finish();
+
+        assert(game.getPhase() == 1);
+        assert(currentPlayer.getHand().size() == 5);
     }
 
     @Test

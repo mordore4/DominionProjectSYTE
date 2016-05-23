@@ -13,6 +13,7 @@ import java.util.Map;
 import com.google.gson.*;
 import dominion.util.Condition;
 import dominion.util.RemoveCardsCondition;
+import dominion.util.RemoveCardsThenAddCondition;
 
 /**
  * Created by Digaly on 19/05/2016.
@@ -142,6 +143,16 @@ public class HTMLController
             {
                 discardCard(request.getParameter("nickname"), request.getParameter("lobbyname"),
                         request.getParameter("cardname"));
+            }
+        });
+
+        methodMap.put("discardmultiple", new Command()
+        {
+            @Override
+            public void runCommand(HttpServletRequest request, PrintWriter writer)
+            {
+                discardMultiple(request.getParameter("nickname"), request.getParameter("lobbyname"),
+                        request.getParameter("cardlist"));
             }
         });
 
@@ -382,6 +393,25 @@ public class HTMLController
                 thisPlayer.getHand().removeCard(card);
             }
         }
+    }
+
+    public void discardMultiple(String nickname, String lobbyName, String cardlist)
+    {
+        Game game = retrieveGameOfLobby(lobbyName);
+
+        if (!game.findCurrentPlayer().getName().equals(nickname)) return;
+
+        Player currentPlayer = game.findCurrentPlayer();
+
+        String[] cards = cardlist.split(",");
+
+        for (String card : cards)
+        {
+            currentPlayer.getHand().removeCard(currentPlayer.getHand().findCard(card));
+        }
+
+        RemoveCardsThenAddCondition condition = (RemoveCardsThenAddCondition) game.getConditionsList().get(currentPlayer);
+        condition.finish();
     }
 
     public void endActions(String lobbyName)

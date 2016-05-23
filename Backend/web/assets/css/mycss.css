@@ -524,7 +524,7 @@ a.info {
     background: url("../media/ui/info_circle_coins.png") no-repeat top left;
 }
 
-#end-turn, #play-treasures, #end-actions {
+#end-turn, #play-treasures, #end-actions, #finish-discarding {
     position: absolute;
     right: 32px;
     display: inline-block;
@@ -541,7 +541,7 @@ a.info {
     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
 }
 
-#play-treasures:hover, #end-turn:hover {
+#play-treasures:hover, #end-turn:hover, #finish-discarding:hover {
     opacity: 0.85;
 }
 
@@ -549,7 +549,7 @@ a.info {
     bottom: calc(242px + 32px);
 }
 
-#play-treasures {
+#play-treasures, #finish-discarding {
     bottom: calc(178px + 16px);
 }
 

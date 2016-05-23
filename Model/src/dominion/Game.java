@@ -213,12 +213,10 @@ public class Game
             if (currentCard.isActionCard())
                 currentPlayer.setActions(currentPlayer.getActions() - 1);
 
-            boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
-
             if (phase == 0)
             {
 
-                if ((!currentPlayer.getHand().containsActionCards() || currentPlayer.getActions() == 0) && !hasGainCardCondition)
+                if ((!currentPlayer.getHand().containsActionCards() || currentPlayer.getActions() == 0) && conditionsList.size() == 0)
                     advancePhase();
             }
             else if (phase == 1)
@@ -258,7 +256,7 @@ public class Game
 
         for (Ability ability : cardAbilities)
         {
-            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() == 9 || ability.getId() >= 25)
+            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() == 15 || ability.getId() == 9 || ability.getId() >= 25)
             {
                 ability.doAbility(this);
             }

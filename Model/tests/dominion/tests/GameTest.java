@@ -11,7 +11,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 /**

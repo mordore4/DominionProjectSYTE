@@ -3,6 +3,7 @@ package dominion;
 import dominion.exceptions.CardNotAvailableException;
 import dominion.util.GainCardCondition;
 import dominion.util.RemoveCardsCondition;
+import dominion.util.RemoveCardsThenAddCondition;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,9 @@ public class Ability
                 break;
             case 14:
                 bureaucratSpecialAbility(game);
+                break;
+            case 15:
+                cellarSpecialAbility(game);
                 break;
             case 19:
                 militiaSpecialAbility(game);
@@ -301,6 +305,13 @@ public class Ability
     private void gainCardCostingUpTo(Game game)
     {
         GainCardCondition newCondition = new GainCardCondition(game.findCurrentPlayer(), game, amount);
+
+        game.addCondition(newCondition);
+    }
+
+    private void cellarSpecialAbility(Game game)
+    {
+        RemoveCardsThenAddCondition newCondition = new RemoveCardsThenAddCondition(game.findCurrentPlayer(), game);
 
         game.addCondition(newCondition);
     }

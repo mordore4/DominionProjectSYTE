@@ -39,7 +39,7 @@ public class TestHelper
 
         testCardList.put("adventurer", new Card("adventurer", 3, 6, 0, new Ability[] {}));
         testCardList.put("bureaucrat", new Card("bureaucrat", 4, 4, 0, new Ability[] {}));
-        testCardList.put("cellar", new Card("cellar", 3, 2, 0, new Ability[] {new Ability(1, 1), new Ability(6, -1), new Ability(8, 1)}));
+        testCardList.put("cellar", new Card("cellar", 3, 2, 0, new Ability[] {new Ability(1, 1), new Ability(15, -1)}));
         testCardList.put("chancellor", new Card("chancellor", 3, 3, 0, new Ability[] {}));
         testCardList.put("chapel", new Card("chapel", 3, 2, 0, new Ability[] {new Ability(5, 4)}));
         testCardList.put("copper", new Card("copper", 1, 0, 0, new Ability[] {new Ability(3, 1)}));
