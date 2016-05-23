@@ -240,14 +240,14 @@ var executeCommand = function (message)
 
 var receiveChatMessage = function (nickname, message)
 {
-    var html = '<li><span class="username">' + nickname + ': </span> ' + message + '</li>';
+    var html = '<li><strong class="username">' + nickname + ': </strong> ' + message + '</li>';
 
     appendToChat(html);
 };
 
 var receiveChatNotice = function (message)
 {
-    var html = '<li><span class="notice">' + message + '</span></li>';
+    var html = '<li><strong class="notice">' + message + '</strong></li>';
 
     appendToChat(html);
 };
@@ -449,7 +449,7 @@ var buyCard = function ()
 
     if (isMyTurn && phase == 3 && getCardBuyable(cardName) && getTurnInfo("buys") > 0)
     {
-        ioSendChatNotice("<span class=\"username\">" + nickname + "</span> bought a <span class=\"cardname\">" + cardName + "</span>");
+        ioSendChatNotice("<strong class=\"username\">" + nickname + "</strong> bought a <strong class=\"cardname\">" + cardName + "</strong>");
         ajaxBuyCard(cardName);
     }
 };
@@ -575,12 +575,12 @@ var playTreasures = function ()
 
 var setTurnInfo = function (type, value)
 {
-    $("#player-turninfo").find("#turn-" + type).find("span").text(value);
+    $("#player-turninfo").find("#turn-" + type).find("strong").text(value);
 };
 
 var getTurnInfo = function (type)
 {
-    return parseInt($("#player-turninfo").find("#turn-" + type).find("span").text());
+    return parseInt($("#player-turninfo").find("#turn-" + type).find("strong").text());
 };
 
 var setUpGame = function ()

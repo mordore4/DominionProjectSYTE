@@ -16,7 +16,7 @@
 
 <body>
 <!--<div id="dialog-confirm" title="Empty the recycle bin?">
-    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Did you know you can press 'CTRL + C' to enable/disable chat?</p>
+    <p><strong class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></strong>Did you know you can press 'CTRL + C' to enable/disable chat?</p>
 
 </div>
 -->
@@ -32,7 +32,7 @@
 
 <aside id="current-player" style="display: none;">
     Current player:
-    <span class="playername"></span>
+    <strong class="playername"></strong>
 </aside>
 
 <aside id="chat" class="visible">
@@ -54,28 +54,26 @@
 </aside>
 
 
-<main class="site-wrapper">
+<main>
     <div class="site-wrapper-inner">
-        <div class="masthead clearfix">
-            <div class="inner">
-                <h3 class="masthead-brand">Dominion</h3>
-                <nav>
-                    <ul class="nav masthead-nav">
-                        <li class="active home"><a href="#">Home</a></li>
-                        <li class="register"><a href="#">Register</a></li>
-                        <li class="login"><a href="#">Login</a></li>
-                        <li class="about"><a href="#">About</a></li>
-                        <li class="contact"><a href="#">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        <header class="clearfix">
+            <h3>Dominion</h3>
+            <nav>
+                <ul>
+                    <li class="active home"><a href="#">Home</a></li>
+                    <li class="register"><a href="#">Register</a></li>
+                    <li class="login"><a href="#">Login</a></li>
+                    <li class="about"><a href="#">About</a></li>
+                    <li class="contact"><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
 
-        <div class="cf inner unselectable" id="gamewindow" style="display: none;">
+        <section class="cf inner unselectable" id="gamewindow" style="display: none;">
 
-            <div id="kingdomwrapper">
+            <article id="kingdomwrapper">
                 <div class="corner-topleft"></div>
-                <div class="title">Kingdom cards</div>
+                <div class="title borderedtitle">Kingdom cards</div>
                 <div class="corner-topright"></div>
 
                 <div id="kingdomcards">
@@ -83,33 +81,33 @@
 
                     </ul>
                 </div>
-            </div>
+            </article>
 
-            <div id="player-turninfo">
-                <div class="info-sub" id="turn-actions"><span class="info">0</span>Actions</div>
-                <div class="info-sub" id="turn-buys"><span class="info">0</span>Buys</div>
-                <div class="info-sub" id="turn-coins"><span class="info">0</span>Coins</div>
-            </div>
+            <article id="player-turninfo">
+                <p class="info-sub" id="turn-actions"><strong class="info">0</strong>Actions</p>
+                <p class="info-sub" id="turn-buys"><strong class="info">0</strong>Buys</p>
+                <p class="info-sub" id="turn-coins"><strong class="info">0</strong>Coins</p>
+            </article>
 
-            <div id="handwrapper">
+            <article id="handwrapper">
                 <div id="handdecor">
                     <div class="corner-topleft"></div>
-                    <div class="title">Your hand</div>
+                    <div class="borderedtitle title">Your hand</div>
                     <div class="corner-topright"></div>
 
                     <ul id="hand"></ul>
                 </div>
-            </div>
+            </article>
 
-            <div id="topcoins-title">Treasure</div>
+            <div class="title topcoins-title">Treasure</div>
             <ul class="topcoins" id="coins"></ul>
 
-            <div id="topstates-title">States</div>
+            <div class="title topstates-title">States</div>
             <ul class="topprov" id="topstates"></ul>
 
-        </div>
+        </section>
 
-        <div class="cf inner" id="enternickname" style="display: none;">
+        <form class="cf inner" id="enternickname" style="display: none;">
             <div class="form-group">
                 <label for="nickname">Nickname: </label>
                 <input type="text" class="form-control" id="nickname"/>
@@ -129,74 +127,74 @@
 
             <a href="#" id="createlobby">Create lobby</a>
             <a href="#" id="joinlobby">Join lobby</a>
-        </div>
+        </form>
 
-        <div class="cf inner" id="lobbyroom" style="display: none;">
+        <aside class="cf inner" id="lobbyroom" style="display: none;">
             <h1 id="lobby-name">Lobby-name</h1>
-            <div id="player-list">
+            <article id="player-list">
 
-            </div>
+            </article>
             <a href="#" id="startgame">Start game</a>
-        </div>
+        </aside>
 
         <ul id="cardsComeCenter" style="display: none;"></ul>
 
-        <div class="inner cover cf" id="menu">
+        <section class="inner cover cf" id="menu">
             <h1 class="cover-heading">Become the master of cards!</h1>
 
             <ul>
                 <li>
-                    <a href="#" class="btn btn-lg btn-default" id="play"><span class="eerste"></span>Play</a>
+                    <a href="#" class="btn btn-lg btn-default" id="play"><strong class="eerste"></strong>Play</a>
                 </li>
                 <li>
-                    <a href="#" class="btn btn-lg btn-default" id="highscores"><span
-                            class="tweede"></span>Highscores</a>
+                    <a href="#" class="btn btn-lg btn-default" id="highscores"><strong
+                            class="tweede"></strong>Highscores</a>
                 </li>
                 <li>
-                    <a href="#" class="btn btn-lg btn-default" id="settings"><span class="derde"></span>Settings</a>
+                    <a href="#" class="btn btn-lg btn-default" id="settings"><strong class="derde"></strong>Settings</a>
                 </li>
             </ul>
-        </div>
+        </section>
 
         <form id="form" style="display: none;">
             <fieldset>
                 <legend>Become the master of cards!</legend>
                 <div class="form-group"> <!-- Full Name -->
-                    <label for="full_name_id" class="control-label">Full Name<span>*</span></label>
+                    <label for="full_name_id" class="control-label">Full Name<strong>*</strong></label>
                     <input type="text" class="form-control" id="full_name_id" name="full_name"
                            placeholder="Your full name">
                 </div>
 
                 <div class="form-group">
-                    <label for="emailInput" class="control-label">E-mail<span>*</span></label>
+                    <label for="emailInput" class="control-label">E-mail<strong>*</strong></label>
                     <input type="email" class="form-control" id="emailInput" name="emailInput"
                            placeholder="E-mail address">
                 </div>
 
                 <div class="form-group">
-                    <label for="usernamePlayer" class="usernamePlayer">Username<span>*</span></label>
+                    <label for="usernamePlayer" class="usernamePlayer">Username<strong>*</strong></label>
                     <input type="text" class="form-control" id="usernamePlayer" name="usernamePlayer"
                            placeholder="Username">
                 </div>
 
                 <div class="form-group">
-                    <label for="passwordPlayer" class="passwordPlayer">Password<span>*</span></label>
+                    <label for="passwordPlayer" class="passwordPlayer">Password<strong>*</strong></label>
                     <input type="password" class="form-control" id="passwordPlayer" name="passwordPlayer"
                            placeholder="Password">
                 </div>
 
 
                 <div class="form-group"> <!-- City-->
-                    <label for="city_id" class="control-label">City<span>*</span></label>
+                    <label for="city_id" class="control-label">City<strong>*</strong></label>
                     <input type="text" class="form-control" id="city_id" name="city" placeholder="Brugge">
                 </div>
 
                 <div class="form-group"> <!-- State Button -->
-                    <label for="state_id" class="control-label">State<span>*</span></label>
+                    <label for="state_id" class="control-label">State<strong>*</strong></label>
                 </div>
 
                 <div class="form-group"> <!-- Zip Code-->
-                    <label for="zip_id" class="control-label">Zip Code<span>*</span></label>
+                    <label for="zip_id" class="control-label">Zip Code<strong>*</strong></label>
                     <input type="text" class="form-control" id="zip_id" name="zip" placeholder="#####">
                 </div>
 

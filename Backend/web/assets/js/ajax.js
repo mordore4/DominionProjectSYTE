@@ -209,7 +209,7 @@ var ajaxCheckGameStatus = function ()
             setTurnInfo("buys", status.buys);
             setTurnInfo("coins", status.coins);
 
-            $("#current-player").find("span.playername").text(status.currentPlayer);
+            $("#current-player").find("strong.playername").text(status.currentPlayer);
 
             //This is the first time we notice it's our turn
             //So this can be seen as stuff to do on turn start

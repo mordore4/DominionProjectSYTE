@@ -37,7 +37,7 @@ body.myturn {
 
 #gamewindow {
     position: relative;
-    width: calc(100% - 100px);
+    min-width: calc(100% - 100px);
     height: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -69,9 +69,9 @@ body.myturn {
 #menu {
     margin-left: auto;
     margin-right: auto;
-    width: 550px;
+    min-width: 550px;
     text-align: center;
-    padding: 0px;
+    padding: 0;
     background-image: url("../media/logodominion.png");
     background-repeat: no-repeat;
     background-position: top center;
@@ -106,8 +106,8 @@ body.myturn {
 
 .shadow {
     display: inline-block;
-    -webkit-box-shadow: -8px 8px 16px 0px rgba(0, 0, 0, 1);
-    -moz-box-shadow: -8px 8px 16px 0px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
+    -moz-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
     box-shadow: -8px 8px 8px rgba(255, 255, 255, 1);
 }
 
@@ -119,7 +119,7 @@ body.myturn {
     position: relative;
     color: #111;
     text-align: center;
-    width: 456px;
+    min-width: 456px;
     border: none;
     margin: 0;
     background: transparent url("../media/flag_n.png");
@@ -131,7 +131,7 @@ body.myturn {
 }
 
 .lead {
-    width: 65%;
+    min-width: 65%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -140,7 +140,7 @@ body.myturn {
     background-repeat: no-repeat;
     background-size: 32px;
     height: calc(100% - 20px);
-    width: 10%;
+    min-width: 10%;
     position: absolute;
     left: 10px;
     top: 10px;
@@ -150,7 +150,7 @@ body.myturn {
     background-image: url("../media/ui/button_play_n.png");
 }
 
-#play:hover span.eerste {
+#play:hover strong.eerste {
     background-image: url("../media/ui/button_play.png");
 }
 
@@ -158,7 +158,7 @@ body.myturn {
     background-image: url("../media/ui/button_scores_n.png");
 }
 
-#highscores:hover span.tweede {
+#highscores:hover strong.tweede {
     background-image: url("../media/ui/button_scores.png");
 }
 
@@ -166,7 +166,7 @@ body.myturn {
     background-image: url("../media/ui/button_settings_n.png");
 }
 
-#settings:hover span.derde {
+#settings:hover strong.derde {
     background-image: url("../media/ui/button_settings.png");
 }
 
@@ -199,7 +199,7 @@ body.loading .modal {
 }
 
 #hand li, #cardsComeCenter li {
-    width: 158px;
+    min-width: 158px;
     height: 249px;
     display: inline-block;
     text-decoration: none;
@@ -212,7 +212,7 @@ body.loading .modal {
 
 #cardsComeCenter li {
     height: 180px;
-    width: 110px;
+    min-width: 110px;
     background-repeat: no-repeat;
 }
 
@@ -245,21 +245,6 @@ body.loading .modal {
     z-index: 20;
 }
 
-#topcoins-title, #topstates-title {
-    position: absolute;
-    top: -40px;
-    font-size: 2em;
-    font-family: sans-serif;
-}
-
-#topcoins-title {
-    right: 40px;
-}
-
-#topstates-title {
-    left: 24px;
-}
-
 #coins {
     right: 20px;
 }
@@ -269,29 +254,17 @@ body.loading .modal {
 }
 
 #topstates img, #coins img {
-    width: 130px;
+    min-width: 130px;
 }
 
 #topstates figure, #coins figure {
     position: relative;
-    width: 135px;
+    min-width: 135px;
     height: 115px;
 }
 
-#topstates .amount, #coins .amount {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50px;
-    height: 45px;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
-}
-
 a.info {
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     position: absolute;
     bottom: 0;
@@ -302,7 +275,7 @@ a.info {
 
 .kingdomcard {
     display: inline-block;
-    width: 140px;
+    min-width: 140px;
     height: 120px;
     border: 2px solid black;
     padding: 3px;
@@ -314,7 +287,7 @@ a.info {
 .kingdomcard .amount, #topstates .amount, #coins .amount {
     position: absolute;
     background: url("../media/ui/amount_circle.png") no-repeat top left;
-    width: 40px;
+    min-width: 40px;
     height: 45px;
     top: 0;
     right: 0;
@@ -331,14 +304,12 @@ a.info {
 }
 
 .kingdomcard-top {
-    background-image: url("../../images/Smithy.jpg");
     width: 100%;
     height: 80%;
     background-size: 100%;
 }
 
 .kingdomcard-bottom {
-    background-image: url("../../images/Smithy.jpg");
     width: 100%;
     height: 20%;
     background-size: 100%;
@@ -366,13 +337,13 @@ a.info {
     padding-left: 8px;
     padding-top: 8px;
     position: relative;
-    width: 756px;
+    min-width: 756px;
 }
 
 #handwrapper {
     padding-left: 8px;
     padding-top: 8px;
-    width: 100%;
+    min-width: 100%;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -392,7 +363,7 @@ a.info {
     top: -32px;
     left: -3px;
     border-bottom: 3px solid rgba(0, 0, 0, 0.6);
-    width: calc(25% + 3px);
+    min-width: calc(25% + 3px);
     height: 32px;
     display: inline-block;
 }
@@ -406,17 +377,27 @@ a.info {
 .title {
     position: absolute;
     top: -36px;
-    left: 25%;
-    border: 3px solid rgba(0, 0, 0, 0.6);
-    border-bottom: none;
-    width: 50%;
-    height: 36px;
-    display: inline-block;
     font-size: 2em;
     font-family: sans-serif;
 }
 
+.borderedtitle {
+    left: 25%;
+    border: 3px solid rgba(0, 0, 0, 0.6);
+    border-bottom: none;
+    min-width: 132px;
+    width: 50%;
+    height: 36px;
+    display: inline-block;
+}
 
+.topcoins-title {
+    right: 40px;
+}
+
+.topstates-title {
+    left: 24px;
+}
 
 #kingdomcards {
     display: inline-block;
@@ -444,7 +425,7 @@ a.info {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    width: 25%;
+    min-width: 25%;
 
 }
 
@@ -497,14 +478,13 @@ a.info {
 #card-info img {
     border: 8px solid black;
     border-radius: 8px;
-    width: 300px;
+    min-width: 300px;
     height: 500px;
     margin-top: calc(25% - 250px);
 }
 
 .unselectable {
     -moz-user-select: none;
-    -khtml-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -524,7 +504,7 @@ a.info {
 }
 
 #player-turninfo .info {
-    width: 56px;
+    min-width: 56px;
     height: 56px;
     background: url("../media/ui/info_circle.png") no-repeat top left;
     font-weight: bold;
@@ -555,7 +535,7 @@ a.info {
     background-image: url("../media/ui/button_dirtoverlay.png");
     font-size: 3rem;
     padding: 8px;
-    width: 250px;
+    min-width: 250px;
     height: 64px;
     border: none;
     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
@@ -614,7 +594,7 @@ a.info {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 500px;
+    min-width: 500px;
     height: 178px;
     background-color: rgba(0, 0, 0, 0.7);
     border: 2px solid gray;
@@ -633,7 +613,7 @@ a.info {
     position: absolute;
     top: 0;
     right: 0;
-    width: 40px;
+    min-width: 40px;
     height: 40px;
 
 }
@@ -646,7 +626,7 @@ a.info {
     right: 0;
     bottom: 138px;
     background-color: rgba(255, 255, 255, 0.7);
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 5px;
     z-index: 2000;
@@ -679,7 +659,7 @@ a.info {
 
 #chat .compose-message label {
     display: inline-block;
-    width: 42px;
+    min-width: 42px;
     height: 32px;
     line-height: 32px;
 }
@@ -689,13 +669,13 @@ a.info {
     text-align: left;
 }
 
-span.username {
+strong.username {
     color: dodgerblue;
     font-weight: bold;
     text-transform: capitalize;
 }
 
-span.cardname {
+strong.cardname {
     color: paleturquoise;
     font-weight: bold;
     font-style: italic;
@@ -705,7 +685,7 @@ span.cardname {
     color: black;
 }
 
-span.notice {
+strong.notice {
     color: goldenrod;
     font-weight: bold;
 }
@@ -713,14 +693,13 @@ span.notice {
 #current-player {
     position: absolute;
     bottom: 128px;
-    font-size: 2em;
-    width: auto;
+    font-size: 2.5rem;
     line-height: 56px;
     padding: 8px;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-#current-player span.playername {
+#current-player strong.playername {
     display: block;
     font-weight: bold;
 }
