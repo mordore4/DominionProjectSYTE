@@ -407,7 +407,7 @@ public class HTMLController
 
         for (String card : cards)
         {
-            currentPlayer.getHand().removeCard(currentPlayer.getHand().findCard(card));
+            game.discardCard(currentPlayer.getHand().findCard(card));
         }
 
         RemoveCardsThenAddCondition condition = (RemoveCardsThenAddCondition) game.getConditionsList().get(currentPlayer);
