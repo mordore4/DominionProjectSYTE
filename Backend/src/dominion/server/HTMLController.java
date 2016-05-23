@@ -385,12 +385,12 @@ public class HTMLController
             {
                 if (cardType == card.getType())
                 {
-                    thisPlayer.getHand().removeCard(card);
+                    game.discardCardFromPlayer(card, thisPlayer);
                 }
             }
             else
             {
-                thisPlayer.getHand().removeCard(card);
+                game.discardCardFromPlayer(card, thisPlayer);
             }
         }
     }
