@@ -263,7 +263,7 @@ var ajaxCheckGameStatus = function ()
                             bEndTurn.show();
                             bPlayTreasures.show();
                             break;
-                        case 3:
+                        case 2:
                             bEndActions.hide();
                             bEndTurn.show();
                             bPlayTreasures.hide();
@@ -279,7 +279,7 @@ var ajaxCheckGameStatus = function ()
             {
                 console.log(status.myCondition);
 
-                if (phase == 1 || phase == 3)
+                if (phase == 1 || phase == 2)
                 {
                     ajaxRetrieveBuyableCards()
                 }
@@ -303,6 +303,7 @@ var ajaxCheckGameStatus = function ()
                         allowDiscard = true;
                         break;
                     case "GainCardCondition":
+                        ajaxRetrieveBuyableCards();
                         break;
                 }
             }

@@ -84,7 +84,12 @@ public class Game
             phase++;
         }
 
-        if (phase >= 2)
+        /*if (phase == 2 && findBuyableCards().size() == 0)
+        {
+            phase++;
+        }*/
+
+        if (phase >= 3)
         {
             advancePlayer();
         }
@@ -208,9 +213,17 @@ public class Game
             if (currentCard.isActionCard())
                 currentPlayer.setActions(currentPlayer.getActions() - 1);
 
+            boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+
             if (phase == 0)
             {
-                if (!currentPlayer.getHand().containsActionCards() || currentPlayer.getActions() == 0)
+
+                if ((!currentPlayer.getHand().containsActionCards() || currentPlayer.getActions() == 0) && !hasGainCardCondition)
+                    advancePhase();
+            }
+            else if (phase == 1)
+            {
+                if (!currentPlayer.getHand().checkHandForType(1))
                     advancePhase();
             }
         }
@@ -245,7 +258,7 @@ public class Game
 
         for (Ability ability : cardAbilities)
         {
-            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() >= 25)
+            if (ability.getId() < 6 || ability.getId() == 12 || ability.getId() == 9 || ability.getId() >= 25)
             {
                 ability.doAbility(this);
             }
@@ -266,11 +279,22 @@ public class Game
         int cardCost = thisCard.getCost();
         Player currentPlayer = findCurrentPlayer();
 
-        if (currentPlayer.getCoins() >= cardCost && currentPlayer.getBuys() > 0)
+        boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+
+
+        if ((currentPlayer.getCoins() >= cardCost && currentPlayer.getBuys() > 0) || hasGainCardCondition)
         {
             addCard(cardName);
-            currentPlayer.setBuys(currentPlayer.getBuys() - 1);
-            currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
+
+            if (!hasGainCardCondition)
+            {
+                currentPlayer.setBuys(currentPlayer.getBuys() - 1);
+                currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
+            }
+            else
+            {
+                getConditionsList().removeCompleteConditions();
+            }
         }
     }
 
@@ -372,12 +396,12 @@ public class Game
         checkIfGameIsOver();
     }
 
-    public void moveCardsToDiscardPile (ArrayList<Card> fromPile)
+    public void moveCardsToDiscardPile(ArrayList<Card> fromPile)
     {
         moveCardsFromTo(fromPile, findCurrentPlayer().getDiscardPile().getCards());
     }
 
-    public void moveCardsFromTo (ArrayList<Card> fromPile, ArrayList<Card> toPile)
+    public void moveCardsFromTo(ArrayList<Card> fromPile, ArrayList<Card> toPile)
     {
         for (int i = fromPile.size() - 1; i >= 0; i--)
         {
@@ -387,7 +411,7 @@ public class Game
     }
 
 
-    public void moveThisCardFromTo (Card thisCard, ArrayList<Card> fromPile, ArrayList<Card> toPile)
+    public void moveThisCardFromTo(Card thisCard, ArrayList<Card> fromPile, ArrayList<Card> toPile)
     {
         toPile.add(thisCard);
         fromPile.remove(thisCard);
@@ -420,17 +444,18 @@ public class Game
     public boolean isBuyable(Card card)
     {
         int money = findCurrentPlayer().getCoins();
-        boolean isGainCardsConditionActive = conditionsList.hasConditionOfType(GainCardCondition.class);
-        boolean gainCardCostOkay = true;
+        boolean hasEnoughMoney = money >= card.getCost();
 
-        if (isGainCardsConditionActive)
+        boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+
+        if (hasGainCardCondition)
         {
-            GainCardCondition condition = (GainCardCondition) conditionsList.get(findCurrentPlayer());
+            GainCardCondition condition = (GainCardCondition) getConditionsList().get(findCurrentPlayer());
 
-            gainCardCostOkay = card.getCost() <= condition.getCost();
+            hasEnoughMoney = card.getCost() <= condition.getCost();
         }
 
-        return money >= card.getCost() && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0 && gainCardCostOkay;
+        return hasEnoughMoney && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0;
     }
 
     public void checkIfGameIsOver()
@@ -451,7 +476,6 @@ public class Game
             isOver = true;
         }
     }
-
 
 
     public boolean getIsOver()
@@ -499,7 +523,7 @@ public class Game
         this.cardList = cardList;
     }
 
-    public Revealer getRevealer ()
+    public Revealer getRevealer()
     {
         return revealer;
     }
@@ -512,5 +536,22 @@ public class Game
     public void addCondition(Condition condition)
     {
         conditionsList.add(condition);
+
+        boolean isGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+
+        if (isGainCardCondition)
+        {
+            phase = 2;
+        }
+    }
+
+    public void setPhase(int phase)
+    {
+        this.phase = phase;
+
+        if (this.phase == 0 && !findCurrentPlayer().hasActionCards())
+        {
+            this.phase++;
+        }
     }
 }

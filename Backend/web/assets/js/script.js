@@ -447,7 +447,7 @@ var buyCard = function ()
 {
     var cardName = $(this).attr("data-cardname");
 
-    if (isMyTurn && phase == 3 && getCardBuyable(cardName) && getTurnInfo("buys") > 0)
+    if (isMyTurn && phase == 2 && getCardBuyable(cardName) && getTurnInfo("buys") > 0)
     {
         ioSendChatNotice("<strong class=\"username\">" + nickname + "</strong> bought a <strong class=\"cardname\">" + cardName + "</strong>");
         ajaxBuyCard(cardName);

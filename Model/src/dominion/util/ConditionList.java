@@ -23,7 +23,7 @@ public class ConditionList
         conditions.put(condition.getPlayer(), condition);
     }
 
-    private void removeCompleteConditions()
+    public void removeCompleteConditions()
     {
         ArrayList<Player> keysToRemove = new ArrayList<>();
 

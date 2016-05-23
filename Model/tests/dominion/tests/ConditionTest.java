@@ -62,10 +62,10 @@ public class ConditionTest
     @Test
     public void TestGainCardCondition() throws CardNotAvailableException
     {
-        GainCardCondition condition = new GainCardCondition(testPlayer, 3);
+        GainCardCondition condition = new GainCardCondition(testPlayer, game, 3);
         Card testCard = new Card("testcard", 3, 3, 1, new Ability[]{new Ability(19, -1)});
 
-        testPlayer.getHand().addCard(testCard);
+        testPlayer.getDiscardPile().addCard(testCard);
 
         assertTrue(condition.isFulfilled());
     }

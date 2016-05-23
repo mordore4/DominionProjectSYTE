@@ -2,6 +2,7 @@ package dominion.util;
 
 import dominion.Card;
 import dominion.Deck;
+import dominion.Game;
 import dominion.Player;
 
 import java.util.ArrayList;
@@ -12,14 +13,16 @@ import java.util.ArrayList;
 public class GainCardCondition extends Condition
 {
     private int cost;
-    private transient ArrayList<Card> startHand;
+    private transient ArrayList<Card> startDiscardPile;
+    private transient Game game;
 
-    public GainCardCondition(Player player, int cost)
+    public GainCardCondition(Player player, Game game, int cost)
     {
         super(player);
 
-        this.startHand = (ArrayList<Card>) player.getHand().getCards().clone();
+        this.startDiscardPile = (ArrayList<Card>) player.getDiscardPile().getCards().clone();
         this.cost = cost;
+        this.game = game;
     }
 
     public int getCost()
@@ -31,11 +34,11 @@ public class GainCardCondition extends Condition
     public boolean isFulfilled()
     {
         Card newCard = null;
-        ArrayList<Card> currentHand = getPlayer().getHand().getCards();
+        ArrayList<Card> currentDiscardPile = getPlayer().getDiscardPile().getCards();
 
-        for (Card card : currentHand)
+        for (Card card : currentDiscardPile)
         {
-            if (!startHand.contains(card))
+            if (!startDiscardPile.contains(card))
             {
                 newCard = card;
             }
@@ -43,7 +46,23 @@ public class GainCardCondition extends Condition
 
         if (newCard != null)
         {
-            return newCard.getCost() <= cost;
+
+            if (newCard.getCost() <= cost)
+            {
+                if (getPlayer().hasActionCards() && getPlayer().getActions() > 0)
+                {
+                    game.setPhase(0);
+                }
+                else
+                {
+                    game.setPhase(1);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
