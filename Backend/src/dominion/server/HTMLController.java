@@ -21,7 +21,6 @@ public class HTMLController
 {
     GameEngine gameEngine;
     Map<String, Command> methodMap;
-    HashMap<String, Boolean> enableBuying = new HashMap<>();
     private Gson gson;
 
 
@@ -193,7 +192,6 @@ public class HTMLController
     public void createLobby(String nickname, String lobbyName, String cardSet)
     {
         gameEngine.createLobby(nickname, lobbyName, cardSet);
-        enableBuying.put(lobbyName, false);
     }
 
     public void joinLobby(String nickname, String lobbyName)
@@ -307,16 +305,7 @@ public class HTMLController
         gameStatus.put("conditionsActive", game.getConditionsList().size() > 0);
         gameStatus.put("myCondition", myConditionWrapper);
         gameStatus.put("currentPlayer", game.findCurrentPlayer().getName());
-
-        if (!enableBuying.get(lobbyName))
-        {
-            gameStatus.put("phase", game.getPhase());
-        }
-        else
-        {
-            gameStatus.put("phase", 3);
-        }
-
+        gameStatus.put("phase", game.getPhase());
         gameStatus.put("actions", game.findCurrentPlayer().getActions());
         gameStatus.put("buys", game.findCurrentPlayer().getBuys());
         gameStatus.put("coins", game.findCurrentPlayer().getCoins());
@@ -351,7 +340,7 @@ public class HTMLController
 
         try
         {
-            if (game.findCurrentPlayer().getName().equals(nickname) && enableBuying.get(lobbyName))
+            if (game.findCurrentPlayer().getName().equals(nickname) && game.getPhase() == 2)
             {
                 game.buyCard(cardName);
             }
@@ -409,7 +398,6 @@ public class HTMLController
     {
         Game game = retrieveGameOfLobby(lobbyName);
 
-        enableBuying.put(lobbyName, false);
         game.advancePlayer();
     }
 
@@ -417,14 +405,7 @@ public class HTMLController
     {
         Game game = retrieveGameOfLobby(lobbyName);
 
-        Player currentPlayer = game.findCurrentPlayer();
-
         game.playTreasures();
-
-        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
-        {
-            enableBuying.put(lobbyName, true);
-        }
     }
 
     public void putCardOnTable(String lobbyName, String cardName)
@@ -438,14 +419,6 @@ public class HTMLController
         catch (CardNotAvailableException ex)
         {
             ex.printStackTrace();
-        }
-        //currentPlayer.playCard(cardName);
-
-        Player currentPlayer = game.findCurrentPlayer();
-
-        if (game.getPhase() == 1 && !currentPlayer.getHand().checkHandForType(1))
-        {
-            enableBuying.put(lobbyName, true);
         }
     }
 

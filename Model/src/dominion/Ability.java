@@ -300,7 +300,7 @@ public class Ability
 
     private void gainCardCostingUpTo(Game game)
     {
-        GainCardCondition newCondition = new GainCardCondition(game.findCurrentPlayer(), amount);
+        GainCardCondition newCondition = new GainCardCondition(game.findCurrentPlayer(), game, amount);
 
         game.addCondition(newCondition);
     }

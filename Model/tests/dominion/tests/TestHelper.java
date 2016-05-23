@@ -68,7 +68,7 @@ public class TestHelper
         testCardList.put("village", new Card("village", 3, 3, 0, new Ability[] {new Ability(1, 2), new Ability(4, 1)}));
         testCardList.put("witch", new Card("witch", 4, 4, 0, new Ability[] {new Ability(4, 2), new Ability(9, 0)}));
         testCardList.put("woodcutter", new Card("woodcutter", 3, 3, 0, new Ability[] {new Ability(2, 1), new Ability(3, 2)}));
-        testCardList.put("workshop", new Card("workshop", 3, 3, 0, new Ability[] {}));
+        testCardList.put("workshop", new Card("workshop", 3, 3, 0, new Ability[] {new Ability(9, 4)}));
     }
 
     public void printArrayStatements()
