@@ -304,10 +304,14 @@ var ajaxCheckGameStatus = function ()
                 {
                     case "RemoveCardsCondition":
                     case "RemodelCondition":
-                        $("#handdecor").find("div.title").text("Remove " + status.myCondition.condition.cardsToRemove + " cards");
+                        var cardsToRemove = status.myCondition.condition.cardsToRemove;
+
+                        $("#handdecor").find("div.title").text("Remove " + cardsToRemove + " card" +
+                            ((cardsToRemove > 1) ? "s" : ""));
                         allowDiscard = true;
                         break;
                     case "GainCardCondition":
+                        $("#handdecor").find("div.title").text("Buy a card");
                         ajaxRetrieveBuyableCards();
                         break;
                     case "RemoveCardsThenAddCondition":

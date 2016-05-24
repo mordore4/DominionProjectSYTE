@@ -11,14 +11,14 @@ public class RemodelCondition extends Condition
 {
     private int cardsToRemove;
     private int handSize;
-    private Game game;
+    private transient Game game;
 
     public RemodelCondition(Player player, int cardsToRemove, Game game)
     {
         super(player);
 
         this.cardsToRemove = cardsToRemove;
-        this.handSize = player.getHand().size();
+        this.handSize = player.getHand().size() - 1;
         this.game = game;
     }
 

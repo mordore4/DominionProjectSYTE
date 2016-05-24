@@ -385,7 +385,7 @@ public class HTMLController
 
             if (thisPlayersCondition instanceof RemodelCondition || (thisPlayerCondition != null && thisPlayerCondition.isDestroyCard()))
             {
-                thisPlayer.getHand().removeCard(card);
+                game.trashCardFromPlayer(thisPlayer, card);
             }
             else
             {
