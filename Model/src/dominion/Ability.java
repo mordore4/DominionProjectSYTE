@@ -175,7 +175,7 @@ public class Ability
     {
         for (Player player : game.getPlayers())
         {
-            if (player != game.findCurrentPlayer())
+            if (player != game.findCurrentPlayer() && player.getHand().findCard("moat") == null)
             {
                 //Discard down to 3 cards, so we take the hand size and subtract 3
                 //If our hand size is below zero, math.max will take 0 for us
