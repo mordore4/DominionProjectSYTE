@@ -109,7 +109,7 @@ public class Game
 
         findCurrentPlayer().setBuys(1);
         findCurrentPlayer().setActions(1);
-        findCurrentPlayer().setCoins(10);
+        findCurrentPlayer().setCoins(0);
 
         phase = -1;
         advancePhase();
@@ -305,8 +305,7 @@ public class Game
 
         boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
 
-
-        if ((currentPlayer.getCoins() >= cardCost && currentPlayer.getBuys() > 0) || hasGainCardCondition)
+        if (isBuyable(thisCard))
         {
             addCard(cardName);
 

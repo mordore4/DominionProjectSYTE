@@ -409,62 +409,6 @@ public class HTMLController
         }
     }
 
-    /*public void discardCard(String nickname, String lobbyName, String cardName)
-    {
-        Game game = retrieveGameOfLobby(lobbyName);
-
-        Player thisPlayer = game.getPlayer(nickname);
-        Condition thisPlayersCondition = game.getConditionsList().get(thisPlayer);
-
-        RemoveCardsCondition playerRemoveCardsCondition = null;
-
-        if (thisPlayersCondition instanceof RemoveCardsCondition)
-        {
-            playerRemoveCardsCondition = (RemoveCardsCondition) thisPlayersCondition;
-        }
-
-        GainCardCondition playerGainCardCondition = null;
-
-        if (thisPlayersCondition instanceof GainCardCondition)
-        {
-            playerGainCardCondition = (GainCardCondition) thisPlayersCondition;
-        }
-
-        Card card = thisPlayer.getHand().findCard(cardName);
-
-        if (card != null)
-        {
-
-            if (thisPlayersCondition instanceof RemodelCondition || thisPlayersCondition instanceof GainCardCondition
-                    || (playerRemoveCardsCondition != null && playerRemoveCardsCondition.isDestroyCard()))
-            {
-                if (playerGainCardCondition != null)
-                {
-                    if (playerGainCardCondition.getType() == card.getType())
-                    {
-                        game.trashCardFromPlayer(thisPlayer, card);
-                        System.out.println("mine trash type correct");
-                    }
-                    else
-                    {
-                        System.out.println("mine trash type incorrect");
-                    }
-                }
-                else
-                {
-                    System.out.println("other trash type");
-                    game.trashCardFromPlayer(thisPlayer, card);
-                }
-            }
-            else
-            {
-                System.out.println("generic discard");
-                game.discardCardFromPlayer(card, thisPlayer);
-            }
-
-        }
-    }*/
-
     public void discardMultiple(String nickname, String lobbyName, String cardlist)
     {
         Game game = retrieveGameOfLobby(lobbyName);

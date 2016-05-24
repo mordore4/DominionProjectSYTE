@@ -521,11 +521,11 @@ var setCardBuyable = function (cardName, buyable)
 
 var getCardBuyable = function (cardName)
 {
-    var isFixedCard = $.inArray(cardName, fixedCards);
+    var isFixedCard = isInFixedCards(cardName);
     var foundCard = findCardElement(cardName);
 
     //States or coins
-    if (isFixedCard >= 0)
+    if (isFixedCard)
     {
         foundCard = foundCard.find("img");
     }
@@ -539,9 +539,7 @@ var getCardBuyable = function (cardName)
 
 var setCardAmount = function (cardName, amount)
 {
-    var isFixedCard = $.inArray(cardName, fixedCards);
     var foundCard = findCardElement(cardName);
-    var containerElement = $("#coins");
 
     foundCard = foundCard.find("div.amount");
 
