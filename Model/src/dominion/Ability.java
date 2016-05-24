@@ -322,7 +322,7 @@ public class Ability
 
     private void remodelSpecialAbility(Game game)
     {
-        RemodelCondition newCondition = new RemodelCondition(game.findCurrentPlayer(), 1, game);
+        RemodelCondition newCondition = new RemodelCondition(game.findCurrentPlayer(), 3, game);
 
         game.addCondition(newCondition);
     }

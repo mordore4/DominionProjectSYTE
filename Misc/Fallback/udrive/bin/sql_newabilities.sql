@@ -52,7 +52,9 @@ INSERT INTO `Ability` (`abilityId`, `abilityName`) VALUES
 	(23, 'getVictoryPoints'),
 	(24, 'gardenSpecial'),
 	(25, 'gainSilverCard'),
-	(26, 'gainTreasureCardCost');
+	(26, 'gainTreasureCardCost'),
+	(27, 'moneyLenderSpecial'),
+	(28, 'remodelSpecial');
 /*!40000 ALTER TABLE `Ability` ENABLE KEYS */;
 
 
@@ -159,9 +161,7 @@ INSERT INTO `CardAbility` (`cardName`, `abilityId`, `abilityAmount`) VALUES
 	('moneylender', 3, 3),
 	('moneylender', 7, 1),
 	('province', 23, 6),
-	('remodel', 0, 1),
-	('remodel', 8, -1),
-	('remodel', 9, -1),
+	('remodel', 28, -1),
 	('silver', 3, 2),
 	('smithy', 4, 3),
 	('spy', 1, 1),

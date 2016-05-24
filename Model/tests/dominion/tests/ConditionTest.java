@@ -78,6 +78,7 @@ public class ConditionTest
 
         assertFalse(condition.isFulfilled());
         assertTrue(game.getConditionsList().hasConditionOfType(RemodelCondition.class));
+        //System.out.println(game.getConditionsList().get(testPlayer).getClass().getSimpleName());
 
         game.trashCardFromPlayer(testPlayer, testPlayer.getHand().getCards().get(0));
 

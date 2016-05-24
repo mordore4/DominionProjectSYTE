@@ -370,23 +370,20 @@ public class HTMLController
 
         Player thisPlayer = game.getPlayer(nickname);
         Condition thisPlayersCondition = game.getConditionsList().get(thisPlayer);
-        boolean conditionHasType = false;
-        int cardType = 0;
 
         RemoveCardsCondition thisPlayerCondition = null;
 
         if (thisPlayersCondition instanceof RemoveCardsCondition)
         {
             thisPlayerCondition = (RemoveCardsCondition) thisPlayersCondition;
-            cardType = thisPlayerCondition.getType();
-            conditionHasType = (cardType != 0);
         }
+
         Card card = thisPlayer.getHand().findCard(cardName);
 
         if (card != null)
         {
 
-            if ((thisPlayerCondition != null && thisPlayerCondition.isDestroyCard()) || (thisPlayersCondition != null && thisPlayersCondition instanceof RemodelCondition))
+            if (thisPlayersCondition instanceof RemodelCondition || (thisPlayerCondition != null && thisPlayerCondition.isDestroyCard()))
             {
                 thisPlayer.getHand().removeCard(card);
             }

@@ -25,16 +25,36 @@ CREATE TABLE IF NOT EXISTS `Ability` (
 -- Dumpen data van tabel dominion.Ability: ~10 rows (ongeveer)
 /*!40000 ALTER TABLE `Ability` DISABLE KEYS */;
 INSERT IGNORE INTO `Ability` (`abilityId`, `abilityName`) VALUES
+	(-1, 'chooseCardsOfType'),
+	(0, 'chooseCards'),
 	(1, 'addAction'),
 	(2, 'addBuy'),
 	(3, 'addCoin'),
 	(4, 'addCard'),
-	(5, 'trashCard'),
-	(6, 'discardCard'),
-	(7, 'buyCard'),
-	(8, 'addCardAfterDiscard'),
-	(9, 'curseAll'),
-	(10, 'addVictoryPoints');
+	(5, 'discard'),
+	(6, 'trashThisCard'),
+	(7, 'trashCards'),
+	(8, 'trashCardAndGetValue'),
+	(9, 'gainCardCostingUpTo'),
+	(10, 'revealCardsOfDeck'),
+	(11, 'playNextCardTwice'),
+	(12, 'curseOtherPlayers'),
+	(13, 'adventurerSpecial'),
+	(14, 'bureaucratSpecial'),
+	(15, 'cellarSpecial'),
+	(16, 'chancellorSpecial'),
+	(17, 'councilRoomSpecial'),
+	(18, 'librarySpecial'),
+	(19, 'militiaSpecial'),
+	(20, 'moatSpecial'),
+	(21, 'spySpecial'),
+	(22, 'thiefSpecial'),
+	(23, 'getVictoryPoints'),
+	(24, 'gardenSpecial'),
+	(25, 'gainSilverCard'),
+	(26, 'gainTreasureCardCost'),
+	(27, 'moneyLenderSpecial'),
+	(28, 'remodelSpecial');
 /*!40000 ALTER TABLE `Ability` ENABLE KEYS */;
 
 

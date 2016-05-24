@@ -279,7 +279,7 @@ var ajaxCheckGameStatus = function ()
             }
             else
             {
-                console.log(status.myCondition);
+                //console.log(status.myCondition);
 
                 if (phase == 1 || phase == 2)
                 {
@@ -295,7 +295,7 @@ var ajaxCheckGameStatus = function ()
                 });
                 createCardsOnTable(cardNames);
             }
-
+            
             if (status.myCondition != null)
             {
                 console.log(status.myCondition.name);
@@ -303,7 +303,7 @@ var ajaxCheckGameStatus = function ()
                 switch (status.myCondition.name)
                 {
                     case "RemoveCardsCondition":
-                    case "RemodelCondition":    
+                    case "RemodelCondition":
                         $("#handdecor").find("div.title").text("Remove " + status.myCondition.condition.cardsToRemove + " cards");
                         allowDiscard = true;
                         break;
