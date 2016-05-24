@@ -8,6 +8,6 @@ definer_host=%
 suid=1
 with_check_option=0
 revision=1
-timestamp=2016-05-14 16:17:31
+timestamp=2016-05-24 23:21:31
 create-version=1
 source=select `Card`.`cardName` AS `cardName` from `Card` where (not(`Card`.`cardName` in (select distinct `CardAbility`.`cardName` from `CardAbility`)))
