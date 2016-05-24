@@ -11,10 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.*;
-import dominion.util.Condition;
-import dominion.util.RemodelCondition;
-import dominion.util.RemoveCardsCondition;
-import dominion.util.RemoveCardsThenAddCondition;
+import dominion.util.*;
 
 /**
  * Created by Digaly on 19/05/2016.
@@ -375,12 +372,62 @@ public class HTMLController
 
         Player thisPlayer = game.getPlayer(nickname);
         Condition thisPlayersCondition = game.getConditionsList().get(thisPlayer);
+        Card card = thisPlayer.getHand().findCard(cardName);
 
-        RemoveCardsCondition thisPlayerCondition = null;
+        RemoveCardsCondition playerRemoveCardsCondition = null;
 
         if (thisPlayersCondition instanceof RemoveCardsCondition)
         {
-            thisPlayerCondition = (RemoveCardsCondition) thisPlayersCondition;
+            playerRemoveCardsCondition = (RemoveCardsCondition) thisPlayersCondition;
+        }
+
+        if (card != null)
+        {
+            if (thisPlayersCondition instanceof MineCondition
+                    || thisPlayersCondition instanceof RemodelCondition
+                    || (playerRemoveCardsCondition != null && playerRemoveCardsCondition.isDestroyCard()))
+            {
+                //Trash instead of discard
+                if (thisPlayersCondition instanceof MineCondition)
+                {
+                    //Type is important
+                    if (card.getType() == 1)
+                    {
+                        game.trashCardFromPlayer(thisPlayer, card);
+                    }
+                }
+                else
+                {
+                    //Type doesn't matter, just trash
+                    game.trashCardFromPlayer(thisPlayer, card);
+                }
+            }
+            else
+            {
+                game.discardCardFromPlayer(card, thisPlayer);
+            }
+        }
+    }
+
+    /*public void discardCard(String nickname, String lobbyName, String cardName)
+    {
+        Game game = retrieveGameOfLobby(lobbyName);
+
+        Player thisPlayer = game.getPlayer(nickname);
+        Condition thisPlayersCondition = game.getConditionsList().get(thisPlayer);
+
+        RemoveCardsCondition playerRemoveCardsCondition = null;
+
+        if (thisPlayersCondition instanceof RemoveCardsCondition)
+        {
+            playerRemoveCardsCondition = (RemoveCardsCondition) thisPlayersCondition;
+        }
+
+        GainCardCondition playerGainCardCondition = null;
+
+        if (thisPlayersCondition instanceof GainCardCondition)
+        {
+            playerGainCardCondition = (GainCardCondition) thisPlayersCondition;
         }
 
         Card card = thisPlayer.getHand().findCard(cardName);
@@ -388,17 +435,35 @@ public class HTMLController
         if (card != null)
         {
 
-            if (thisPlayersCondition instanceof RemodelCondition || (thisPlayerCondition != null && thisPlayerCondition.isDestroyCard()))
+            if (thisPlayersCondition instanceof RemodelCondition || thisPlayersCondition instanceof GainCardCondition
+                    || (playerRemoveCardsCondition != null && playerRemoveCardsCondition.isDestroyCard()))
             {
-                game.trashCardFromPlayer(thisPlayer, card);
+                if (playerGainCardCondition != null)
+                {
+                    if (playerGainCardCondition.getType() == card.getType())
+                    {
+                        game.trashCardFromPlayer(thisPlayer, card);
+                        System.out.println("mine trash type correct");
+                    }
+                    else
+                    {
+                        System.out.println("mine trash type incorrect");
+                    }
+                }
+                else
+                {
+                    System.out.println("other trash type");
+                    game.trashCardFromPlayer(thisPlayer, card);
+                }
             }
             else
             {
+                System.out.println("generic discard");
                 game.discardCardFromPlayer(card, thisPlayer);
             }
 
         }
-    }
+    }*/
 
     public void discardMultiple(String nickname, String lobbyName, String cardlist)
     {
@@ -417,6 +482,7 @@ public class HTMLController
 
         RemoveCardsThenAddCondition condition = (RemoveCardsThenAddCondition) game.getConditionsList().get(currentPlayer);
         condition.finish();
+        condition.isFulfilled();
     }
 
     public void endActions(String lobbyName)

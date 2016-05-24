@@ -306,6 +306,7 @@ var ajaxCheckGameStatus = function ()
                 {
                     case "RemoveCardsCondition":
                     case "RemodelCondition":
+                    case "MineCondition":
                         var cardsToRemove = status.myCondition.condition.cardsToRemove;
 
                         $("#handdecor").find("div.title").text("Remove " + cardsToRemove + " card" +

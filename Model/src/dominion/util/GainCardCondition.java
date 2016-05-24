@@ -15,6 +15,7 @@ public class GainCardCondition extends Condition
     private int cost;
     private transient ArrayList<Card> startDiscardPile;
     private transient Game game;
+    private int type;
 
     public GainCardCondition(Player player, Game game, int cost)
     {
@@ -23,6 +24,14 @@ public class GainCardCondition extends Condition
         this.startDiscardPile = (ArrayList<Card>) player.getDiscardPile().getCards().clone();
         this.cost = cost;
         this.game = game;
+        this.type = 0;
+    }
+
+    public GainCardCondition(Player player, Game game, int cost, int type)
+    {
+        this(player, game, cost);
+
+        this.type = type;
     }
 
     public int getCost()
@@ -46,11 +55,23 @@ public class GainCardCondition extends Condition
 
         if (newCard != null)
         {
-            return (newCard.getCost() <= cost);
+            if (type == 0)
+            {
+                return (newCard.getCost() <= cost);
+            }
+            else
+            {
+                return (newCard.getCost() <= cost && newCard.getType() == type);
+            }
         }
         else
         {
             return false;
         }
+    }
+
+    public int getType()
+    {
+        return type;
     }
 }

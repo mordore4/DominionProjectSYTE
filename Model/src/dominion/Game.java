@@ -106,9 +106,10 @@ public class Game
             currentPlayerIndex = 0;
         }
 
+
         findCurrentPlayer().setBuys(1);
         findCurrentPlayer().setActions(1);
-        findCurrentPlayer().setCoins(0);
+        findCurrentPlayer().setCoins(10);
 
         phase = -1;
         advancePhase();
@@ -476,6 +477,11 @@ public class Game
             GainCardCondition condition = (GainCardCondition) getConditionsList().get(findCurrentPlayer());
 
             hasEnoughMoney = card.getCost() <= condition.getCost();
+
+            if (condition.getType() != 0)
+            {
+                hasEnoughMoney = hasEnoughMoney && condition.getType() == card.getType();
+            }
         }
 
         return hasEnoughMoney && findCurrentPlayer().getBuys() > 0 && card.getAmount() > 0;

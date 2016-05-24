@@ -79,11 +79,31 @@ public class ConditionTest
 
         assertFalse(condition.isFulfilled());
         assertTrue(game.getConditionsList().hasConditionOfType(RemodelCondition.class));
-        //System.out.println(game.getConditionsList().get(testPlayer).getClass().getSimpleName());
 
         game.trashCardFromPlayer(testPlayer, testPlayer.getHand().getCards().get(0));
 
         assertTrue(game.getConditionsList().hasConditionOfType(GainCardCondition.class));
+    }
+
+    @Test
+    public void TestMineCondition() throws CardNotAvailableException
+    {
+        MineCondition condition = new MineCondition(testPlayer, game);
+        game.addCondition(condition);
+
+        assertFalse(condition.isFulfilled());
+
+        game.trashCardFromPlayer(testPlayer, testPlayer.getHand().findCard("copper"));
+
+        assertTrue(game.getConditionsList().hasConditionOfType(GainCardCondition.class));
+
+        GainCardCondition gcCondition = (GainCardCondition) game.getConditionsList().get(testPlayer);
+
+        assertTrue(gcCondition.getCost() == 3);
+
+        game.buyCard("copper");
+
+        assertTrue(game.getConditionsList().size() == 0);
     }
 
 }
