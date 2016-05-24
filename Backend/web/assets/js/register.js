@@ -3,5 +3,5 @@
  */
 
 $(document).ready(function() {
-    $("label[for=state_id]").parent().load("assets/fragments/states.html");
+    $("#place-holder").parent().load("assets/fragments/states.html");
 });

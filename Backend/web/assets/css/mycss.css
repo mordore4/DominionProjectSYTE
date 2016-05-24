@@ -435,6 +435,15 @@ a.info {
      color: white;
  }
 
+.control-label {
+    color: white;
+}
+
+.control-label:after{
+    content: " *";
+    color: red;
+}
+
 .form-control::-webkit-input-placeholder {
     color: lightgray;
 }

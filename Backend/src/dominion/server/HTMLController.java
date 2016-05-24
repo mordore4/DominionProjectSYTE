@@ -321,6 +321,11 @@ public class HTMLController
         gameStatus.put("actions", game.findCurrentPlayer().getActions());
         gameStatus.put("buys", game.findCurrentPlayer().getBuys());
         gameStatus.put("coins", game.findCurrentPlayer().getCoins());
+        gameStatus.put("victoryPoints", thisPlayer.getBasicVictoryPoints() + thisPlayer.getDynamicVictoryPoints());
+        if (game.getIsOver())
+        {
+            gameStatus.put("winner", game.getWinner().getName());
+        }
 
         writer.print(gson.toJson(gameStatus));
     }

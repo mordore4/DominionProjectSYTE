@@ -19,9 +19,10 @@ public class Player
     public Player()
     {
         this.setActions(1);
-        this.setBuys(1);
-        this.setCoins(0);
+        this.setBuys(40);
+        this.setCoins(100);
         this.setBasicVictoryPoints(0);
+        this.setDynamicVictoryPoints(0);
 
         discardPile = new Deck();
         deck = new Deck();
@@ -144,5 +145,20 @@ public class Player
     public void setValueOfLastTrashedCard(int valueOfLastTrashedCard)
     {
         this.valueOfLastTrashedCard = valueOfLastTrashedCard;
+    }
+
+    public int getDynamicVictoryPoints()
+    {
+        return dynamicVictoryPoints;
+    }
+
+    public void setDynamicVictoryPoints(int dynamicVictoryPoints)
+    {
+        this.dynamicVictoryPoints = dynamicVictoryPoints;
+    }
+
+    public int getTotalVictoryPoints()
+    {
+        return this.basicVictoryPoints + this.dynamicVictoryPoints;
     }
 }

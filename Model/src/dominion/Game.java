@@ -112,6 +112,25 @@ public class Game
 
         phase = -1;
         advancePhase();
+        if (isOver)
+        {
+            this.setPhase(4);
+        }
+    }
+
+    public Player getWinner()
+    {
+        int highestVpValue = 0;
+        Player currentWinner = null;
+        for (Player player: players)
+        {
+            if(player.getTotalVictoryPoints() > highestVpValue )
+            {
+                highestVpValue = player.getTotalVictoryPoints();
+                currentWinner = player;
+            }
+        }
+        return currentWinner;
     }
 
     public int getPhase()
@@ -480,7 +499,6 @@ public class Game
             isOver = true;
         }
     }
-
 
     public boolean getIsOver()
     {

@@ -637,3 +637,5 @@ var clearBuyableCards = function ()
         setCardBuyable(fixedCards[card].name, false);
     }
 };
+
+

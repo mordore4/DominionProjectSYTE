@@ -208,6 +208,7 @@ var ajaxCheckGameStatus = function ()
             setTurnInfo("actions", status.actions);
             setTurnInfo("buys", status.buys);
             setTurnInfo("coins", status.coins);
+            setTurnInfo("victoryPoints", status.victoryPoints);
 
             $("#current-player").find("strong.playername").text(status.currentPlayer);
 
@@ -230,6 +231,7 @@ var ajaxCheckGameStatus = function ()
             var bEndTurn = $("#end-turn");
             var bPlayTreasures = $("#play-treasures");
             var bFinishDiscarding = $("#finish-discarding");
+            var gameWindow = $("#gamewindow");
 
             if (isMyTurn)
             {
@@ -333,6 +335,22 @@ var ajaxCheckGameStatus = function ()
             //Keep calling this ajax unless it's our turn
             if (timeOut != null) clearTimeout(timeOut);
             if (!isMyTurn || status.conditionsActive) timeOut = setTimeout(ajaxCheckGameStatus, pollInterval);
+            
+            if (phase == 4)
+            {
+                bEndActions.hide();
+                bEndTurn.hide();
+                bPlayTreasures.hide();
+                gameWindow.hide();
+                $("#current-player").hide();
+                $("#cardsComeCenter").hide();
+                
+                var winner = status.winner;
+                
+                if (timeOut != null) {
+                    clearTimeout(timeOut);
+                }
+            }
         });
 };
 
