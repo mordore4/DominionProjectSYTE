@@ -640,10 +640,10 @@ var clearBuyableCards = function ()
 
 var showVictoryScreen = function()
 {
-
+    $("#game-over").show();
 };
 
 var showLossScreen = function()
 {
-
+    $("#game-over").show();
 };

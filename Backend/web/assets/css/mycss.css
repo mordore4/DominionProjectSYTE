@@ -429,6 +429,10 @@ a.info {
 
 }
 
+#game-over {
+    display: none;
+}
+
 .form-control {
      background-color: #3c3c3c;
      opacity: 0.8;
