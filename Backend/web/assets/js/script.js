@@ -25,13 +25,6 @@ $(document).ready(function ()
      $("#dialog-confirm").hide();
      */
     $("#imgVis").hide();
-    $(".register").on('click', function ()
-    {
-        $('#menu').hide();
-        $("#form").show();
-
-    });
-
 
     $("#imgChat").on('click', function ()
     {
@@ -131,7 +124,6 @@ $(document).ready(function ()
         }
     });
 
-    $("label[for=state_id]").parent().load("assets/fragments/states.html");
     $('#play').on('click', enterNickName);
     $("#card-info").on('click', function ()
     {

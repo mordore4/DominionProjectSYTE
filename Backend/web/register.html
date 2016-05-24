@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dominion">
+    <meta name="author" content="SYTE">
+    <title>Dominion</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/cover.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/mycss.css" type="text/css"/>
+    <meta name="title" content="Dominion"/>
+    <link rel="icon" href="images/logotje.jpg">
+</head>
+
+<body>
+<main>
+    <div class="site-wrapper-inner">
+        <header class="clearfix">
+            <h3>Dominion</h3>
+            <nav>
+                <ul>
+                    <li class="home"><a href="index.html">Home</a></li>
+                    <li class="active register"><a href="register.html">Register</a></li>
+                    <li class="login"><a href="#">Login</a></li>
+                    <li class="about"><a href="#">About</a></li>
+                    <li class="contact"><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <form id="form">
+            <fieldset>
+                <legend>Become the master of cards!</legend>
+                <div class="form-group"> <!-- Full Name -->
+                    <label for="full_name_id" class="control-label">Full Name<strong>*</strong></label>
+                    <input type="text" class="form-control" id="full_name_id" name="full_name"
+                           placeholder="Your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="emailInput" class="control-label">E-mail<strong>*</strong></label>
+                    <input type="email" class="form-control" id="emailInput" name="emailInput"
+                           placeholder="E-mail address">
+                </div>
+
+                <div class="form-group">
+                    <label for="usernamePlayer" class="usernamePlayer">Username<strong>*</strong></label>
+                    <input type="text" class="form-control" id="usernamePlayer" name="usernamePlayer"
+                           placeholder="Username">
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordPlayer" class="passwordPlayer">Password<strong>*</strong></label>
+                    <input type="password" class="form-control" id="passwordPlayer" name="passwordPlayer"
+                           placeholder="Password">
+                </div>
+
+
+                <div class="form-group"> <!-- City-->
+                    <label for="city_id" class="control-label">City<strong>*</strong></label>
+                    <input type="text" class="form-control" id="city_id" name="city" placeholder="Brugge">
+                </div>
+
+                <div class="form-group"> <!-- State Button -->
+                    <label for="state_id" class="control-label">State<strong>*</strong></label>
+                </div>
+
+                <div class="form-group"> <!-- Zip Code-->
+                    <label for="zip_id" class="control-label">Zip Code<strong>*</strong></label>
+                    <input type="text" class="form-control" id="zip_id" name="zip" placeholder="#####">
+                </div>
+
+                <div class="form-group"> <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Register!</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</main>
+
+<script type="text/javascript" src="assets/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-ui-touchpunch.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/register.js"></script>
+
+
+</body>
+</html>
