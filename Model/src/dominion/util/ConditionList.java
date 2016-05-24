@@ -12,9 +12,11 @@ import java.util.Map;
 public class ConditionList
 {
     private Map<Player, Condition> conditions;
+    private int lastSize;
 
     public ConditionList()
     {
+        lastSize = 0;
         conditions = new HashMap<>();
     }
 
@@ -65,6 +67,19 @@ public class ConditionList
         }
 
         return false;
+    }
+
+    public boolean hasChanged()
+    {
+        if (lastSize != conditions.size())
+        {
+            lastSize = conditions.size();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public int size()

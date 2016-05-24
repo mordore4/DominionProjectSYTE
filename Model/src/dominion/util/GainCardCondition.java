@@ -46,23 +46,7 @@ public class GainCardCondition extends Condition
 
         if (newCard != null)
         {
-
-            if (newCard.getCost() <= cost)
-            {
-                if (getPlayer().hasActionCards() && getPlayer().getActions() > 0)
-                {
-                    game.setPhase(0);
-                }
-                else
-                {
-                    game.setPhase(1);
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (newCard.getCost() <= cost);
         }
         else
         {

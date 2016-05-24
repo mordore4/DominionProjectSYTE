@@ -534,6 +534,18 @@ public class Game
 
     public ConditionList getConditionsList()
     {
+        if (conditionsList.hasChanged() && conditionsList.size() == 0)
+        {
+            if (findCurrentPlayer().hasActionCards() && findCurrentPlayer().getActions() > 0)
+            {
+                setPhase(0);
+            }
+            else
+            {
+                setPhase(1);
+            }
+        }
+
         return conditionsList;
     }
 

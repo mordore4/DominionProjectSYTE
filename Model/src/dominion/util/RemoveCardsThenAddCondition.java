@@ -31,16 +31,6 @@ public class RemoveCardsThenAddCondition extends Condition
         if (isDone)
         {
             game.findCurrentPlayer().addCards(cardsRemoved);
-
-            if (getPlayer().hasActionCards() && getPlayer().getActions() > 0)
-            {
-                game.setPhase(0);
-            }
-            else
-            {
-                game.setPhase(1);
-            }
-
             return true;
         }
         else
