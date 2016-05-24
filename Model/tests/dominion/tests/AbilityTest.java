@@ -166,6 +166,8 @@ public class AbilityTest
         RemoveCardsThenAddCondition condition = (RemoveCardsThenAddCondition) game.getConditionsList().get(currentPlayer);
         condition.finish();
 
+        game.getConditionsList();
+
         assert(game.getPhase() == 1);
         assert(currentPlayer.getHand().size() == 5);
     }

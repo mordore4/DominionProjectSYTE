@@ -42,6 +42,5 @@ public class RemoveCardsThenAddCondition extends Condition
     public void finish()
     {
         this.isDone = true;
-        isFulfilled();
     }
 }

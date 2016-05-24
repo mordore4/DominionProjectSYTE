@@ -71,6 +71,8 @@ public class ConditionList
 
     public boolean hasChanged()
     {
+        removeCompleteConditions();
+
         if (lastSize != conditions.size())
         {
             lastSize = conditions.size();
