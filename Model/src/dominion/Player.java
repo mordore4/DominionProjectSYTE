@@ -14,6 +14,7 @@ public class Player
     private int coins;
     private int basicVictoryPoints;
     private int dynamicVictoryPoints;
+    private int valueOfLastTrashedCard;
 
     public Player()
     {
@@ -133,5 +134,15 @@ public class Player
     public void addVictoryPoints(int amount)
     {
         this.setBasicVictoryPoints(getBasicVictoryPoints() + amount);
+    }
+
+    public int getValueOfLastTrashedCard()
+    {
+        return valueOfLastTrashedCard;
+    }
+
+    public void setValueOfLastTrashedCard(int valueOfLastTrashedCard)
+    {
+        this.valueOfLastTrashedCard = valueOfLastTrashedCard;
     }
 }

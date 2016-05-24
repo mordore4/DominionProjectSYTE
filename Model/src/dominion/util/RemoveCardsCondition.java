@@ -11,6 +11,7 @@ public class RemoveCardsCondition extends Condition
     private int cardsToRemove;
     private int handSize;
     private int type;
+    private boolean destroyCard;
 
     public RemoveCardsCondition(Player player, int cardsToRemove)
     {
@@ -18,6 +19,14 @@ public class RemoveCardsCondition extends Condition
 
         this.cardsToRemove = cardsToRemove;
         this.handSize = player.getHand().size();
+        this.destroyCard = false;
+    }
+
+    public RemoveCardsCondition(Player player, int cardsToRemove, boolean destroyCard)
+    {
+        this(player, cardsToRemove);
+
+        this.destroyCard = destroyCard;
     }
 
     public RemoveCardsCondition(Player player, int cardsToRemove, int type)
@@ -37,5 +46,10 @@ public class RemoveCardsCondition extends Condition
     public int getType()
     {
         return type;
+    }
+
+    public boolean isDestroyCard()
+    {
+        return destroyCard;
     }
 }

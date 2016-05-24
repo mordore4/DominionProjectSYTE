@@ -2,6 +2,7 @@ package dominion;
 
 import dominion.exceptions.CardNotAvailableException;
 import dominion.util.GainCardCondition;
+import dominion.util.RemodelCondition;
 import dominion.util.RemoveCardsCondition;
 import dominion.util.RemoveCardsThenAddCondition;
 
@@ -67,6 +68,9 @@ public class Ability
                 break;
             case 27:
                 moneylenderSpecialAbility(game);
+                break;
+            case 28:
+                remodelSpecialAbility(game);
                 break;
         }
     }
@@ -316,6 +320,12 @@ public class Ability
         game.addCondition(newCondition);
     }
 
+    private void remodelSpecialAbility(Game game)
+    {
+        RemodelCondition newCondition = new RemodelCondition(game.findCurrentPlayer(), 1, game);
+
+        game.addCondition(newCondition);
+    }
 
     public int getId()
     {

@@ -228,6 +228,12 @@ public class Game
         else throw new CardNotAvailableException();
     }
 
+    public void trashCardFromPlayer(Player player, Card card)
+    {
+        player.setValueOfLastTrashedCard(card.getCost());
+        player.getHand().removeCard(card);
+    }
+
     public void playTreasures()
     {
         Player currentPlayer = findCurrentPlayer();

@@ -53,6 +53,8 @@ public class ConditionList
 
     public boolean hasConditionOfType(Class<?> type)
     {
+        removeCompleteConditions();
+
         for (Condition condition : conditions.values())
         {
             //if (condition.getClass().isInstance(type))

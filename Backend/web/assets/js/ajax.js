@@ -298,9 +298,12 @@ var ajaxCheckGameStatus = function ()
 
             if (status.myCondition != null)
             {
+                console.log(status.myCondition.name);
+                
                 switch (status.myCondition.name)
                 {
                     case "RemoveCardsCondition":
+                    case "RemodelCondition":    
                         $("#handdecor").find("div.title").text("Remove " + status.myCondition.condition.cardsToRemove + " cards");
                         allowDiscard = true;
                         break;

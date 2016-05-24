@@ -18,7 +18,7 @@ public class Database
     {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-        connectionString = "jdbc:mysql://178.117.107.177/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN";
+        connectionString = "jdbc:mysql://192.168.1.200/dominion?user=internal&password=ablTDFivUvYJs7VxDscGrIuso32CuQYN";
 
         Connection testConnection = null;
 

@@ -70,4 +70,18 @@ public class ConditionTest
         assertTrue(condition.isFulfilled());
     }
 
+    @Test
+    public void TestRemodelCondition() throws CardNotAvailableException
+    {
+        RemodelCondition condition = new RemodelCondition(testPlayer, 1, game);
+        game.addCondition(condition);
+
+        assertFalse(condition.isFulfilled());
+        assertTrue(game.getConditionsList().hasConditionOfType(RemodelCondition.class));
+
+        game.trashCardFromPlayer(testPlayer, testPlayer.getHand().getCards().get(0));
+
+        assertTrue(game.getConditionsList().hasConditionOfType(GainCardCondition.class));
+    }
+
 }
