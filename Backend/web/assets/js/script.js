@@ -638,4 +638,12 @@ var clearBuyableCards = function ()
     }
 };
 
+var showVictoryScreen = function()
+{
 
+};
+
+var showLossScreen = function()
+{
+
+};

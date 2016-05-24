@@ -347,10 +347,22 @@ var ajaxCheckGameStatus = function ()
                 $("#cardsComeCenter").hide();
                 
                 var winner = status.winner;
+                if (nickname == winner)
+                {
+                    showVictoryScreen();
+                }
+                else
+                {
+                    showLossScreen();
+                }
                 
                 if (timeOut != null) {
                     clearTimeout(timeOut);
                 }
+            }
+            else
+            {
+                $("#game-over").hide();
             }
         });
 };
