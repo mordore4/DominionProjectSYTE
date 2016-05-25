@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="java-backend">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../java-backend" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../java-backend/src" />
+      <root url="file://$PROJECT_DIR$/../java-backend/tests" />
+    </SOURCES>
+  </library>
+</component>
