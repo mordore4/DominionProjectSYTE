@@ -312,15 +312,26 @@ public class Game
 
         if (isBuyable(thisCard))
         {
-            addCard(cardName);
-
             if (!hasGainCardCondition)
             {
+                addCard(cardName);
+
                 currentPlayer.setBuys(currentPlayer.getBuys() - 1);
                 currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
             }
             else
             {
+                GainCardCondition gcCondition = (GainCardCondition) getConditionsList().get(currentPlayer);
+
+                if (gcCondition.getType() != 0)
+                {
+                    addCardToPileFromPlayer(cardName, currentPlayer.getHand());
+                }
+                else
+                {
+                    addCard(cardName);
+                }
+
                 getConditionsList().removeCompleteConditions();
             }
         }
