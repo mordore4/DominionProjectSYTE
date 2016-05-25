@@ -88,18 +88,21 @@ public class CliController
         {
             Player currentPlayer = game.findCurrentPlayer();
             System.out.println(currentPlayer.getName() + "'s turn starts.");
+            printlnincolor(31, "test1 " + game.getPhase());
             switch (game.getPhase())
             {
                 case 0:
                     actionPhase(currentPlayer);
+                    printlnincolor(31, "test2 " + game.getPhase());
                     break;
                 case 1:
                     buyPhase(currentPlayer);
                     game.advancePhase();
+                    printlnincolor(31, "test3 " + game.getPhase());
                     break;
-                case 2:
-                    game.advancePlayer();
             }
+            printlnincolor(31, "test4 " + game.getPhase());
+            printlnincolor(31, "test5 " + game.getPhase());
         }
     }
 
