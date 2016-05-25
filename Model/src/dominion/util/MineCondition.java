@@ -41,7 +41,7 @@ public class MineCondition extends Condition
 
         if (removedCard != null)
         {
-            GainCardCondition condition = new GainCardCondition(getPlayer(), game, getPlayer().getValueOfLastTrashedCard() + 3, 1);
+            GainCardToHandCondition condition = new GainCardToHandCondition(getPlayer(), game, getPlayer().getValueOfLastTrashedCard() + 3, 1);
             game.addCondition(condition);
         }
 

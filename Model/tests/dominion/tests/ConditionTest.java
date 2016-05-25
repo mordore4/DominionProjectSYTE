@@ -95,15 +95,17 @@ public class ConditionTest
 
         game.trashCardFromPlayer(testPlayer, testPlayer.getHand().findCard("copper"));
 
-        assertTrue(game.getConditionsList().hasConditionOfType(GainCardCondition.class));
+        assertTrue(game.getConditionsList().hasConditionOfType(GainCardToHandCondition.class));
 
-        GainCardCondition gcCondition = (GainCardCondition) game.getConditionsList().get(testPlayer);
+        GainCardToHandCondition gcCondition = (GainCardToHandCondition) game.getConditionsList().get(testPlayer);
 
         assertTrue(gcCondition.getCost() == 3);
 
+        int handSize = testPlayer.getHand().size();
         game.buyCard("copper");
 
         assertTrue(game.getConditionsList().size() == 0);
+        assertTrue(testPlayer.getHand().size() > handSize);
     }
 
 }

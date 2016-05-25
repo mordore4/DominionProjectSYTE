@@ -11,12 +11,14 @@ public class RemodelCondition extends Condition
 {
     private int handSize;
     private transient Game game;
+    private int cardsToRemove;
 
     public RemodelCondition(Game game)
     {
         super(game.findCurrentPlayer());
         this.handSize = game.findCurrentPlayer().getHand().size() - 1;
         this.game = game;
+        this.cardsToRemove = 1;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class RemodelCondition extends Condition
     {
         Deck playerHand = getPlayer().getHand();
 
-        if ((handSize - playerHand.size() == 1) || playerHand.size() == 0)
+        if ((handSize - playerHand.size() == cardsToRemove) || playerHand.size() == 0)
         {
             GainCardCondition condition = new GainCardCondition(getPlayer(), game, getPlayer().getValueOfLastTrashedCard() + 2);
             game.addCondition(condition);

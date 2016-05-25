@@ -314,6 +314,7 @@ var ajaxCheckGameStatus = function ()
                         allowDiscard = true;
                         break;
                     case "GainCardCondition":
+                    case "GainCardToHandCondition":
                         $("#handdecor").find("div.title").text("Buy a card");
                         ajaxRetrieveBuyableCards();
                         break;
@@ -450,6 +451,7 @@ var ajaxBuyCard = function (cardname)
         .done(function ()
         {
             ajaxRetrieveBuyableCards();
+            ajaxRetrieveHand();
             ajaxCheckGameStatus();
         });
 };
