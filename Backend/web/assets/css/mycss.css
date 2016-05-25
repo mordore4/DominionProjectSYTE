@@ -356,11 +356,6 @@ body.loading .modal {
     height: 115px;
 }
 
-#topstates .amount, #coins .amount {
-    right: 4px;
-    top: 3px;
-}
-
 #coins {
     right: 20px;
 }
@@ -417,6 +412,11 @@ body.loading .modal {
     font-weight: bold;
     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
     z-index: 30;
+}
+
+#topstates .amount, #coins .amount {
+    right: 4px;
+    top: 3px;
 }
 
 .kingdomcard-top {
