@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="html-frontend:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/html-frontend_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="html-frontend/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="html-frontend" />
+          <element id="module-output" name="java-backend" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="gson-2.6.2" />
+          <element id="file-copy" path="$PROJECT_DIR$/../java-backend/lib/mysql-connector-java-5.1.38-bin.jar" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

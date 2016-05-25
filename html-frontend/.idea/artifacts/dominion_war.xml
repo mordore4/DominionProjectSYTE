@@ -2,7 +2,7 @@
   <artifact type="war" name="dominion:war">
     <output-path>$PROJECT_DIR$/out/artifacts/dominion_war</output-path>
     <root id="archive" name="dominion_war.war">
-      <element id="artifact" artifact-name="Backend:war exploded" />
+      <element id="artifact" artifact-name="html-frontend:war exploded" />
     </root>
   </artifact>
 </component>
