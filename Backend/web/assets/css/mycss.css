@@ -1,3 +1,4 @@
+/* Clearfix! */
 .cf:before,
 .cf:after {
     content: "";
@@ -11,7 +12,7 @@
 .cf {
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
-
+/* Everything that has to do with "body" */
 html,
 body {
     height: 100%;
@@ -42,6 +43,7 @@ body.loading {
 body.loading .modal {
     display: block;
 }
+/* Buttons from Bootstrap adjusted */
 .btn.btn-lg.btn-default {
     border-radius: 0;
     display: inline-block;
@@ -60,10 +62,36 @@ body.loading .modal {
     color: white;
     background-image: url("../media/flag.png");
 }
-.lead {
-    min-width: 65%;
+/* Everything that has to do with Menu including the pictures */
+#menu {
     margin-left: auto;
     margin-right: auto;
+    min-width: 550px;
+    text-align: center;
+    padding: 0;
+    background-image: url("../media/logodominion.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    padding-top: 185px;
+}
+
+#menu li {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#menu ul {
+    padding: 0;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+#menu h1 {
+    background-color: rgba(0, 0, 0, 0.6);
+    text-shadow: #000000 2px;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .eerste, .tweede, .derde {
@@ -99,38 +127,7 @@ body.loading .modal {
 #settings:hover strong.derde {
     background-image: url("../media/ui/button_settings.png");
 }
-#menu {
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 550px;
-    text-align: center;
-    padding: 0;
-    background-image: url("../media/logodominion.png");
-    background-repeat: no-repeat;
-    background-position: top center;
-    padding-top: 185px;
-}
-
-#menu li {
-    list-style: none;
-    margin-bottom: 20px;
-}
-
-#menu ul {
-    padding: 0;
-    padding-top: 32px;
-    padding-bottom: 32px;
-}
-
-#menu h1 {
-    background-color: rgba(0, 0, 0, 0.6);
-    text-shadow: #000000 2px;
-    display: inline-block;
-    padding: 5px;
-    border-radius: 5px;
-
-}
-
+/* adjusting phase */
 .site-wrapper-inner {
     padding-top: 0;
     display: block;
@@ -154,7 +151,7 @@ body.loading .modal {
     -moz-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
     box-shadow: -8px 8px 8px rgba(255, 255, 255, 1);
 }
-
+/* All form things */
 #form {
     border-radius: 0;
     display: inline-block;
@@ -207,7 +204,7 @@ body.loading .modal {
     -ms-user-select: none;
     user-select: none;
 }
-
+/* Game window and cards involved */
 #gamewindow {
     position: relative;
     min-width: calc(100% - 100px);
@@ -254,16 +251,11 @@ body.loading .modal {
     font-size: 1.5em;
     line-height: 164px;
 }
-#cardsComeCenter li {
-    height: 180px;
-    min-width: 110px;
-    background-repeat: no-repeat;
-}
 
 #cardset {
     color: black;
 }
-
+/* All hand CSS */
 #hand {
     text-align: center;
     bottom: 0;
@@ -283,6 +275,12 @@ body.loading .modal {
     margin: 0;
     background-size: contain;
     transition: width 5s;
+}
+
+#cardsComeCenter li {
+    height: 180px;
+    min-width: 110px;
+    background-repeat: no-repeat;
 }
 
 #hand li {
@@ -305,6 +303,7 @@ body.loading .modal {
 #handwrapper #handdecor #hand li.ui-sortable-helper {
     box-shadow: 0 0 8px 4px green;
 }
+
 #handwrapper {
     padding-left: 8px;
     padding-top: 8px;
@@ -342,7 +341,7 @@ body.loading .modal {
     list-style: none;
     z-index: 20;
 }
-
+/* Top states + coins */
 #topstates {
     left: -20px;
 }
@@ -356,6 +355,7 @@ body.loading .modal {
     min-width: 135px;
     height: 115px;
 }
+
 #topstates .amount, #coins .amount {
     right: 4px;
     top: 3px;
@@ -363,6 +363,19 @@ body.loading .modal {
 
 #coins {
     right: 20px;
+}
+
+#player-turninfo .info {
+    min-width: 56px;
+    height: 56px;
+    background: url("../media/ui/info_circle.png") no-repeat top left;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    margin-right: 8px;
+    line-height: 56px;
+    text-align: center;
+    display: inline-block;
+    color: white;
 }
 
 #turn-buys .info {
@@ -380,17 +393,7 @@ body.loading .modal {
 .topstates-title {
     left: 24px;
 }
-
-a.info {
-    min-width: 40px;
-    height: 40px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: url("../media/ui/button_info.png") no-repeat top left;
-    z-index: 25;
-}
-
+/* Kingdomcards */
 .kingdomcard {
     display: inline-block;
     min-width: 140px;
@@ -455,18 +458,25 @@ a.info {
     position: relative;
     min-width: 756px;
 }
-
-.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
-    opacity: 1;
-}
-
-.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
-    opacity: 1;
-}
-
+/* random organised */
 a.info {
+    min-width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: url("../media/ui/button_info.png") no-repeat top left;
+    z-index: 25;
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
+}
+
+.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
+    opacity: 1;
+}
+
+.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
+    opacity: 1;
 }
 
 .nobuy {
@@ -489,7 +499,6 @@ a.info {
     right: -3px;
 }
 
-
 .title {
     position: absolute;
     top: -36px;
@@ -506,7 +515,7 @@ a.info {
     height: 36px;
     display: inline-block;
 }
-
+/* Game status things */
 #game-over {
     display: none;
 }
@@ -560,7 +569,7 @@ a.info {
 #game-over table tr.me {
     background-color: rgba(162, 119, 28, 0.2);
 }
-
+/* Play + player(info) */
 #player-turninfo {
     position: absolute;
     top: 16px;
@@ -595,18 +604,6 @@ a.info {
     margin-bottom: 8px;
 }
 
-#player-turninfo .info {
-    min-width: 56px;
-    height: 56px;
-    background: url("../media/ui/info_circle.png") no-repeat top left;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
-    margin-right: 8px;
-    line-height: 56px;
-    text-align: center;
-    display: inline-block;
-    color: white;
-}
 
 #play-treasures:hover, #end-turn:hover, #finish-discarding:hover {
     opacity: 0.85;
@@ -615,7 +612,7 @@ a.info {
 #play-treasures, #finish-discarding {
     bottom: calc(178px + 16px);
 }
-
+/* All chat + lobby involved */
 #enternickname, #lobbyroom {
     background-color: rgba(0, 0, 0, 0.6);
     display: inline-block;
