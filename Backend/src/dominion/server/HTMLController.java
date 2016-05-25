@@ -371,24 +371,17 @@ public class HTMLController
         Game game = retrieveGameOfLobby(lobbyName);
 
         Player thisPlayer = game.getPlayer(nickname);
-        Condition thisPlayersCondition = game.getConditionsList().get(thisPlayer);
+        Condition thisPlayerCondition = game.getConditionsList().get(thisPlayer);
         Card card = thisPlayer.getHand().findCard(cardName);
-
-        RemoveCardsCondition playerRemoveCardsCondition = null;
-
-        if (thisPlayersCondition instanceof RemoveCardsCondition)
-        {
-            playerRemoveCardsCondition = (RemoveCardsCondition) thisPlayersCondition;
-        }
 
         if (card != null)
         {
-            if (thisPlayersCondition instanceof MineCondition
-                    || thisPlayersCondition instanceof RemodelCondition
-                    || (playerRemoveCardsCondition != null && playerRemoveCardsCondition.isDestroyCard()))
+            boolean conditionIsMineCondition = thisPlayerCondition instanceof MineCondition;
+            boolean conditionIsRemodelCondition = thisPlayerCondition instanceof RemodelCondition;
+            if (conditionIsMineCondition || conditionIsRemodelCondition)
             {
                 //Trash instead of discard
-                if (thisPlayersCondition instanceof MineCondition)
+                if (conditionIsMineCondition)
                 {
                     //Type is important
                     if (card.getType() == 1)

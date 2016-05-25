@@ -73,7 +73,7 @@ public class ConditionTest
     @Test
     public void TestRemodelCondition() throws CardNotAvailableException
     {
-        RemodelCondition condition = new RemodelCondition(testPlayer, 1, game);
+        RemodelCondition condition = new RemodelCondition(game);
         game.addCondition(condition);
         game.trashCardFromPlayer(testPlayer, testPlayer.getHand().getCards().get(0));
 
