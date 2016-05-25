@@ -2,14 +2,15 @@ var http = require('http').Server();
 var io = require('socket.io')(http);
 var sanitizeHtml = require('sanitize-html');
 var sanitizeParams = {
-    allowedTags: ['span'],
+    allowedTags: ['span', 'strong'],
     allowedAttributes: {
-        'span': ['class']
+        'span': ['class'],
+        'strong': ['class']
     }
 };
 
 var players = 0;
-var port = 4;
+var port = 3000;
 
 http.listen(port, function () {
     console.log('Dominion-chatserver running on *:' + port);

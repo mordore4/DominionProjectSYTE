@@ -19,8 +19,8 @@ public class Player
     public Player()
     {
         this.setActions(1);
-        this.setBuys(40);
-        this.setCoins(100);
+        this.setBuys(1);
+        this.setCoins(0);
         this.setBasicVictoryPoints(0);
         this.setDynamicVictoryPoints(0);
 

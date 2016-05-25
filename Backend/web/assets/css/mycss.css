@@ -1,3 +1,4 @@
+/* Clearfix! */
 .cf:before,
 .cf:after {
     content: "";
@@ -11,7 +12,7 @@
 .cf {
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
-
+/* Everything that has to do with "body" */
 html,
 body {
     height: 100%;
@@ -35,37 +36,33 @@ body.myturn {
     box-shadow: inset 0 0 64px 16px rgba(0, 150, 25, 0.5);
 }
 
-#gamewindow {
-    position: relative;
-    min-width: calc(100% - 100px);
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
+body.loading {
+    overflow: hidden;
 }
 
-#cardsComeCenter {
-    position: relative;
+body.loading .modal {
+    display: block;
+}
+/* Buttons from Bootstrap adjusted */
+.btn.btn-lg.btn-default {
+    border-radius: 0;
     display: inline-block;
-    width: auto;
-    min-width: 110px;
-    height: 180px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 8px;
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 0;
-    font-family: sans-serif;
+    height: 56px;
+    line-height: 34px;
+    position: relative;
+    color: #111;
+    text-align: center;
+    min-width: 456px;
+    border: none;
+    margin: 0;
+    background: transparent url("../media/flag_n.png");
 }
 
-#cardsComeCenter:empty:before {
-    content: 'Drop your cards here';
+.btn.btn-lg.btn-default:hover, .btn.btn-lg.btn-default:active {
     color: white;
-    font-size: 1.5em;
-    line-height: 164px;
+    background-image: url("../media/flag.png");
 }
-
+/* Everything that has to do with Menu including the pictures */
 #menu {
     margin-left: auto;
     margin-right: auto;
@@ -95,45 +92,6 @@ body.myturn {
     display: inline-block;
     padding: 5px;
     border-radius: 5px;
-
-}
-
-.site-wrapper-inner {
-    padding-top: 0;
-    display: block;
-    margin-top: 128px;
-}
-
-.shadow {
-    display: inline-block;
-    -webkit-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
-    -moz-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
-    box-shadow: -8px 8px 8px rgba(255, 255, 255, 1);
-}
-
-.btn.btn-lg.btn-default {
-    border-radius: 0;
-    display: inline-block;
-    height: 56px;
-    line-height: 34px;
-    position: relative;
-    color: #111;
-    text-align: center;
-    min-width: 456px;
-    border: none;
-    margin: 0;
-    background: transparent url("../media/flag_n.png");
-}
-
-.btn.btn-lg.btn-default:hover, .btn.btn-lg.btn-default:active {
-    color: white;
-    background-image: url("../media/flag.png");
-}
-
-.lead {
-    min-width: 65%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .eerste, .tweede, .derde {
@@ -169,6 +127,12 @@ body.myturn {
 #settings:hover strong.derde {
     background-image: url("../media/ui/button_settings.png");
 }
+/* adjusting phase */
+.site-wrapper-inner {
+    padding-top: 0;
+    display: block;
+    margin-top: 128px;
+}
 
 .modal {
     display: none;
@@ -181,14 +145,117 @@ body.myturn {
     background: rgba(255, 255, 255, .8) url('../../assets/media/ajax-loader.gif') 50% 50% no-repeat;
 }
 
-body.loading {
-    overflow: hidden;
+.shadow {
+    display: inline-block;
+    -webkit-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
+    -moz-box-shadow: -8px 8px 16px 0 rgba(0, 0, 0, 1);
+    box-shadow: -8px 8px 8px rgba(255, 255, 255, 1);
+}
+/* All form things */
+#form {
+    border-radius: 0;
+    display: inline-block;
+    height: 40px;
+    line-height: 34px;
+    color: black;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 25%;
+
 }
 
-body.loading .modal {
-    display: block;
+.form-control::-webkit-input-placeholder {
+    color: lightgray;
 }
 
+.form-control:-moz-placeholder {
+    /* Firefox 18- */
+    color: lightgray;
+}
+
+.form-control::-moz-placeholder {
+    /* Firefox 19+ */
+    color: lightgray;
+}
+
+.form-control:-ms-input-placeholder {
+    color: lightgray;
+}
+
+.form-control {
+    background-color: #3c3c3c;
+    opacity: 0.8;
+    color: white;
+}
+
+.control-label {
+    color: white;
+}
+
+.control-label:after{
+    content: " *";
+    color: red;
+}
+
+.unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/* Game window and cards involved */
+#gamewindow {
+    position: relative;
+    min-width: calc(100% - 100px);
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+}
+
+#card-info {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#card-info img {
+    border: 8px solid black;
+    border-radius: 8px;
+    min-width: 300px;
+    height: 500px;
+    margin-top: calc(25% - 250px);
+}
+
+#cardsComeCenter {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    min-width: 110px;
+    height: 180px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 0;
+    font-family: sans-serif;
+}
+
+#cardsComeCenter:empty:before {
+    content: 'Drop your cards here';
+    color: white;
+    font-size: 1.5em;
+    line-height: 164px;
+}
+
+#cardset {
+    color: black;
+}
+/* All hand CSS */
 #hand {
     text-align: center;
     bottom: 0;
@@ -237,6 +304,36 @@ body.loading .modal {
     box-shadow: 0 0 8px 4px green;
 }
 
+#handwrapper {
+    padding-left: 8px;
+    padding-top: 8px;
+    min-width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 249px;
+}
+
+#handdecor {
+    display: inline-block;
+    padding: 8px;
+    border: 3px solid rgba(0, 0, 0, 0.6);
+    border-top: none;
+    position: relative;
+}
+
+#hand li:hover {
+    -moz-transform: translate(-2px, -2px);
+    -ms-transform: translate(-2px, -2px);
+    -o-transform: translate(-2px, -2px);
+    -webkit-transform: translate(-2px, -2px);
+    transform: translate(-2px, -2px)
+}
+
+#hand li {
+    transition: height 0.5s;
+}
+
 #topstates, #coins {
     position: absolute;
     top: 0;
@@ -244,11 +341,7 @@ body.loading .modal {
     list-style: none;
     z-index: 20;
 }
-
-#coins {
-    right: 20px;
-}
-
+/* Top states + coins */
 #topstates {
     left: -20px;
 }
@@ -263,16 +356,44 @@ body.loading .modal {
     height: 115px;
 }
 
-a.info {
-    min-width: 40px;
-    height: 40px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: url("../media/ui/button_info.png") no-repeat top left;
-    z-index: 25;
+#topstates .amount, #coins .amount {
+    right: 4px;
+    top: 3px;
 }
 
+#coins {
+    right: 20px;
+}
+
+#player-turninfo .info {
+    min-width: 56px;
+    height: 56px;
+    background: url("../media/ui/info_circle.png") no-repeat top left;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    margin-right: 8px;
+    line-height: 56px;
+    text-align: center;
+    display: inline-block;
+    color: white;
+}
+
+#turn-buys .info {
+    background: url("../media/ui/info_circle_buys.png") no-repeat top left;
+}
+
+#turn-coins .info {
+    background: url("../media/ui/info_circle_coins.png") no-repeat top left;
+}
+
+.topcoins-title {
+    right: 40px;
+}
+
+.topstates-title {
+    left: 24px;
+}
+/* Kingdomcards */
 .kingdomcard {
     display: inline-block;
     min-width: 140px;
@@ -298,11 +419,6 @@ a.info {
     z-index: 30;
 }
 
-#topstates .amount, #coins .amount {
-    right: 4px;
-    top: 3px;
-}
-
 .kingdomcard-top {
     width: 100%;
     height: 80%;
@@ -314,89 +430,6 @@ a.info {
     height: 20%;
     background-size: 100%;
     background-position: bottom center;
-}
-
-a.info {
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
-}
-
-.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
-    opacity: 1;
-}
-
-.nobuy {
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
-}
-
-#kingdomwrapper {
-    border: 3px solid rgba(0, 0, 0, 0.6);
-    border-top: none;
-    display: inline-block;
-    padding-left: 8px;
-    padding-top: 8px;
-    position: relative;
-    min-width: 756px;
-}
-
-#handwrapper {
-    padding-left: 8px;
-    padding-top: 8px;
-    min-width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 249px;
-}
-
-#handdecor {
-    display: inline-block;
-    padding: 8px;
-    border: 3px solid rgba(0, 0, 0, 0.6);
-    border-top: none;
-    position: relative;
-}
-
-.corner-topleft, .corner-topright {
-    position: absolute;
-    top: -32px;
-    left: -3px;
-    border-bottom: 3px solid rgba(0, 0, 0, 0.6);
-    min-width: calc(25% + 3px);
-    height: 32px;
-    display: inline-block;
-}
-
-.corner-topright {
-    left: inherit;
-    right: -3px;
-}
-
-
-.title {
-    position: absolute;
-    top: -36px;
-    font-size: 2em;
-    font-family: sans-serif;
-}
-
-.borderedtitle {
-    left: 25%;
-    border: 3px solid rgba(0, 0, 0, 0.6);
-    border-bottom: none;
-    min-width: 132px;
-    width: 50%;
-    height: 36px;
-    display: inline-block;
-}
-
-.topcoins-title {
-    right: 40px;
-}
-
-.topstates-title {
-    left: 24px;
 }
 
 #kingdomcards {
@@ -416,19 +449,73 @@ a.info {
     margin-right: 8px;
 }
 
-#form {
-    border-radius: 0;
+#kingdomwrapper {
+    border: 3px solid rgba(0, 0, 0, 0.6);
+    border-top: none;
     display: inline-block;
+    padding-left: 8px;
+    padding-top: 8px;
+    position: relative;
+    min-width: 756px;
+}
+/* random organised */
+a.info {
+    min-width: 40px;
     height: 40px;
-    line-height: 34px;
-    color: black;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 25%;
-
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: url("../media/ui/button_info.png") no-repeat top left;
+    z-index: 25;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
 }
 
+.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
+    opacity: 1;
+}
+
+.kingdomcard:hover a.info, #topstates li figure:hover a.info, #coins li figure:hover a.info {
+    opacity: 1;
+}
+
+.nobuy {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.corner-topleft, .corner-topright {
+    position: absolute;
+    top: -32px;
+    left: -3px;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.6);
+    min-width: calc(25% + 3px);
+    height: 32px;
+    display: inline-block;
+}
+
+.corner-topright {
+    left: inherit;
+    right: -3px;
+}
+
+.title {
+    position: absolute;
+    top: -36px;
+    font-size: 2em;
+    font-family: sans-serif;
+}
+
+.borderedtitle {
+    left: 25%;
+    border: 3px solid rgba(0, 0, 0, 0.6);
+    border-bottom: none;
+    min-width: 132px;
+    width: 50%;
+    height: 36px;
+    display: inline-block;
+}
+/* Game status things */
 #game-over {
     display: none;
 }
@@ -482,77 +569,7 @@ a.info {
 #game-over table tr.me {
     background-color: rgba(162, 119, 28, 0.2);
 }
-
-.form-control {
-     background-color: #3c3c3c;
-     opacity: 0.8;
-     color: white;
- }
-
-.control-label {
-    color: white;
-}
-
-.control-label:after{
-    content: " *";
-    color: red;
-}
-
-.form-control::-webkit-input-placeholder {
-    color: lightgray;
-}
-
-.form-control:-moz-placeholder {
-    /* Firefox 18- */
-    color: lightgray;
-}
-
-.form-control::-moz-placeholder {
-    /* Firefox 19+ */
-    color: lightgray;
-}
-
-.form-control:-ms-input-placeholder {
-    color: lightgray;
-}
-
-
-
-#hand li:hover {
-    -moz-transform: translate(-2px, -2px);
-    -ms-transform: translate(-2px, -2px);
-    -o-transform: translate(-2px, -2px);
-    -webkit-transform: translate(-2px, -2px);
-    transform: translate(-2px, -2px)
-}
-
-#hand li {
-    transition: height 0.5s;
-}
-
-#card-info {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 50;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#card-info img {
-    border: 8px solid black;
-    border-radius: 8px;
-    min-width: 300px;
-    height: 500px;
-    margin-top: calc(25% - 250px);
-}
-
-.unselectable {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
+/* Play + player(info) */
 #player-turninfo {
     position: absolute;
     top: 16px;
@@ -561,30 +578,8 @@ a.info {
     text-align: left;
 }
 
-#player-turninfo .info-sub {
-    font-size: 2.5rem;
-    margin-bottom: 8px;
-}
-
-#player-turninfo .info {
-    min-width: 56px;
-    height: 56px;
-    background: url("../media/ui/info_circle.png") no-repeat top left;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 1);
-    margin-right: 8px;
-    line-height: 56px;
-    text-align: center;
-    display: inline-block;
-    color: white;
-}
-
-#turn-buys .info {
-    background: url("../media/ui/info_circle_buys.png") no-repeat top left;
-}
-
-#turn-coins .info {
-    background: url("../media/ui/info_circle_coins.png") no-repeat top left;
+#end-turn, #end-actions {
+    bottom: calc(242px + 32px);
 }
 
 #end-turn, #play-treasures, #end-actions, #finish-discarding {
@@ -604,18 +599,20 @@ a.info {
     text-shadow: 0 0 5px rgba(0, 0, 0, 1);
 }
 
-#play-treasures:hover, #end-turn:hover, #finish-discarding:hover {
-    opacity: 0.85;
+#player-turninfo .info-sub {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
 }
 
-#end-turn, #end-actions {
-    bottom: calc(242px + 32px);
+
+#play-treasures:hover, #end-turn:hover, #finish-discarding:hover {
+    opacity: 0.85;
 }
 
 #play-treasures, #finish-discarding {
     bottom: calc(178px + 16px);
 }
-
+/* All chat + lobby involved */
 #enternickname, #lobbyroom {
     background-color: rgba(0, 0, 0, 0.6);
     display: inline-block;
@@ -666,7 +663,6 @@ a.info {
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     z-index: 2000;
-
 }
 
 #imgChat {
@@ -678,21 +674,6 @@ a.info {
     right: 0;
     min-width: 40px;
     height: 40px;
-
-}
-
-#imgVis {
-    background-image: url("../media/visible.png");
-    background-repeat: no-repeat;
-    background-size: 40px;
-    position: absolute;
-    right: 0;
-    bottom: 138px;
-    background-color: rgba(255, 255, 255, 0.7);
-    min-width: 40px;
-    height: 40px;
-    border-radius: 5px;
-    z-index: 2000;
 }
 
 #chat.visible {
@@ -732,6 +713,20 @@ a.info {
     text-align: left;
 }
 
+#imgVis {
+    background-image: url("../media/visible.png");
+    background-repeat: no-repeat;
+    background-size: 40px;
+    position: absolute;
+    right: 0;
+    bottom: 138px;
+    background-color: rgba(255, 255, 255, 0.7);
+    min-width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    z-index: 2000;
+}
+
 strong.username {
     color: dodgerblue;
     font-weight: bold;
@@ -742,10 +737,6 @@ strong.cardname {
     color: paleturquoise;
     font-weight: bold;
     font-style: italic;
-}
-
-#cardset {
-    color: black;
 }
 
 strong.notice {

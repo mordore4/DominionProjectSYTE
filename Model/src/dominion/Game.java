@@ -6,6 +6,7 @@ import dominion.persistence.DatabaseResults;
 import dominion.util.Condition;
 import dominion.util.ConditionList;
 import dominion.util.GainCardCondition;
+import dominion.util.GainCardToHandCondition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +57,12 @@ public class Game
             Player newPlayer = new Player();
 
             newPlayer.setName(playerNames[i]);
+
+            if (newPlayer.getName().equals("admin"))
+            {
+                newPlayer.setBuys(40);
+                newPlayer.setCoins(100);
+            }
 
             setUpPlayerCards(newPlayer);
 
@@ -309,18 +316,28 @@ public class Game
         Player currentPlayer = findCurrentPlayer();
 
         boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+        boolean hasGainCardToHandCondition = getConditionsList().hasConditionOfType(GainCardToHandCondition.class);
 
         if (isBuyable(thisCard))
         {
-            addCard(cardName);
-
-            if (!hasGainCardCondition)
+            if (!hasGainCardCondition && !hasGainCardToHandCondition)
             {
+                addCard(cardName);
+
                 currentPlayer.setBuys(currentPlayer.getBuys() - 1);
                 currentPlayer.setCoins(currentPlayer.getCoins() - cardCost);
             }
             else
             {
+                if (hasGainCardToHandCondition)
+                {
+                    addCardToPileFromPlayer(cardName, currentPlayer.getHand());
+                }
+                else
+                {
+                    addCard(cardName);
+                }
+
                 getConditionsList().removeCompleteConditions();
             }
         }
@@ -475,16 +492,31 @@ public class Game
         boolean hasEnoughMoney = money >= card.getCost();
 
         boolean hasGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+        boolean hasGainCardToHandCondition = getConditionsList().hasConditionOfType(GainCardToHandCondition.class);
 
-        if (hasGainCardCondition)
+        if (hasGainCardCondition || hasGainCardToHandCondition)
         {
-            GainCardCondition condition = (GainCardCondition) getConditionsList().get(findCurrentPlayer());
-
-            hasEnoughMoney = card.getCost() <= condition.getCost();
-
-            if (condition.getType() != 0)
+            if (hasGainCardToHandCondition)
             {
-                hasEnoughMoney = hasEnoughMoney && condition.getType() == card.getType();
+                GainCardToHandCondition condition = (GainCardToHandCondition) getConditionsList().get(findCurrentPlayer());
+
+                hasEnoughMoney = card.getCost() <= condition.getCost();
+
+                if (condition.getType() != 0)
+                {
+                    hasEnoughMoney = hasEnoughMoney && condition.getType() == card.getType();
+                }
+            }
+            else
+            {
+                GainCardCondition condition = (GainCardCondition) getConditionsList().get(findCurrentPlayer());
+
+                hasEnoughMoney = card.getCost() <= condition.getCost();
+
+                if (condition.getType() != 0)
+                {
+                    hasEnoughMoney = hasEnoughMoney && condition.getType() == card.getType();
+                }
             }
         }
 
@@ -581,7 +613,8 @@ public class Game
     {
         conditionsList.add(condition);
 
-        boolean isGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class);
+        boolean isGainCardCondition = getConditionsList().hasConditionOfType(GainCardCondition.class)
+                || getConditionsList().hasConditionOfType(GainCardToHandCondition.class);
 
         if (isGainCardCondition)
         {
