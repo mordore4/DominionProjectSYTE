@@ -80,7 +80,7 @@ public class Ability
         switch (id)
         {
             case 6:
-                game.findCurrentPlayer().getHand().removeCard(card);
+                game.trashCardFromPlayer(game.findCurrentPlayer(), card);
                 break;
             case 9:
                 gainCardCostingUpTo(game, card);
@@ -193,15 +193,6 @@ public class Ability
             game.moveCardsToDiscardPile(game.findCurrentPlayer().getDeck().getCards());
         }
     }
-
-    /*private void chapelSpecial(Game game, ArrayList<Card> cardsToTrash)
-    {
-        Deck hand = game.findCurrentPlayer().getHand();
-        for (Card currentCard : cardsToTrash)
-        {
-            hand.removeCard(currentCard);
-        }
-    }*/ //Yannis Baas xoxox
 
     private void councilRoomSpecial(Game game)
     {

@@ -252,6 +252,11 @@ public class Game
     {
         player.setValueOfLastTrashedCard(card.getCost());
         player.getHand().removeCard(card);
+        if (card.getType() == 2)
+        {
+            int amountToAdd = card.getAbilities()[0].getAmount();
+            player.addVictoryPoints(0 - amountToAdd);
+        }
     }
 
     public void playTreasures()

@@ -64,17 +64,6 @@ public class Deck
         return card;
     }
 
-    /*public int calculatePoints() //Move to game
-    {
-        int points = 0;
-        for (int cardnr = 0; cardnr < cards.size(); cardnr++)
-        {
-            //points += cards[cardnr].getValue();
-        }
-
-        return points;
-    }*/
-
     public void shuffle()
     {
         Collections.shuffle(cards);
