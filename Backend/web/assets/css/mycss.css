@@ -433,6 +433,56 @@ a.info {
     display: none;
 }
 
+#game-over article {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 512px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+}
+
+#game-over h2 {
+    margin-bottom: 42px;
+}
+
+#game-over table {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 8px;
+    text-align: left;
+    font-size: 1.5em;
+    border-top: 2px solid goldenrod;
+    border-bottom: 2px solid goldenrod;
+    padding-top: 64px;
+    background: url("../media/decoration.png") no-repeat;
+    background-size: contain;
+}
+
+#game-over table th:nth-child(1), #game-over table td:nth-child(1) {
+    min-width: 200px;
+}
+
+#game-over table thead {
+    color: goldenrod;
+}
+
+#game-over tr td, #game-over tr th {
+    padding: 8px;
+}
+
+#game-over tbody tr {
+    color: #ff2f2f;
+}
+
+#game-over table tr.winner {
+    color: limegreen;
+}
+
+#game-over table tr.me {
+    background-color: rgba(162, 119, 28, 0.2);
+}
+
 .form-control {
      background-color: #3c3c3c;
      opacity: 0.8;

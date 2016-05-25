@@ -172,7 +172,8 @@ var hideHandIfEmpty = function ()
     }
 };
 
-var isInFixedCards = function(cardName) {
+var isInFixedCards = function (cardName)
+{
     for (var i = 0; i < fixedCards.length; i++)
     {
         if (fixedCards[i].name == cardName)
@@ -451,7 +452,8 @@ var buyCard = function ()
     }
 };
 
-var discardCard = function() {
+var discardCard = function ()
+{
     if (!allowDiscard) return;
 
     var cardName = $(this).attr("data-cardname");
@@ -467,7 +469,8 @@ var discardCard = function() {
     }
 };
 
-var finishDiscarding = function() {
+var finishDiscarding = function ()
+{
     $("#finish-discarding").hide();
     ajaxDiscardMultiple(cardsToDiscard);
     cardsToDiscard = [];
@@ -636,12 +639,57 @@ var clearBuyableCards = function ()
     }
 };
 
-var showVictoryScreen = function()
+var showVictoryScreen = function (pointsList, winner)
 {
-    $("#game-over").show();
+    var gameOver = $("#game-over");
+    gameOver.find("h1").text("You win!");
+    gameOver.find("article h2").hide();
+    showPointsPerPlayer(pointsList, winner);
+    gameOver.show();
 };
 
-var showLossScreen = function()
+var showLossScreen = function (pointsList, winner)
 {
-    $("#game-over").show();
+    var gameOver = $("#game-over");
+    gameOver.find("h1").text("You lose!");
+    gameOver.find("article h2").text("Winner: " + winner);
+    showPointsPerPlayer(pointsList, winner);
+    gameOver.show();
+};
+
+var showPointsPerPlayer = function (pointsList, winner)
+{
+    var tbody = $("#game-over").find("tbody");
+    tbody.empty();
+
+    for (var i = 0; i < pointsList.length; i++)
+    {
+        var pointsOfPlayer = pointsList[i];
+
+        var html = "<tr>";
+        var isMe = (pointsOfPlayer[0] == nickname);
+        var isWinner = (pointsOfPlayer[0] == winner);
+
+        if (pointsOfPlayer[0] == winner)
+        {
+            html = '<tr class="winner">';
+        }
+
+        html += "<td>" + pointsOfPlayer[0] + "</td><td>" + pointsOfPlayer[1] + "</td></tr>";
+
+        tbody.append(html);
+
+        var newRow = tbody.find("tr").last();
+
+        if (isMe)
+        {
+            newRow.addClass("me");
+        }
+
+        if (isWinner)
+        {
+            newRow.addClass("winner");
+        }
+
+    }
 };

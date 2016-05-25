@@ -345,15 +345,17 @@ var ajaxCheckGameStatus = function ()
                 gameWindow.hide();
                 $("#current-player").hide();
                 $("#cardsComeCenter").hide();
-                
+
+                console.log(status.pointsList);
+
                 var winner = status.winner;
                 if (nickname == winner)
                 {
-                    showVictoryScreen();
+                    showVictoryScreen(status.pointsList, winner);
                 }
                 else
                 {
-                    showLossScreen();
+                    showLossScreen(status.pointsList, winner);
                 }
                 
                 if (timeOut != null) {

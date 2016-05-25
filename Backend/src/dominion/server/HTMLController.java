@@ -321,6 +321,19 @@ public class HTMLController
         gameStatus.put("victoryPoints", thisPlayer.getBasicVictoryPoints() + thisPlayer.getDynamicVictoryPoints());
         if (game.getIsOver())
         {
+            ArrayList<Object[]> victoryPoints = new ArrayList<>();
+
+            for (Player player : game.getPlayers())
+            {
+                Object[] playerPoints = new Object[2];
+
+                playerPoints[0] = player.getName();
+                playerPoints[1] = player.getTotalVictoryPoints();
+
+                victoryPoints.add(playerPoints);
+            }
+
+            gameStatus.put("pointsList", victoryPoints);
             gameStatus.put("winner", game.getWinner().getName());
         }
 
