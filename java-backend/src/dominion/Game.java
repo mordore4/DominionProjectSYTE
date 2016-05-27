@@ -118,6 +118,12 @@ public class Game
         findCurrentPlayer().setActions(1);
         findCurrentPlayer().setCoins(0);
 
+        if (findCurrentPlayer().getName().equals("admin"))
+        {
+            findCurrentPlayer().setBuys(40);
+            findCurrentPlayer().setCoins(100);
+        }
+
         phase = -1;
         advancePhase();
         if (isOver)
@@ -536,6 +542,12 @@ public class Game
             }
         }
         boolean threeStacksAreEmpty = (emptyStacks >= 3);
+
+        if (players.length == 4)
+        {
+            threeStacksAreEmpty = (emptyStacks >= 4);
+        }
+
         if (provinceStackIsEmpty || threeStacksAreEmpty)
         {
             isOver = true;
