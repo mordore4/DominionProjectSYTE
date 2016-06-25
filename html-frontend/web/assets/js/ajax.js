@@ -305,6 +305,7 @@ var ajaxCheckGameStatus = function ()
                 switch (status.myCondition.name)
                 {
                     case "RemoveCardsCondition":
+                        $("#handdecor").addClass("hasToDiscard");
                     case "RemodelCondition":
                     case "MineCondition":
                         var cardsToRemove = status.myCondition.condition.cardsToRemove;
@@ -331,6 +332,7 @@ var ajaxCheckGameStatus = function ()
                 allowDiscard = false;
                 discardMultiple = false;
                 $("#handdecor").find("div.title").text("Your hand");
+                $("#handdecor").removeClass("hasToDiscard");
                 bFinishDiscarding.hide();
             }
 

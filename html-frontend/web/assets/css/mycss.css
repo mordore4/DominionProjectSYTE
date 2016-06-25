@@ -5,6 +5,11 @@
     display: table;
 }
 
+.hasToDiscard
+{
+    background-color: red;
+}
+
 .cf:after {
     clear: both;
 }

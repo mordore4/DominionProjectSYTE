@@ -461,6 +461,7 @@ var discardCard = function ()
     if (!discardMultiple)
     {
         ajaxDiscardCard(cardName);
+        ioSendChatNotice("<strong class='username'>" + nickname + "</strong> discarded " + "<strong class='cardname'>" + cardName + "</strong>")
     }
     else
     {
